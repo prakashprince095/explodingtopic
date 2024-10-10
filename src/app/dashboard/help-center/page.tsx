@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Input } from 'postcss'
 function Help() {
     return (
         <div className="flex flex-col items-center justify-center ">
