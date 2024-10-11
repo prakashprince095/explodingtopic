@@ -56,7 +56,7 @@ function Help() {
                             <li>
                                 <h1 className=" flex items-center gap-2 hover:underline">
                                     <img className='w-10' src="/contact/w.svg" alt="" />
-                                    <h1 className='text-[20px]'> What's app</h1>
+                                    <h1 className='text-[20px]'> Whats app</h1>
                                 </h1>
                             </li>
                             <li>

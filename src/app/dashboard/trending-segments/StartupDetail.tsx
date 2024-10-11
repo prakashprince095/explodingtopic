@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Segment } from './page';
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import Image from 'next/image';
 
 export type Startup = {
   title: string;
@@ -117,11 +118,12 @@ const RelatedStartups: React.FC<{ startups: Startup['relatedStartups'] }> = ({ s
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {startups.map((related, index) => (
           <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
-            <img
-              src={related.logo}
-              alt={related.name}
-              className="w-24 h-24 rounded-full object-cover"
-            />
+            <Image
+                src=""
+                alt={related.name}
+                fill
+                className="w-24 h-24 rounded-full object-cover"
+              />
             <div>
               <h5 className="text-[22px]">{related.name}</h5>
               <p className=" text-gray-600 text-[18px]">{related.description}</p>
@@ -258,21 +260,21 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
   const mockRelatedStartups = [
     {
       id: 1,
-      logo: "https://via.placeholder.com/50",
+      logo: "",
       name: "InnovateX",
       description: "Pioneers in cloud computing technology.",
       growthRate: "+75%",
     },
     {
       id: 2,
-      logo: "https://via.placeholder.com/50",
+      logo: "",
       name: "AI Wonders",
       description: "Cutting-edge AI for medical applications.",
       growthRate: "+50%",
     },
     {
       id: 3,
-      logo: "https://via.placeholder.com/50",
+      logo: "",
       name: "NextGen Robotics",
       description: "Innovative robotics for industrial automation.",
       growthRate: "+90%",
@@ -428,7 +430,7 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {startup.relatedStartups?.map((related, index) => (
               <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
-                <img src={related.logo} alt={related.name} className="w-24 h-24 rounded-full" />
+                <Image src="" alt={related.name} className="w-24 h-24 rounded-full" />
                 <div>
                   <h5 className="text-[26px]">{related.name}</h5>
                   <p className='text-[20px]'>{related.description}</p>

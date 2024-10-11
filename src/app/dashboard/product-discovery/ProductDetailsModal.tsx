@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Line } from 'react-chartjs-2';
+import Image from "next/image";
 import {
   Chart as ChartJS,
   LineElement,
@@ -141,7 +142,7 @@ const TopSellers: React.FC<{ sellers: ProductSegment['topSellers'] }> = ({ selle
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {sellers.map((seller, index) => (
           <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
-            <img
+            <Image
               src={seller.logo}
               alt={seller.name}
               className="w-12 h-12 rounded-full object-cover"
@@ -168,7 +169,7 @@ const RelatedProducts: React.FC<{ products: ProductSegment['relatedProducts'] }>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products.map((product, index) => (
           <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
-            <img
+            <Image
               src={product.logo}
               alt={product.name}
               className="w-12 h-12 rounded-full object-cover"
@@ -283,9 +284,13 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-7xl mx-auto border border-gray-200">
         {/* First Section: Product Overview */}
         <div className="flex items-center justify-center gap-3">
-            {/* Product Image */}
+          {/* Product Image */}
           <div className="w-[380px] h-[400px] rounded-lg bg-slate-100 p-3">
-            <img src={product.imageUrl} alt={product.name} className="w-full rounded-lg mb-4" />
+            <Image
+              src={product.imageUrl || '/default-image.png'}  // Fallback image URL
+              alt={product.name}
+              className="w-full rounded-lg mb-4"
+            />
             <h2 className="text-2xl f mb-2">{product.name}</h2>
             <p>{product.description}</p>
             <div className="mt-4">
@@ -332,42 +337,6 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
             </ul>
           </div>
         </div>
-
-        {/* Timeframe & Sales Graph */}
-        {/* <div className="mt-8">
-          <label htmlFor="timeframe" className="block text-lg f mb-2">
-            Select Timeframe
-          </label>
-          <select
-            id="timeframe"
-            value={selectedTimeframe}
-            onChange={(e) => setSelectedTimeframe(e.target.value)}
-            className="block w-full border border-gray-300 rounded-md p-2 mb-4"
-          >
-            {timeframes.map((timeframe, index) => (
-              <option key={index} value={timeframe}>
-                {timeframe}
-              </option>
-            ))}
-          </select>
-          <div className="mb-4">
-            <svg
-              width="100%"
-              height="100"
-              viewBox="0 0 100 30"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <polyline
-                fill="none"
-                stroke="blue"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                points={product.salesData?.join(" ") || ""}
-              />
-            </svg>
-          </div>
-        </div>  */}
 
         {/* Sales Volume Chart */}
         <div>
