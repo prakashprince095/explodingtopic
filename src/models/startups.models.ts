@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-// Define KeyIndicators interface and schema
 interface IKeyIndicators extends Document {
     growth: string;
     speed: string;
@@ -34,7 +33,6 @@ const RelatedStartupSchema: Schema = new Schema({
     growthRate: { type: String, required: true },
 });
 
-// Define Channel interface and schema
 interface IChannel extends Document {
     name: string;
     volume: number;
@@ -45,7 +43,6 @@ const ChannelSchema: Schema = new Schema({
     volume: { type: Number, required: true },
 });
 
-// Define Segment interface and schema
 interface ISegment extends Document {
     title: string;
     description: string;
@@ -84,7 +81,6 @@ const SegmentSchema: Schema = new Schema({
     keyIndicators: { type: KeyIndicatorsSchema, required: false },
 });
 
-// Export the models
 const Segment = mongoose.model<ISegment>('Segment', SegmentSchema);
 const RelatedStartup = mongoose.model<IRelatedStartup>('RelatedStartup', RelatedStartupSchema);
 const KeyIndicators = mongoose.model<IKeyIndicators>('KeyIndicators', KeyIndicatorsSchema);

@@ -90,7 +90,7 @@ const InsightHub: React.FC = () => {
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* Header Section */}
       <section className="mb-10">
-        <h1 className="text-4xl font-bold text-gray-800">Insight Hub</h1>
+        <h1 className="text-2xl  text-gray-800">Insight Hub</h1>
       </section>
 
       {/* Search, Sort, and Filter Options */}
@@ -122,7 +122,7 @@ const InsightHub: React.FC = () => {
 
       {/* Trending Startups Section */}
       <section className="mb-12">
-        <h2 className="text-3xl font-semibold text-gray-700 mb-6">Trending Startups</h2>
+        <h2 className="text-xl  text-gray-700 mb-6">Trending Startups</h2>
         <div className="flex flex-wrap gap-6">
           {processedHubItems.slice(0, 3).map((item) => (
             <div key={item.id} className="bg-white shadow-md rounded-lg p-6 w-80">
@@ -138,6 +138,7 @@ const InsightHub: React.FC = () => {
             </div>
           ))}
         </div>
+        
         <button
           className="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors"
           onClick={() => setShowMoreHub(true)}
@@ -158,7 +159,7 @@ const InsightHub: React.FC = () => {
               <div className="grid grid-cols-2 gap-6">
                 {processedHubItems.map((item) => (
                   <div key={item.id} className="border border-gray-300 p-4 rounded-lg">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">{item.title}</h3>
+                    <h3 className="text-xl  text-gray-800 mb-2">{item.title}</h3>
                     <p className="text-lg text-gray-600">{item.volume}</p>
                     <p className="text-lg text-gray-600">{item.totalFunding}</p>
                     <p className="text-lg text-gray-600">{item.latestRound}</p>
@@ -177,7 +178,7 @@ const InsightHub: React.FC = () => {
 
       {/* Product Discover Section */}
       <section>
-        <h2 className="text-3xl font-semibold text-gray-700 mb-6">Product Discover</h2>
+        <h2 className="text-xl  text-gray-700 mb-6">Product Discover</h2>
         <div className="flex flex-wrap gap-6">
           {processedProductItems.slice(0, 3).map((product) => (
             <div key={product.id} className="bg-white shadow-md rounded-lg p-6 w-80">
@@ -215,7 +216,7 @@ const InsightHub: React.FC = () => {
               <div className="grid grid-cols-2 gap-6">
                 {processedProductItems.map((product) => (
                   <div key={product.id} className="border border-gray-300 p-4 rounded-lg">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.name}</h3>
+                    <h3 className="text-xl  text-gray-800 mb-2">{product.name}</h3>
                     <p className="text-lg text-gray-600">{product.description}</p>
                     <p className="text-lg text-gray-600">{product.categories.join(", ")}</p>
                     <p className="text-lg text-gray-600">{product.location}</p>

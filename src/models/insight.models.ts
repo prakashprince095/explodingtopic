@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-// Define the interface for HubItem document
 interface IHubItem extends Document {
     title: string;
     volume: string;
@@ -13,7 +12,6 @@ interface IHubItem extends Document {
     description: string;
 }
 
-// Define the interface for ProductItem document
 interface IProductItem extends Document {
     name: string;
     description: string;
@@ -26,7 +24,6 @@ interface IProductItem extends Document {
     location: string;
 }
 
-// Create HubItem schema
 const HubItemSchema: Schema = new Schema({
     title: { type: String, required: true },
     volume: { type: String, required: true },
@@ -39,7 +36,6 @@ const HubItemSchema: Schema = new Schema({
     description: { type: String, required: true },
 });
 
-// Create ProductItem schema
 const ProductItemSchema: Schema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -52,7 +48,6 @@ const ProductItemSchema: Schema = new Schema({
     location: { type: String, required: true },
 });
 
-// Create Mongoose models
 const HubItem = mongoose.model<IHubItem>('HubItem', HubItemSchema);
 const ProductItem = mongoose.model<IProductItem>('ProductItem', ProductItemSchema);
 
