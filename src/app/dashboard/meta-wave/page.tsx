@@ -1,258 +1,85 @@
-"use client"; // Ensure this component is treated as a client component
-import { useState } from "react";
-import { Line } from "react-chartjs-2";
-import "chart.js/auto"; // Required for Chart.js
+'use client';
+import Link from "next/link";
 
-interface MetaTrend {
-  id: number;
-  title: string;
-  categoryTags: string[];
-  contributingTrendsCount: number;
-  growthIndicator: "up" | "stable" | "down";
-  description: string;
-}
+// Example data for categories with six items in each category
+const categories = {
+  trending: [
+    { name: "AI Video Enhancers", description: "AI tools to enhance video quality...", volume: "10.2K", growth: "+5800%" },
+    { name: "AI Transcription", description: "Service that provides free, accurate AI-based transcriptions...", volume: "12.1K", growth: "+7600%" },
+    { name: "AI in Education", description: "Innovative tools to assist with learning and teaching...", volume: "8.3K", growth: "+4800%" },
+    { name: "AI Presentation Makers", description: "Tools to create presentations using AI...", volume: "5.1K", growth: "+3500%" },
+    { name: "Text-to-Video Tools", description: "AI that converts text into videos...", volume: "6.4K", growth: "+6200%" },
+    { name: "AI-Powered Content Generating Tools", description: "AI tools to generate written content...", volume: "7.8K", growth: "+4200%" },
+  ],
+  technology: [
+    { name: "DevOps Spinoffs", description: "New trends in the DevOps ecosystem...", volume: "4.5K", growth: "+2700%" },
+    { name: "Climate FinTech", description: "FinTech solutions for climate-related issues...", volume: "2.9K", growth: "+1800%" },
+    { name: "Accessible Martech", description: "Tools to make marketing technology accessible...", volume: "3.8K", growth: "+3000%" },
+    { name: "Workflow Automation Tools", description: "Automating workflows with the latest tools...", volume: "5.4K", growth: "+2100%" },
+    { name: "Content Monetization Platforms", description: "Monetization tools for creators and platforms...", volume: "4.1K", growth: "+2900%" },
+    { name: "Headless CMS", description: "Content management without the head...", volume: "4.7K", growth: "+2500%" },
+  ],
+  wellness: [
+    { name: "Electrolyte Supplements", description: "Supplements to replenish electrolytes...", volume: "3.5K", growth: "+1600%" },
+    { name: "ADHD Products", description: "Tools to assist individuals with ADHD...", volume: "2.4K", growth: "+1700%" },
+    { name: "Focus Supplements", description: "Supplements to enhance focus and clarity...", volume: "3.9K", growth: "+1900%" },
+    { name: "Breastfeeding Tech", description: "Tech solutions to assist with breastfeeding...", volume: "4.2K", growth: "+2000%" },
+    { name: "Cold Exposure Products", description: "Tools for cold therapy and exposure...", volume: "1.7K", growth: "+900%" },
+    { name: "Sleep Tech", description: "Tech products to enhance sleep quality...", volume: "5.6K", growth: "+2200%" },
+  ],
+  ai: [
+    { name: "AI Transcription", description: "Service that provides AI-based transcriptions...", volume: "12.1K", growth: "+7600%" },
+    { name: "AI Presentation Makers", description: "AI-based presentation tools...", volume: "5.1K", growth: "+3500%" },
+    { name: "Blog Post to Video", description: "Converting blog posts into videos using AI...", volume: "7.2K", growth: "+4600%" },
+    { name: "AI-Assisted Coding", description: "Tools to help developers with coding...", volume: "6.3K", growth: "+5300%" },
+    { name: "AI-Enhanced Learning", description: "AI tools to assist with learning...", volume: "4.9K", growth: "+3200%" },
+    { name: "Short-Form Video Editors", description: "AI-powered video editing tools...", volume: "5.4K", growth: "+4100%" },
+  ],
+  beauty: [
+    { name: "Specialty Lotions", description: "Lotions for specialized skincare needs...", volume: "2.4K", growth: "+1300%" },
+    { name: "TikTok Hair Care", description: "Hair care trends inspired by TikTok...", volume: "1.8K", growth: "+900%" },
+    { name: "Snail Mucin Skincare", description: "Skincare products using snail mucin...", volume: "3.4K", growth: "+2100%" },
+    { name: "Rice Water Beauty Routine", description: "Beauty routines using rice water...", volume: "4.2K", growth: "+2700%" },
+    { name: "Ceramide Skincare", description: "Skincare products with ceramides...", volume: "3.7K", growth: "+1800%" },
+    { name: "Ingredient-Led Skincare", description: "Skincare focused on active ingredients...", volume: "5.1K", growth: "+2400%" },
+  ],
+};
 
-export default function MetaWave() {
-  const [selectedTrend, setSelectedTrend] = useState<MetaTrend | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filterCategory, setFilterCategory] = useState<string>("");
-  const [sortField, setSortField] = useState<string>("");
+// Helper function to convert category name to URL slug
+const toSlug = (name: string) => name.toLowerCase().replace(/\s+/g, '-');
 
-  const metaTrends: MetaTrend[] = [
-    {
-      id: 1,
-      title: "Sustainability Movement",
-      categoryTags: ["Technology", "Retail"],
-      contributingTrendsCount: 12,
-      growthIndicator: "up",
-      description: "A focus on sustainable business practices and eco-friendly solutions.",
-    },
-    {
-      id: 2,
-      title: "AI Revolution",
-      categoryTags: ["Technology", "Healthcare"],
-      contributingTrendsCount: 15,
-      growthIndicator: "stable",
-      description: "Rapid advancements in artificial intelligence across industries.",
-    },
-    {
-      id: 3,
-      title: "Automobile",
-      categoryTags: ["Technology", "Vehicle"],
-      contributingTrendsCount: 15,
-      growthIndicator: "stable",
-      description: "Rapid advancements in autonomous vehicle technologies.",
-    },
-  ];
+const CategorySection = ({ title, items }: { title: string; items: any[] }) => (
+  <div className="mb-12">
+    <h2 className="text-2xl font-bold mb-4">{title}</h2>
+    <div className="grid grid-cols-3 gap-6">
+      {items.map((category, idx) => (
+        <Link key={idx} href={`/dashboard/meta-wave/${toSlug(category.name)}`} passHref>
+          <div className="p-6 bg-white shadow-md rounded-md cursor-pointer hover:shadow-lg transition">
+            <h3 className="text-xl font-semibold">{category.name}</h3>
+            <p className="text-gray-600 mt-2">{category.description}</p>
+            <p className="mt-4 text-sm text-gray-500">Volume: {category.volume}</p>
+            <p className="mt-1 text-sm text-green-500">Growth: {category.growth}</p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  </div>
+);
 
-  // Filtered Meta Trends based on search and filter category
-  const filteredTrends = metaTrends.filter((trend) => {
-    return (
-      trend.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (!filterCategory || trend.categoryTags.includes(filterCategory))
-    );
-  });
-
-  // Handle Trend Selection
-  const handleTrendClick = (trend: MetaTrend) => {
-    setSelectedTrend(trend);
-  };
-
-  // Line Chart Data and Options
-  const lineChartData = {
-    labels: ["2021", "2022", "2023", "2024", "2025"], // Example timeline
-    datasets: [
-      {
-        label: selectedTrend?.title ?? "Meta Trend Growth",
-        data: [20, 40, 60, 80, 100], // Example growth data
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-      },
-    ],
-  };
-
-  const lineChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const, // Use one of the valid union types
-      },
-    },
-  };
-  
-  // Contributing Trends (Dummy Data)
-  const contributingTrends = [
-    { name: "AI in Retail", category: "Retail", growthRate: "12%", impactScore: 8.5, lastUpdated: "Oct 2, 2024" },
-    { name: "Autonomous Vehicles", category: "Automobile", growthRate: "15%", impactScore: 9.0, lastUpdated: "Oct 1, 2024" },
-    { name: "Renewable Energy", category: "Energy", growthRate: "10%", impactScore: 7.5, lastUpdated: "Sep 30, 2024" },
-  ];
-
-  // Handle sorting for contributing trends
-  const sortedContributingTrends = [...contributingTrends].sort((a, b) => {
-    if (sortField === "growthRate") {
-      return parseFloat(b.growthRate) - parseFloat(a.growthRate);
-    } else if (sortField === "impactScore") {
-      return b.impactScore - a.impactScore;
-    }
-    return 0;
-  });
-
-  // Save Meta Trend (Dummy Functionality)
-  const saveMetaTrend = () => {
-    alert("Meta Trend saved to your profile!");
-  };
-
-  // Share Meta Trend as PDF (Dummy Functionality)
-  const shareAsPDF = () => {
-    alert("Meta Trend exported as PDF!");
-  };
-
-  // Alerts for Meta Trend Changes (Dummy Functionality)
-  const setupAlerts = () => {
-    alert("Alerts set up for changes in this Meta Trend!");
-  };
-
-  // Export as CSV (Dummy Functionality)
-  const exportCSV = () => {
-    alert("Contributing trends exported as CSV!");
-  };
-
+const MetaWavePage = () => {
   return (
-    <div className="container mx-auto p-4">
-      {/* Page Header */}
-      <header className="mb-8">
-        <h1 className="text-4xl ">Meta Trends Overview</h1>
-        <p className="text-gray-600 mt-2">Explore the emerging meta trends shaping industries across the globe.</p>
-      </header>
-
-      {/* Search and Filter Section */}
-      <div className="flex space-x-4 mb-8">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search Meta Trends"
-          className="p-2 border rounded-lg bg-transparent"
-        />
-        <select
-          className="p-2 border rounded-lg bg-transparent"
-          value={filterCategory}
-          onChange={(e) => setFilterCategory(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          <option value="Technology">Technology</option>
-          <option value="Retail">Retail</option>
-          <option value="Healthcare">Healthcare</option>
-        </select>
-      </div>
-
-      {/* Meta Trend Cards */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredTrends.map((trend) => (
-          <div
-            key={trend.id}
-            className="  p-4 rounded-lg border border-gray-400  cursor-pointer"
-            onClick={() => handleTrendClick(trend)}
-          >
-            <h3 className="text-xl font-semibold">{trend.title}</h3>
-            <p className="text-gray-500">{trend.description}</p>
-            <div className="flex justify-between mt-4">
-              <span className="text-gray-600">{trend.categoryTags.join(", ")}</span>
-              <span className={`text-${trend.growthIndicator === "up" ? "green" : trend.growthIndicator === "stable" ? "yellow" : "red"}-500`}>
-                {trend.growthIndicator === "up" ? "Growth" : trend.growthIndicator === "stable" ? "Stable" : "Decline"}
-              </span>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* Meta Trend Overview */}
-      {selectedTrend && (
-        <section className="mt-8">
-          <h2 className="text-3xl font-semibold">{selectedTrend.title} Overview</h2>
-          <p className="text-gray-600 mt-2">{selectedTrend.description}</p>
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold">Key Metrics:</h3>
-            <ul className="list-disc ml-6 mt-2">
-              <li>Total Contributing Trends: {selectedTrend.contributingTrendsCount}</li>
-              {/* More metrics can be added here */}
-            </ul>
-          </div>
-        </section>
-      )}
-
-      {/* Contributing Trends Table */}
-      {selectedTrend && (
-        <section className="mt-8">
-          <h3 className="text-2xl font-semibold">Contributing Trends</h3>
-          <div className="flex justify-end mb-4">
-            <button className="p-2 bg-white text-black rounded" onClick={exportCSV}>Export as CSV</button>
-          </div>
-          <table className="min-w-full border border-white mt-4">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => setSortField("name")}>Micro-Trend Name</th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => setSortField("category")}>Category</th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => setSortField("growthRate")}>Growth Rate</th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => setSortField("impactScore")}>Impact Score</th>
-                <th className="px-4 py-2">Last Updated</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedContributingTrends.map((trend, index) => (
-                <tr key={index}>
-                  <td className="border px-4 py-2 text-center">{trend.name}</td>
-                  <td className="border px-4 py-2 text-center">{trend.category}</td>
-                  <td className="border px-4 py-2 text-center">{trend.growthRate}</td>
-                  <td className="border px-4 py-2 text-center">{trend.impactScore}</td>
-                  <td className="border px-4 py-2 text-center">{trend.lastUpdated}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-      )}
-
-      {/* Meta Trend Growth Line Chart */}
-      {selectedTrend && (
-        <section className="mt-8">
-          <h3 className="text-2xl font-semibold">Growth and Projection</h3>
-          <Line data={lineChartData} options={lineChartOptions} />
-        </section>
-      )}
-
-      {/* Save and Share Options */}
-      {selectedTrend && (
-        <section className="mt-8">
-          <div className="flex justify-between">
-            <button className="bg-white text-black px-4 py-2 rounded-lg" onClick={saveMetaTrend}>
-              Save Meta Trend
-            </button>
-            <button className="bg-white text-black px-4 py-2 rounded-lg" onClick={shareAsPDF}>
-              Share as PDF
-            </button>
-          </div>
-        </section>
-      )}
-
-      {/* Alerts and Map Section */}
-      {selectedTrend && (
-        <>
-          <section className="mt-8">
-            <button className="bg-white text-black px-4 py-2 rounded-lg" onClick={setupAlerts}>
-              Setup Alerts for Changes
-            </button>
-          </section>
-
-          <section className="mt-8">
-            <h3 className="text-2xl font-semibold">Geographical Breakdown</h3>
-            {/* Placeholder for Interactive Map */}
-            <div className=" h-64 mt-4 rounded-md flex items-center justify-center">
-              <p>Map Placeholder</p>
-            </div>
-          </section>
-        </>
-      )}
+    <div className="container mx-auto p-8 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold mb-12">Meta Trends</h1>
+      
+      <CategorySection title="Trending" items={categories.trending} />
+      <CategorySection title="Technology" items={categories.technology} />
+      <CategorySection title="Wellness" items={categories.wellness} />
+      <CategorySection title="AI" items={categories.ai} />
+      <CategorySection title="Beauty" items={categories.beauty} />
+      
+      {/* Add more sections here like B2B, Food & Beverage, etc. */}
     </div>
   );
-}
+};
+
+export default MetaWavePage;

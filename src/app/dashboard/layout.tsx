@@ -13,11 +13,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Main content area for the child pages */}
       <main className="ml-64 p-8 w-full  min-h-screen">
-        <HubProvider>
-          <ProductProvider>
-            {children}
-          </ProductProvider>
-        </HubProvider>
+          <HubProvider>
+            <ProductProvider>
+              {children}
+            </ProductProvider>
+          </HubProvider>
       </main>
     </div >
   );

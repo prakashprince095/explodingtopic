@@ -1,6 +1,10 @@
+'use client'
 import React from 'react'
+import { useProfileUser } from '@/context/UserContext';
 
-function Profile() {
+const Profile: React.FC = () => {
+  const { profileUser } = useProfileUser(); // Use profileUser from context
+ 
   return (
     <div className="min-h-screen  flex items-center justify-center">
     <div className="max-w-6xl w-full p-8">
@@ -16,11 +20,11 @@ function Profile() {
           <h2 className="text-lg font-semibold mb-4">User Info</h2>
           <div className="mb-2">
             <p className="text-gray-600">Name</p>
-            <p className="text-black">Phylliss Pentecost</p>
+            <p className="text-black">{profileUser.username}</p>
           </div>
           <div className="mb-4">
             <p className="text-gray-600">Email</p>
-            <p className="text-black">winifredmacleod534@gmail.com</p>
+            <p className="text-black">{profileUser.email}</p>
           </div>
           <button className="border border-white bg-white text-black py-2 px-4 rounded-md">
             Update Password

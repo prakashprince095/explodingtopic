@@ -146,6 +146,8 @@ const TopSellers: React.FC<{ sellers: ProductSegment['topSellers'] }> = ({ selle
               src={seller.logo}
               alt={seller.name}
               className="w-12 h-12 rounded-full object-cover"
+              width={20}  // Set the width explicitly
+              height={20}
             />
             <div>
               <h5 className="f">{seller.name}</h5>
@@ -173,6 +175,8 @@ const RelatedProducts: React.FC<{ products: ProductSegment['relatedProducts'] }>
               src={product.logo}
               alt={product.name}
               className="w-12 h-12 rounded-full object-cover"
+              width={20}  // Set the width explicitly
+              height={20}
             />
             <div>
               <h5 className="f">{product.name}</h5>
@@ -248,14 +252,14 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
   const mockTopSellers = [
     {
       id: 1,
-      logo: "https://via.placeholder.com/50",
+      logo: "/logos/1.svg",
       name: "SellerOne",
       revenue: "$200K",
       sales: "500 units",
     },
     {
       id: 2,
-      logo: "https://via.placeholder.com/50",
+      logo: "/logos/1.svg",
       name: "BestDeals",
       revenue: "$350K",
       sales: "800 units",
@@ -265,14 +269,14 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
   const mockRelatedProducts = [
     {
       id: 1,
-      logo: "https://via.placeholder.com/50",
+      logo: "/logos/1.svg",
       name: "Gadget X",
       price: "$199",
       avgRating: "4.5",
     },
     {
       id: 2,
-      logo: "https://via.placeholder.com/50",
+      logo: "/logos/1.svg",
       name: "Gadget Y",
       price: "$299",
       avgRating: "4.8",
@@ -287,9 +291,11 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
           {/* Product Image */}
           <div className="w-[380px] h-[400px] rounded-lg bg-slate-100 p-3">
             <Image
-              src={product.imageUrl || '/default-image.png'}  // Fallback image URL
+              src={product.imageUrl || '/logos/1.svg'}  // Fallback image URL
               alt={product.name}
-              className="w-full rounded-lg mb-4"
+              width={50}  // Set the width explicitly
+              height={50}  // Set the height explicitly
+              className=" rounded-lg mb-4"
             />
             <h2 className="text-2xl f mb-2">{product.name}</h2>
             <p>{product.description}</p>
