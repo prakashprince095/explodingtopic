@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useHub } from "@/context/HubContext";
 import { useProductContext } from "@/context/ProductContext";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 interface HubItem {
   id: number;
