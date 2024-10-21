@@ -1,10 +1,22 @@
 'use client'
 import React from 'react'
 import { useProfileUser } from '@/context/UserContext';
+import appwriteService from '@/appwrite/config'; 
+import { useRouter } from 'next/navigation';
 
 const Profile: React.FC = () => {
+  const router = useRouter();
   const { profileUser } = useProfileUser(); // Use profileUser from context
  
+  const onLogout = async () => {
+    try {
+        await appwriteService.logout();
+        router.push("/login");  // Redirect to login after logout
+    } catch (error) {
+        console.log("Error during logout:", error);
+    }
+};
+
   return (
     <div className="min-h-screen  flex items-center justify-center">
     <div className="max-w-6xl w-full p-8">

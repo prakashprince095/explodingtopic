@@ -238,3 +238,4 @@ const InsightHub: React.FC = () => {
 };
 
 export default InsightHub;
+ 

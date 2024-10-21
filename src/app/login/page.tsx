@@ -1,57 +1,78 @@
-"use client"
-
+'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Axios } from 'axios';
+import appwriteService from '@/appwrite/config';
 
 const Login: React.FC = () => {
-    const [user, setUser] = React.useState({
+    const router = useRouter();
+    const [user, setUser] = useState({
         email: '',
         password: '',
     });
 
-    const onLogin = async () => {
+    const [loading, setLoading] = useState(false);
 
-    }
+    const onLogin = async () => {
+        setLoading(true);
+        try {
+            if (!user.email || !user.password) {
+                alert("Please enter both email and password");
+                setLoading(false);
+                return;
+            }
+
+            const session = await appwriteService.login({
+                email: user.email,
+                password: user.password,
+            });
+
+            if (session) {
+                router.push("/dashboard/insights-hub");
+            }
+        } catch (error) {
+            alert("Invalid email or password. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-                <h2 className="text-2xl  mb-6 text-center">Login</h2>
+                <h2 className="text-2xl mb-6 text-center">{loading ? "Logging in..." : "Login"}</h2>
                 <form>
-
                     <div className="mb-4">
-                        <label className="block text-gray-700 mb-2" htmlFor="email">
-                            Email
-                        </label>
+                        <label className="block text-gray-700 mb-2" htmlFor="email">Email</label>
                         <input
                             id="email"
                             type="email"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full px-3 py-2 border border-gray-300 rounded"
                             placeholder="Enter your email"
                             value={user.email}
                             onChange={(e) => setUser({ ...user, email: e.target.value })}
                         />
                     </div>
                     <div className="mb-6">
-                        <label className="block text-gray-700 mb-2" htmlFor="password">
-                            Password
-                        </label>
+                        <label className="block text-gray-700 mb-2" htmlFor="password">Password</label>
                         <input
                             id="password"
                             type="password"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full px-3 py-2 border border-gray-300 rounded"
                             placeholder="Enter your password"
                             value={user.password}
                             onChange={(e) => setUser({ ...user, password: e.target.value })}
                         />
                     </div>
-                    <Link onClick={onLogin} href="/dashboard/insights-hub" className=''>
-                        <h1 className="w-full text-center p-2 bg-blue-500 text-white rounded-md ">Login</h1>
-                    </Link>
-                    <Link href='/Signup'>
-                        <h1 className='bg-black text-white p-2 rounded-md text-center w-full my-2'  >Signup</h1>
+                    <button
+                        type="button"
+                        onClick={onLogin}
+                        className="w-full p-2 bg-blue-500 text-white rounded-md"
+                    >
+                        {loading ? 'Logging in...' : 'Login'}
+                    </button>
+                    <Link href='/signup'>
+                        <h1 className='bg-black text-white p-2 rounded-md text-center w-full my-2'>Sign Up</h1>
                     </Link>
                 </form>
             </div>
