@@ -37,17 +37,14 @@ interface IProductItem {
     location: string;
 }
 
-// Initialize Appwrite Client
 const appwriteClient = new Client()
     .setEndpoint(env.appwrite.endpoint)
     .setProject(env.appwrite.projectId);
 
-// Initialize the Account service from Appwrite SDK
 export const account = new Account(appwriteClient);
 export const databases = new Databases(appwriteClient);
 
 export class AppwriteService {
-    // Method to create a new user account
     async createUserAccount({
         email,
         password,
@@ -58,10 +55,7 @@ export class AppwriteService {
         name: string;
     }) {
         try {
-            // Use Appwrite's built-in userId generation (pass ID.unique() directly)
             await account.create(ID.unique(), email, password, name);
-
-            // Log the user in automatically after account creation
             return await this.login({ email, password });
         } catch (error: any) {
             if (error.code === 409) {
