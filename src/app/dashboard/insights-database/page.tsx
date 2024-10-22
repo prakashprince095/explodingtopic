@@ -153,7 +153,7 @@ const TrendsDatabase: React.FC = () => {
         <div className="w-3/4 p-6">
           {selectedIndustry && !selectedCompany && (
             <div>
-              <h2 className="text-lg font-bold mb-4">Subcategories of {selectedIndustry}</h2>
+              <h2 className="text-lg  mb-4">Subcategories of {selectedIndustry}</h2>
               <ul className="grid grid-cols-2 gap-4">
                 {industries
                   .find((industry) => industry.name === selectedIndustry)

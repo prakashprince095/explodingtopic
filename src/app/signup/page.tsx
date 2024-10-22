@@ -1,128 +1,105 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useProfileUser } from '@/context/UserContext';
-import { Button } from '@/components/ui/button';
 import appwriteService from '@/appwrite/config';
+import Link from 'next/link';
 
 const SignUp: React.FC = () => {
-    const router = useRouter();
-    const { setProfileUser } = useProfileUser();  // Get the method to set user profile
-    const [user, setUser] = useState({
-        username: '',
-        email: '',
-        password: '',
-    });
-    const [buttonDisabled, setButtonDisabled] = useState(true);
-    const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [user, setUser] = useState({ name: '', email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-    const onSignup = async () => {
-        setLoading(true);
-        try {
-            // Ensure all fields are filled
-            if (!user.email || !user.password || !user.username) {
-                alert('Please fill all required fields.');
-                setLoading(false);
-                return;
-            }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setUser({ ...user, [id]: value });
+  };
 
-            // Create the user in Appwrite
-            const createdUser = await appwriteService.createUserAccount({
-                email: user.email,
-                password: user.password,
-                name: user.username,
-            });
+  const onSignup = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    setErrorMessage('');
 
-            // Get the user details after account creation and login
-            const currentUser = await appwriteService.getCurrentUser();
-            if (currentUser) {
-                // Set the user in the context
-                setProfileUser({
-                    username: currentUser.name,
-                    email: currentUser.email,
-                });
-                // Redirect to the dashboard
-                router.push('/dashboard/insights-hub');
-            } else {
-                throw new Error('User creation failed.');
-            }
-        } catch (error) {
-            if (error instanceof Error && error.message.includes('User already exists')) {
-                alert('User already exists. Redirecting to login...');
-                router.push('/login');
-            } else {
-                console.error('Signup failed:', error);
-                alert('Signup failed. Please try again.');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+    // Simple form validation
+    if (!user.name || !user.email || !user.password) {
+      setErrorMessage('All fields are required');
+      setLoading(false);
+      return;
+    }
 
-    useEffect(() => {
-        // Enable or disable the button based on user input
-        if (user.email && user.password && user.username) {
-            setButtonDisabled(false);
-        } else {
-            setButtonDisabled(true);
-        }
-    }, [user]);
+    try {
+      // Create the user account
+      await appwriteService.createUserAccount({
+        email: user.email,
+        password: user.password,
+        name: user.name,
+      });
 
-    return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-                <h2 className="text-2xl mb-6 text-center">{loading ? 'Processing' : 'Sign Up'}</h2>
-                <form>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 mb-2" htmlFor="name">
-                            Username
-                        </label>
-                        <input
-                            id="name"
-                            type="text"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            placeholder="Username"
-                            value={user.username}
-                            onChange={(e) => setUser({ ...user, username: e.target.value })}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 mb-2" htmlFor="email">
-                            Email
-                        </label>
-                        <input
-                            id="email"
-                            type="email"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            placeholder="Enter your email"
-                            value={user.email}
-                            onChange={(e) => setUser({ ...user, email: e.target.value })}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 mb-2" htmlFor="password">
-                            Password
-                        </label>
-                        <input
-                            id="password"
-                            type="password"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            placeholder="Enter your password"
-                            value={user.password}
-                            onChange={(e) => setUser({ ...user, password: e.target.value })}
-                        />
-                    </div>
-                    <Button onClick={onSignup} disabled={buttonDisabled || loading}>
-                        {loading ? 'Signing Up...' : 'Sign Up'}
-                    </Button>
-                    <Link href="/login">
-                        <h1 className="bg-black text-white p-2 rounded-md text-center w-full my-2">Login</h1>
-                    </Link>
-                </form>
-            </div>
-        </div>
-    );
+      // Automatically log the user in and redirect
+      await router.push('/dashboard/insight-hub');
+    } catch (error) {
+      // Display error message to the user
+      setErrorMessage(error instanceof Error ? error.message : 'Account creation failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+        <h2 className="text-2xl mb-6 text-center">{loading ? 'Processing...' : 'Sign Up'}</h2>
+        {errorMessage && <div className="mb-4 text-red-500">{errorMessage}</div>}
+        <form onSubmit={onSignup}>
+          <div className="mb-4">
+            <label htmlFor="name" className="block mb-1">name</label>
+            <input
+              type="text"
+              id="name"
+              value={user.name}
+              onChange={handleInputChange}
+              disabled={loading}
+              className="border p-2 rounded w-full"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block mb-1">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={user.email}
+              onChange={handleInputChange}
+              disabled={loading}
+              className="border p-2 rounded w-full"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block mb-1">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={user.password}
+              onChange={handleInputChange}
+              disabled={loading}
+              className="border p-2 rounded w-full"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full p-2 rounded ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'}`}
+          >
+            {loading ? 'Signing Up...' : 'Sign Up'}
+          </button>
+          <Link href="/login" className="block mt-4 text-center text-blue-500">Already have an account? Login</Link>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default SignUp;

@@ -1,6 +1,19 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import env from '@/env';
+import { Client, Account, ID, Databases } from 'appwrite';
 
-interface IHubItem extends Document {
+// Define types for user account creation and login
+interface CreateUserAccount {
+    email: string;
+    password: string;
+    name: string;
+}
+
+interface LoginUserAccount {
+    email: string;
+    password: string;
+}
+
+interface IHubItem {
     title: string;
     volume: string;
     totalFunding: string;
@@ -12,7 +25,7 @@ interface IHubItem extends Document {
     description: string;
 }
 
-interface IProductItem extends Document {
+interface IProductItem {
     name: string;
     description: string;
     growth: string;
@@ -24,31 +37,95 @@ interface IProductItem extends Document {
     location: string;
 }
 
-const HubItemSchema: Schema = new Schema({
-    title: { type: String, required: true },
-    volume: { type: String, required: true },
-    totalFunding: { type: String, required: true },
-    latestRound: { type: String, required: true },
-    employees: { type: String, required: true },
-    category: { type: [String], required: true },  // Array of strings
-    location: { type: String, required: true },
-    growth: { type: String, required: true },
-    description: { type: String, required: true },
-});
+// Initialize Appwrite Client
+const appwriteClient = new Client()
+    .setEndpoint(env.appwrite.endpoint)
+    .setProject(env.appwrite.projectId);
 
-const ProductItemSchema: Schema = new Schema({
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    growth: { type: String, required: true },
-    salesVolume: { type: String, required: true },
-    totalRevenue: { type: String, required: true },
-    latestVersion: { type: String, required: true },
-    stock: { type: String, required: true },
-    categories: { type: [String], required: true },  // Array of strings
-    location: { type: String, required: true },
-});
+export const account = new Account(appwriteClient);
+export const databases = new Databases(appwriteClient);
 
-const HubItem = mongoose.model<IHubItem>('HubItem', HubItemSchema);
-const ProductItem = mongoose.model<IProductItem>('ProductItem', ProductItemSchema);
+export class AppwriteService {
+    async createUserAccount({ email, password, name }: CreateUserAccount) {
+        try {
+            await account.create(ID.unique(), email, password, name);
+            return this.login({ email, password });
+        } catch (error) {
+            if (error instanceof Error) {
+                if ((error as any).code === 409) {
+                    throw new Error('User already exists');
+                }
+                throw new Error(`Account creation failed: ${error.message}`);
+            } else {
+                throw new Error('An unknown error occurred during account creation.');
+            }
+        }
+    }
 
-export { HubItem, ProductItem };
+    async login({ email, password }: LoginUserAccount) {
+        try {
+            return await account.createSession(email, password);
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Login failed: ${error.message}`);
+            } else {
+                throw new Error('An unknown error occurred during login.');
+            }
+        }
+    }
+
+    async getCurrentUser() {
+        try {
+            return await account.get();
+        } catch (error) {
+            console.warn('No user is currently logged in or an error occurred:', error);
+            return null;
+        }
+    }
+
+    async logout() {
+        try {
+            await account.deleteSession('current');
+        } catch (error) {
+            console.error('Error during logout:', error);
+            throw new Error('Failed to log out. Please try again.');
+        }
+    }
+
+    async saveHubItem(userId: string, hubItem: IHubItem) {
+        try {
+            return await databases.createDocument(
+                env.appwrite.databaseId,
+                env.appwrite.hubItemCollectionId,
+                ID.unique(),
+                { ...hubItem, userId }
+            );
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Failed to save hub item: ${error.message}`);
+            } else {
+                throw new Error('An unknown error occurred while saving the hub item.');
+            }
+        }
+    }
+
+    async saveProductItem(userId: string, productItem: IProductItem) {
+        try {
+            return await databases.createDocument(
+                env.appwrite.databaseId,
+                env.appwrite.productItemCollectionId,
+                ID.unique(),
+                { ...productItem, userId }
+            );
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Failed to save product item: ${error.message}`);
+            } else {
+                throw new Error('An unknown error occurred while saving the product item.');
+            }
+        }
+    }
+}
+
+const appwriteService = new AppwriteService();
+export default appwriteService;

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useHub } from "@/context/HubContext";
 import { useProductContext } from "@/context/ProductContext";
 import { Button } from "@/components/ui/button";
+import appwriteService from "@/appwrite/config";
+
 
 interface HubItem {
   id: number;
@@ -47,6 +49,17 @@ const InsightHub: React.FC = () => {
     );
   };
 
+  const saveHubItem = async (hubItem: HubItem) => {
+    const currentUser = await appwriteService.getCurrentUser();
+    if (currentUser) {
+      await appwriteService.saveHubItem(currentUser.$id, hubItem);
+      alert('Hub Item saved successfully!');
+    } else {
+      alert('User not logged in.');
+    }
+  };
+
+
   const handleSearchProduct = (items: ProductItem[], term: string) => {
     return items.filter((item) =>
       item.name.toLowerCase().includes(term.toLowerCase())
@@ -88,41 +101,42 @@ const InsightHub: React.FC = () => {
   );
 
   return (
-    <div className=" min-h-screen">
+    <div className=" min-h-screen bg-white p-3 rounded-lg">
       {/* Header Section */}
-      <section className="mb-5">
-        <h1 className="text-2xl font-normal text-black">Insight Hub</h1>
-      </section>
+      <header className="flex flex-row items-center justify-between rounded-lg">
+        <section className="mb-5">
+          <h1 className="text-2xl font-normal text-black">Insight Hub</h1>
+        </section>
 
-      {/* Search, Sort, and Filter Options */}
-      <section className="flex items-center gap-4 mb-3">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="border border-gray-300 p-2 rounded-lg  transition-shadow"
-        />
-        <select
-          onChange={(e) => setSortBy(e.target.value)}
-          className="border border-gray-300 p-2 rounded-lg transition-shadow"
-        >
-          <option value="">Sort By</option>
-          <option value="category">Category</option>
-        </select>
-        <select
-          onChange={(e) => setFilterBy(e.target.value)}
-          className="border border-gray-300 p-2 rounded-lg transition-shadow"
-        >
-          <option value="">Filter By Category</option>
-          <option value="Tech">Tech</option>
-          <option value="Health">Health</option>
-          <option value="Finance">Finance</option>
-        </select>
-      </section>
-
+        {/* Search, Sort, and Filter Options */}
+        <section className="flex items-center gap-4 mb-3">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-300 p-2 rounded-lg  transition-shadow"
+          />
+          <select
+            onChange={(e) => setSortBy(e.target.value)}
+            className="border border-gray-300 p-2 rounded-lg transition-shadow"
+          >
+            <option value="">Sort By</option>
+            <option value="category">Category</option>
+          </select>
+          <select
+            onChange={(e) => setFilterBy(e.target.value)}
+            className="border border-gray-300 p-2 rounded-lg transition-shadow"
+          >
+            <option value="">Filter By Category</option>
+            <option value="Tech">Tech</option>
+            <option value="Health">Health</option>
+            <option value="Finance">Finance</option>
+          </select>
+        </section>
+      </header>
       {/* Trending Startups Section */}
-      <section className="mb-12">
+      <section className="mb-12 bg-gray-100">
         <h2 className="text-xl  text-gray-700 mb-6">Trending Startups</h2>
         <div className="flex flex-wrap gap-6">
           {processedHubItems.slice(0, 3).map((item) => (
@@ -139,7 +153,7 @@ const InsightHub: React.FC = () => {
             </div>
           ))}
         </div>
-        
+
         <Button
           className="bg-green-600"
           onClick={() => setShowMoreHub(true)}
@@ -238,4 +252,3 @@ const InsightHub: React.FC = () => {
 };
 
 export default InsightHub;
- 

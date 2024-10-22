@@ -20,16 +20,16 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 h-screen bg-gray-800 text-white fixed">
+    <aside className="w-[200px] h-screen bg-slate-200 text-black fixed">
       <div className="p-4">
-        <Link href="/" className="text-xl font-semibold">Dashboard</Link>
+        <Link href="/" className="text-xl">Dashboard</Link>
       </div>
       <nav className="mt-4">
         <ul>
           {links.map((link) => (
-            <li key={link.href} className={pathname === link.href ? 'bg-gray-500' : ''}>
+            <li key={link.href} className={pathname === link.href ? 'bg-slate-400' : ''}>
               <Link href={link.href}>
-                <h1 className="block p-4 hover:bg-gray-700">{link.name}</h1>
+                <h1 className="block p-4 hover:bg-slate-300">{link.name}</h1>
               </Link>
             </li>
           ))}
