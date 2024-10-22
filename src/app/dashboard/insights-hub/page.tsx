@@ -155,7 +155,7 @@ const InsightHub: React.FC = () => {
         </div>
 
         <Button
-          className="bg-green-600"
+          className=""
           onClick={() => setShowMoreHub(true)}
         >
           See More
@@ -212,7 +212,7 @@ const InsightHub: React.FC = () => {
           ))}
         </div>
         <Button
-          className="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors"
+          className=""
           onClick={() => setShowMoreProduct(true)}
         >
           See More

@@ -7,29 +7,31 @@ import { usePathname } from 'next/navigation';
 const Sidebar = () => {
   const pathname = usePathname();
 
-  // Define links for the sidebar
+  // Define links for the sidebar with associated images/icons
   const links = [
-    { name: 'Insights hub', href: '/dashboard/insights-hub' },
-    { name: 'Trendings Startups', href: '/dashboard/trending-segments' },
-    { name: 'Discover Products', href: '/dashboard/product-discovery' },
-    { name: 'Insights Database', href: '/dashboard/insights-database' },
-    { name: 'Meta Wave', href: '/dashboard/meta-wave' },
-    { name: 'Deep analysis', href: '/dashboard/deep-dive-analysis' },
-    { name: 'Reports', href: '/dashboard/reports-center' },
-    // { name: 'Api Access', href: '/dashboard/data-api-access' },
+    { name: 'Insights hub', href: '/dashboard/insights-hub', imgSrc: '/sidebar/1.svg' },
+    { name: 'Trends Startups', href: '/dashboard/trending-segments', imgSrc: '/sidebar/2.svg' },
+    { name: 'Discover Products', href: '/dashboard/product-discovery', imgSrc: '/sidebar/3.svg' },
+    { name: 'Insights Database', href: '/dashboard/insights-database', imgSrc: '/sidebar/4.svg' },
+    { name: 'Meta Wave', href: '/dashboard/meta-wave', imgSrc: '/sidebar/5.svg' },
+    { name: 'Deep analysis', href: '/dashboard/deep-dive-analysis', imgSrc: '/sidebar/6.svg' },
+    { name: 'Reports', href: '/dashboard/reports-center', imgSrc: '/sidebar/7.svg' },
+    // { name: 'Api Access', href: '/dashboard/data-api-access', imgSrc: '/icons/api-access.svg' },
   ];
 
   return (
     <aside className="w-[200px] h-screen bg-slate-200 text-black fixed">
       <div className="p-4">
-        <Link href="/" className="text-xl">Dashboard</Link>
+        <Link href="/" className="text-md">Dashboard</Link>
       </div>
       <nav className="mt-4">
-        <ul>
+        <ul className='mx-3'>
           {links.map((link) => (
-            <li key={link.href} className={pathname === link.href ? 'bg-slate-400' : ''}>
-              <Link href={link.href}>
-                <h1 className="block p-4 hover:bg-slate-300">{link.name}</h1>
+            <li key={link.href} className={pathname === link.href ? 'bg-slate-300 rounded-md' : ''}>
+              <Link href={link.href} className="flex items-center p-2 hover:bg-slate-300">
+                {/* Image next to the link */}
+                <img src={link.imgSrc} alt={link.name} className="w-5 h-5 mr-2" />
+                <h1>{link.name}</h1>
               </Link>
             </li>
           ))}

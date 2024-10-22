@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <Sidebar />
 
       {/* Main content area for the child pages */}
-      <main className="ml-[200px] p-3 bg-slate-200 w-full  min-h-screen">
+      <main className="ml-[200px] py-3 bg-slate-200 w-full  min-h-screen">
           <HubProvider>
             <ProductProvider>
               {children}
