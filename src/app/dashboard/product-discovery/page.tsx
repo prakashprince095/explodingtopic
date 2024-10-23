@@ -4,6 +4,8 @@ import { useState } from "react";
 import { saveAs } from "file-saver";
 import ProductDetailModal from "./ProductDetailsModal";
 import { useProductContext } from "@/context/ProductContext";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 // Types for product segments
 export type ProductSegment = {
@@ -218,7 +220,7 @@ export default function TrendingProducts() {
   };
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
       {/* 1. Search Bar */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl ">Trending Products</h2>
@@ -227,18 +229,18 @@ export default function TrendingProducts() {
           placeholder="Search Products"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="border p-2 rounded-lg bg-transparent"
+          className="border p-2 rounded-sm min-w-[400px] border-gray-400 bg-transparent"
         />
       </div>
 
       {/* 2. Filter Options */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div className="flex items-center gap-3">
         <select
           value={filters.timeframe}
           onChange={(e) =>
             setFilters({ ...filters, timeframe: e.target.value })
           }
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[300px]"
         >
           <option value="1 Year">1 Year</option>
           <option value="5 Years">5 Years</option>
@@ -247,7 +249,7 @@ export default function TrendingProducts() {
         <select
           value={filters.category}
           onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[300px]"
         >
           <option value="All">All Categories</option>
           <option value="Technology">Technology</option>
@@ -258,54 +260,76 @@ export default function TrendingProducts() {
         <select
           value={filters.location}
           onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[300px]"
         >
           <option value="All">All Locations</option>
           <option value="USA">USA</option>
           {/* Add other locations */}
         </select>
-      </div>
 
-      {/* 3. Additional Filters */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
         {/* Add Growth, Sales Volume, etc. filters */}
         <select
           value={filters.growth}
           onChange={(e) => setFilters({ ...filters, growth: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[300px]"
         >
           <option value="All">All Growth Rates</option>
           <option value="Above 50%">Above 50%</option>
           <option value="Below 50%">Below 50%</option>
         </select>
-
-        <button
-          onClick={clearFilters}
-          className="bg-blue-300 text-black py-2 px-4 rounded"
-        >
-          Clear Filters
-        </button>
       </div>
 
-      {/* 4. List/Grid Toggle */}
-      <div className="flex justify-between items-center mb-4">
+      {/* 3. Additional Filters */}
+      <div className="flex items-center justify-end gap-3 my-4">
         <button
-          onClick={() => setIsGridView(!isGridView)}
-          className="bg-blue-300 text-black py-2 px-4 rounded"
+          onClick={clearFilters}
+          className="flex items-center gap-2 "
         >
-          {isGridView ? "Switch to Column View" : "Switch to Grid View"}
+          <Image
+            src="/product/filter.svg"
+            width={30}
+            height={25}
+            alt="Picture of the grid items"
+          />
+          <h1>Filter</h1>
         </button>
+
+        <div className="my-4 flex gap-1 justify-end">
+        <button
+          onClick={() => setIsGridView(true)}
+          className={`p-1  ${isGridView ? "bg-gray-200 rounded-md" : ""}`}
+        >
+          <Image
+            src="/startups/grid.svg"
+            width={30}
+            height={25}
+            alt="Picture of the grid items"
+          />
+        </button>
+        <button
+          onClick={() => setIsGridView(false)}
+          className={`p-1  ${!isGridView ? "bg-gray-200 rounded-md" : ""}`}
+        >
+          <Image
+            src="/startups/list.svg"
+            width={30}
+            height={25}
+            alt="Picture of the grid items"
+          />
+        </button>
+      </div>
 
         <button
           onClick={exportToCSV}
-          className="bg-blue-300 text-black py-2 px-4 rounded"
         >
-          Export CSV
+          <Image
+            src="/product/export.svg"
+            width={30}
+            height={25}
+            alt="Picture of the grid items"
+          />
         </button>
       </div>
-
-      {/* 5. Trending Products List */}
-      <h2 className="text-2xl ">Trending Products</h2>
 
       <div className={isGridView ? "grid grid-cols-1 md:grid-cols-3 gap-4" : "flex flex-col"}>
         {filteredProducts.map((product) => (
@@ -343,12 +367,11 @@ export default function TrendingProducts() {
               </p>
             </div>
             <div className="mt-4">{renderGrowthChart(product.growth)}</div>
-            <button
+            <Button
               onClick={() => handleAddToHub(product)}
-              className="mt-4 bg-blue-300 text-black py-2 px-4 rounded"
             >
               Add to Hub
-            </button>
+            </Button>
           </div>
         ))}
       </div>

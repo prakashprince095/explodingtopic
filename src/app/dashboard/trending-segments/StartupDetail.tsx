@@ -59,7 +59,7 @@ const TrendPopup: React.FC<TrendPopupProps> = ({ trend, onClose }) => {
 
   return (
     <div className="absolute inset-0 bg-opacity-70 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg relative">
+      <div className="bg-white p-6 rounded-lg  w-3/4 max-w-lg relative">
         <h2 className="text-2xl mb-4">{trend.name}</h2>
         <div className="flex justify-between mb-4">
           <div className='flex justify-between items-center w-full'>
@@ -119,11 +119,12 @@ const RelatedStartups: React.FC<{ startups: Startup['relatedStartups'] }> = ({ s
         {startups.map((related, index) => (
           <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
             <Image
-                src=""
-                alt={related.name}
-                fill
-                className="w-24 h-24 rounded-full object-cover"
-              />
+              src={related.logo || '/placeholder-image.png'} // Use a placeholder image if the logo is missing
+              alt={related.name}
+              width={96} // Set width and height based on expected logo size
+              height={96}
+              className="w-24 h-24 rounded-full object-cover"
+            />
             <div>
               <h5 className="text-[22px]">{related.name}</h5>
               <p className=" text-gray-600 text-[18px]">{related.description}</p>
@@ -281,17 +282,13 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
     },
   ];
 
-  // Example usage in a parent component:
-
-
-
   return (
     <div className="absolute inset-0 bg-gray-50 p-6 overflow-auto">
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-7xl mx-auto border border-gray-200">
+      <div className="bg-white  rounded-lg p-8 max-w-7xl mx-auto border border-gray-200">
         {/* Header Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
-            <h2 className="text-4xl  text-gray-800 mb-4">Startup Name</h2>
+            <h2 className="text-2xl  text-gray-800 mb-4">Startup Name</h2>
             <ul className="space-y-3 text-gray-600">
               <li><h1>Founded Date:</h1> 2020</li>
               <li><h1>No. of Employees:</h1> 100+</li>
@@ -348,8 +345,8 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                   <XAxis dataKey="name" tick={{ fill: '#4B5563' }} />
                   <YAxis tick={{ fill: '#4B5563' }} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="growth" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4 }} />
+                  <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '5px', border: '1px solid #ddd' }} />
+                  <Line type="monotone" dataKey="growth" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -442,9 +439,7 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
             ))}
           </div>
         </div>
-
         <div>
-
           {/* Related Startups Section */}
           {startup.relatedStartups && startup.relatedStartups.length > 0 ? (
             <RelatedStartups startups={startup.relatedStartups} />

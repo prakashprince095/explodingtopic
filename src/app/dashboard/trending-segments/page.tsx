@@ -315,7 +315,6 @@ export default function Trending() {
           <option value="4.4K">4.4K</option>
           <option value="9.9K">9.9K</option>
         </select>
-
       </div>
 
 
