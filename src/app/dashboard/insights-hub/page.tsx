@@ -5,6 +5,7 @@ import { useHub } from "@/context/HubContext";
 import { useProductContext } from "@/context/ProductContext";
 import appwriteService from "@/appwrite/config";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // Define types for HubItem and ProductItem
 interface HubItem {
@@ -79,24 +80,24 @@ const InsightHub: React.FC = () => {
     [...items].sort((a, b) => {
       const valueA = a[key] ?? ''; // Use a fallback value if undefined or null
       const valueB = b[key] ?? ''; // Use a fallback value if undefined or null
-  
+
       if (valueA > valueB) return 1;
       if (valueA < valueB) return -1;
       return 0; // If equal, return 0
     });
-  
+
 
   // Sort function for Product items
   const handleSortProduct = (items: ProductItem[], key: keyof ProductItem) =>
     [...items].sort((a, b) => {
       const valueA = a[key] ?? ''; // Use a fallback value if undefined or null
       const valueB = b[key] ?? ''; // Use a fallback value if undefined or null
-  
+
       if (valueA > valueB) return 1;
       if (valueA < valueB) return -1;
       return 0; // If equal, return 0
     });
-  
+
 
   // Filter function for Hub items by category
   const handleFilterHub = (items: HubItem[], category: string) =>
@@ -195,7 +196,7 @@ const InsightHub: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-white p-3 rounded-lg">
+    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
       <header className="flex flex-row items-center justify-between rounded-lg">
         <section className="mb-5">
           <h1 className="text-2xl font-normal text-black">Insight Hub</h1>
@@ -230,10 +231,15 @@ const InsightHub: React.FC = () => {
       </header>
 
       {/* Trending Startups Section */}
-      <section className="mb-12 bg-gray-100">
+      <section className="mb-12 p-3 rounded-lg border border-gray-300 min-h-[500px] flex flex-col justify-between bg-gray-50">
         <h2 className="text-xl text-gray-700 mb-6">Trending Startups</h2>
         {processedHubItems.length === 0 ? (
-          <p className="text-gray-500">No Hub items found.</p>
+          <div className="flex flex-col items-center justify-center gap-3">
+            <h1 className="text-gray-800 text-[20px] text-center">Add Startups in your Hub.</h1>
+            <Button>
+              <Link className="" href='/dashboard/trending-segments'>Startups</Link>
+            </Button>
+          </div>
         ) : (
           <div className="flex flex-wrap gap-6">
             {processedHubItems.slice(0, hubDisplayLimit).map((item) => (
@@ -257,7 +263,7 @@ const InsightHub: React.FC = () => {
             ))}
           </div>
         )}
-        < Button onClick={() => setShowMoreHub(!showMoreHub)}>
+        <Button className="w-fit" onClick={() => setShowMoreHub(!showMoreHub)}>
           {showMoreHub ? "Show Less" : "See More"}
         </Button>
 
@@ -302,31 +308,40 @@ const InsightHub: React.FC = () => {
       </section>
 
       {/* Product Discover Section */}
-      <section>
+      <section className="mb-12 p-3 rounded-lg border border-gray-300 min-h-[500px] flex flex-col justify-between bg-gray-50">
         <h2 className="text-xl text-gray-700 mb-6">Product Discover</h2>
-        <div className="flex flex-wrap gap-6">
-          {processedProductItems.slice(0, productDisplayLimit).map((product) => (
-            <div key={product.id} className="bg-white shadow-md rounded-lg p-6 w-80">
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">{product.name}</h3>
-              <p className="text-lg text-black">{product.description}</p>
-              <p className="text-lg text-black">{product.categories.join(", ")}</p>
-              <p className="text-lg text-black">{product.location}</p>
-              <p className="text-lg text-black">{product.growth}</p>
-              <p className="text-lg text-black">{product.salesVolume}</p>
-              <p className="text-lg text-black">{product.totalRevenue}</p>
-              <p className="text-lg text-black">{product.latestVersion}</p>
-              <p className="text-lg text-black">{product.stock}</p>
-              <button
-                onClick={() => toggleFavoriteProductItem(product)}
-                className={`text-lg ${product.isFavorite ? 'text-red-500' : 'text-gray-500'}`}
-              >
-                {product.isFavorite ? "Unfavorite" : "Favorite"}
-              </button>
-
-            </div>
-          ))}
+        {processedProductItems.length === 0 ? (
+          <div className="flex flex-col items-center justify-center gap-3">
+          <h1 className="text-gray-800 text-[20px] text-center">Add Product in your Hub.</h1>
+          <Button>
+            <Link className="" href='/dashboard/trending-segments'>Product</Link>
+          </Button>
         </div>
-        <Button onClick={() => setShowMoreProduct(!showMoreProduct)}>
+        ) : (
+          <div className="flex flex-wrap gap-6">
+            {processedProductItems.slice(0, productDisplayLimit).map((product) => (
+              <div key={product.id} className="bg-white shadow-md rounded-lg p-6 w-80">
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">{product.name}</h3>
+                <p className="text-lg text-black">{product.description}</p>
+                <p className="text-lg text-black">{product.categories.join(", ")}</p>
+                <p className="text-lg text-black">{product.location}</p>
+                <p className="text-lg text-black">{product.growth}</p>
+                <p className="text-lg text-black">{product.salesVolume}</p>
+                <p className="text-lg text-black">{product.totalRevenue}</p>
+                <p className="text-lg text-black">{product.latestVersion}</p>
+                <p className="text-lg text-black">{product.stock}</p>
+                <button
+                  onClick={() => toggleFavoriteProductItem(product)}
+                  className={`text-lg ${product.isFavorite ? 'text-red-500' : 'text-gray-500'}`}
+                >
+                  {product.isFavorite ? "Unfavorite" : "Favorite"}
+                </button>
+
+              </div>
+            ))}
+          </div>
+        )}
+        <Button className="w-fit" onClick={() => setShowMoreProduct(!showMoreProduct)}>
           {showMoreProduct ? "Show Less" : "See More"}
         </Button>
 

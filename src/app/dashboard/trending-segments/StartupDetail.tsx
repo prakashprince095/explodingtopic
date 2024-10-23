@@ -291,15 +291,15 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
         {/* Header Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Startup Name</h2>
+            <h2 className="text-4xl  text-gray-800 mb-4">Startup Name</h2>
             <ul className="space-y-3 text-gray-600">
-              <li><strong>Founded Date:</strong> 2020</li>
-              <li><strong>No. of Employees:</strong> 100+</li>
-              <li><strong>Total Funding:</strong> $50M</li>
-              <li><strong>Latest Round:</strong> Series B</li>
-              <li><strong>Location:</strong> San Francisco, CA</li>
-              <li><strong>Website:</strong> <a href="#" className="text-blue-500 underline">startupwebsite.com</a></li>
-              <li><strong>Social Platforms:</strong> Twitter, LinkedIn</li>
+              <li><h1>Founded Date:</h1> 2020</li>
+              <li><h1>No. of Employees:</h1> 100+</li>
+              <li><h1>Total Funding:</h1> $50M</li>
+              <li><h1>Latest Round:</h1> Series B</li>
+              <li><h1>Location:</h1> San Francisco, CA</li>
+              <li><h1>Website:</h1> <a href="#" className="text-blue-500 underline">startupwebsite.com</a></li>
+              <li><h1>Social Platforms:</h1> Twitter, LinkedIn</li>
             </ul>
           </div>
 
@@ -307,7 +307,7 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
           <div className="flex flex-col space-y-4">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-2xl font-bold text-gray-700">+12.3%</h3>
+                <h3 className="text-2xl  text-gray-700">+12.3%</h3>
                 <p className="text-sm text-green-500">Growth</p>
               </div>
 

@@ -20,15 +20,15 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-[200px] h-screen bg-slate-200 text-black fixed">
+    <aside className="w-[200px] h-screen bg-gray-100 text-black fixed">
       <div className="p-4">
         <Link href="/" className="text-md">Dashboard</Link>
       </div>
       <nav className="mt-4">
         <ul className='mx-3'>
           {links.map((link) => (
-            <li key={link.href} className={pathname === link.href ? 'bg-slate-300 rounded-md' : ''}>
-              <Link href={link.href} className="flex items-center my-2 p-2 hover:bg-slate-300 rounded-md">
+            <li key={link.href} className={pathname === link.href ? 'bg-gray-300 rounded-md' : ''}>
+              <Link href={link.href} className="flex items-center my-2 p-2 hover:bg-gray-200 rounded-md">
                 {/* Image next to the link */}
                 <img src={link.imgSrc} alt={link.name} className="w-5 h-5 mr-2" />
                 <h1>{link.name}</h1>

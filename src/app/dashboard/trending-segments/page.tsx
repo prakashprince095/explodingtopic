@@ -4,6 +4,8 @@ import { useState, useMemo } from "react";
 import { saveAs } from "file-saver"; // To export CSV
 import StartupDetail from "./StartupDetail";
 import { useHub } from "@/context/HubContext";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 // Define the types for the segment data
 type KeyIndicators = {
@@ -80,6 +82,30 @@ const segmentsData: Segment[] = [
     latestRound: "Series A",
     employees: "11-50",
     category: ["Technology", "Software", "Programming"],
+    location: "USA",
+    channels: [{ name: "Twitter", volume: 500 }, { name: "GitHub", volume: 300 }],
+    keyIndicators: {
+      growth: "High",
+      speed: "Moderate",
+      seasonality: "Low",
+      volatility: "High",
+      sentiment: "Neutral",
+      forecast: "Growing",
+    },
+  },
+  {
+    id: 3,
+    title: "Youtube",
+    description: "Realtime platform enabling content creators.",
+    foundedDate: "2021-05-15",
+    website: "https://youtube.com",
+    socialPlatforms: ["Twitter", "GitHub"],
+    growth: "+79%",
+    volume: "12.9K",
+    totalFunding: "$10B",
+    latestRound: "Series A",
+    employees: "200-500",
+    category: ["Technology", "Software", "entertainment"],
     location: "USA",
     channels: [{ name: "Twitter", volume: 500 }, { name: "GitHub", volume: 300 }],
     keyIndicators: {
@@ -222,7 +248,7 @@ export default function Trending() {
     growth.startsWith("+") ? "stroke-green-500" : "stroke-red-500";
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
       {/* 1. Search Bar */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl">Trending Startups</h2>
@@ -231,16 +257,21 @@ export default function Trending() {
           placeholder="Search Segments"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="border p-2 rounded-lg bg-transparent"
+          className="border p-2 rounded-sm min-w-[400px] border-gray-400 bg-transparent"
         />
+        <Button
+          onClick={exportToCSV}
+        >
+          Export to CSV
+        </Button>
       </div>
 
       {/* 2. Filter Options */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div className=" flex items-center gap-5 flex-wrap">
         <select
           value={filters.timeframe}
           onChange={(e) => setFilters({ ...filters, timeframe: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[200px] border-gray-400"
         >
           <option value="5 Years">5 Years</option>
           <option value="1 Year">1 Year</option>
@@ -249,7 +280,7 @@ export default function Trending() {
         <select
           value={filters.category}
           onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[200px] border-gray-400"
         >
           <option value="All">All Categories</option>
           <option value="Technology">Technology</option>
@@ -259,19 +290,16 @@ export default function Trending() {
         <select
           value={filters.location}
           onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[200px] border-gray-400"
         >
           <option value="All">All Locations</option>
           <option value="USA">USA</option>
         </select>
-      </div>
 
-      {/* 3. Additional Filters */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
         <select
           value={filters.growth}
           onChange={(e) => setFilters({ ...filters, growth: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[200px] border-gray-400"
         >
           <option value="All">All Growth</option>
           <option value="+99%">+99%</option>
@@ -281,54 +309,112 @@ export default function Trending() {
         <select
           value={filters.volume}
           onChange={(e) => setFilters({ ...filters, volume: e.target.value })}
-          className="border p-2 rounded bg-transparent"
+          className="border p-2 rounded bg-transparent min-w-[200px] border-gray-400"
         >
           <option value="All">All Volumes</option>
           <option value="4.4K">4.4K</option>
           <option value="9.9K">9.9K</option>
         </select>
+
       </div>
 
+
       {/* 4. Grid/List Toggle */}
-      <div className="mb-4 flex justify-end">
+      <div className="my-4 flex gap-1 justify-end">
         <button
           onClick={() => setIsGridView(true)}
-          className={`px-4 py-2 rounded ${isGridView ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          className={`p-1  ${isGridView ? "bg-gray-200 rounded-md" : ""}`}
         >
-          Grid View
+          <Image
+            src="/startups/grid.svg"
+            width={30}
+            height={25}
+            alt="Picture of the grid items"
+          />
         </button>
         <button
           onClick={() => setIsGridView(false)}
-          className={`px-4 py-2 rounded ml-2 ${!isGridView ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          className={`p-1  ${!isGridView ? "bg-gray-200 rounded-md" : ""}`}
         >
-          List View
+          <Image
+            src="/startups/list.svg"
+            width={30}
+            height={25}
+            alt="Picture of the grid items"
+          />
         </button>
       </div>
 
       {/* 5. Startup Grid/List */}
-      <div className={`grid ${isGridView ? "grid-cols-2 md:grid-cols-3 gap-4" : "flex flex-col gap-3"}`}>
+      <div className={`grid ${isGridView ? " grid-cols-2 md:grid-cols-3 gap-4" : "flex flex-col gap-3"}`}>
         {sortedSegments.map((segment) => (
           <div
             key={segment.id}
-            className="border border-gray-400 p-4 rounded-lg hover:bg-gray-100 cursor-pointer"
-            onClick={() => handleStartupClick(segment)}
+            className="border border-gray-300 p-4 rounded-lg bg-gray-100 cursor-pointer"
+
           >
-            <h3 className="text-xl">{segment.title}</h3>
-            <p className="text-[18px]">Volume: {segment.volume}</p>
-            <p className="text-[18px]">Funding: {segment.totalFunding}</p>
-            <p className="text-[18px]">Round: {segment.latestRound}</p>
-            <p className="text-[18px]">Employees: {segment.employees}</p>
-            <p className="text-[18px]">Category: {segment.category.join(", ")}</p>
-            <p className="text-[18px]">Location: {segment.location}</p>
-            <p className="text-[18px]">Growth: {segment.growth}</p>
-            <p className="text-[18px]">Description: {segment.description}</p>
-            {renderGrowthChart(segment.growth)}
-            <button
-              onClick={() => addToHub(segment)}
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Add to Hub
-            </button>
+            {isGridView && (
+              <div className="flex flex-col">
+                <div onClick={() => handleStartupClick(segment)}>
+                  <h3 className="text-2xl mb-3 text-center">{segment.title}</h3>
+                  <div className="flex items-center justify-between">
+                    <p className="text-[18px] text-gray-600">Volume: {segment.volume}</p>
+                    <div className="bg-black text-white px-3 py-2 rounded-full w-fit">
+                      <p className="text-[18px]">Funding: {segment.totalFunding}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-4 items-center justify-between my-4 ">
+                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Round:</span><span className="text-[20px]"> {segment.latestRound}</span></p>
+                    </div>
+                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Employees:</span><span className="text-[20px]"> {segment.employees}</span></p>
+                    </div>
+                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Location:</span><span className="text-[20px]"> {segment.location}</span></p>
+                    </div>
+                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Growth:</span> <span className="text-[20px]">{segment.growth}</span></p>
+                    </div>
+                  </div>
+                  <div className="bg-gray-300 my-3 p-[.5px] rounded-full"></div>
+                  <p><span className="text-[20px]">Description:</span> <br /> <span className="text-[18px]">{segment.description}</span></p>
+                  {renderGrowthChart(segment.growth)}
+                </div>
+                <Button
+                  onClick={() => addToHub(segment)}
+                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                  Add to Hub
+                </Button>
+              </div>
+            )}
+
+            {/* For List View */}
+            {!isGridView && (
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex flex-row flex-grow">
+                  <h3 className="text-2xl">{segment.title}</h3>
+                  <p className="text-[18px]">Volume: {segment.volume}</p>
+                  <p className="text-[18px]">Funding: {segment.totalFunding}</p>
+                  <p className="text-[18px]">Round: {segment.latestRound}</p>
+                  <p className="text-[18px]">Employees: {segment.employees}</p>
+                  <p className="text-[18px]">Category: {segment.category.join(", ")}</p>
+                  <p className="text-[18px]">Location: {segment.location}</p>
+                  <p className="text-[18px]">Growth: {segment.growth}</p>
+                  <p className="text-[18px]">Description: {segment.description}</p>
+                </div>
+                <div className="ml-4 flex-shrink-0">
+                  {renderGrowthChart(segment.growth)}
+                </div>
+                <Button
+                  onClick={() => addToHub(segment)}
+                  className="ml-4 px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                  Add to Hub
+                </Button>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -338,12 +424,7 @@ export default function Trending() {
 
       {/* Export to CSV */}
       <div className="flex justify-end mt-4">
-        <button
-          onClick={exportToCSV}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-        >
-          Export to CSV
-        </button>
+
       </div>
     </div>
 
