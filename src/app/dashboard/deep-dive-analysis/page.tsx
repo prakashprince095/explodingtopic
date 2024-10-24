@@ -89,7 +89,7 @@ const DeepAnalytics = () => {
   };
 
   return (
-    <div className="p-8 flex flex-col items-center bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
       {/* Search Section */}
       <div className="bg-white shadow-lg rounded-lg w-full max-w-3xl p-6 mb-8">
         <div className="flex space-x-4">

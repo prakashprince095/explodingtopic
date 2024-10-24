@@ -295,29 +295,29 @@ export default function TrendingProducts() {
         </button>
 
         <div className="my-4 flex gap-1 justify-end">
-        <button
-          onClick={() => setIsGridView(true)}
-          className={`p-1  ${isGridView ? "bg-gray-200 rounded-md" : ""}`}
-        >
-          <Image
-            src="/startups/grid.svg"
-            width={30}
-            height={25}
-            alt="Picture of the grid items"
-          />
-        </button>
-        <button
-          onClick={() => setIsGridView(false)}
-          className={`p-1  ${!isGridView ? "bg-gray-200 rounded-md" : ""}`}
-        >
-          <Image
-            src="/startups/list.svg"
-            width={30}
-            height={25}
-            alt="Picture of the grid items"
-          />
-        </button>
-      </div>
+          <button
+            onClick={() => setIsGridView(true)}
+            className={`p-1  ${isGridView ? "bg-gray-200 rounded-md" : ""}`}
+          >
+            <Image
+              src="/startups/grid.svg"
+              width={30}
+              height={25}
+              alt="Picture of the grid items"
+            />
+          </button>
+          <button
+            onClick={() => setIsGridView(false)}
+            className={`p-1  ${!isGridView ? "bg-gray-200 rounded-md" : ""}`}
+          >
+            <Image
+              src="/startups/list.svg"
+              width={30}
+              height={25}
+              alt="Picture of the grid items"
+            />
+          </button>
+        </div>
 
         <button
           onClick={exportToCSV}
@@ -331,42 +331,41 @@ export default function TrendingProducts() {
         </button>
       </div>
 
-      <div className={isGridView ? "grid grid-cols-1 md:grid-cols-3 gap-4" : "flex flex-col"}>
+      <div className={isGridView ? "flex flex-row flex-wrap gap-3" : "flex flex-col"}>
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="border p-4 rounded-lg hover:shadow-lg transition-all cursor-pointer"
-            onClick={() => {
-              setSelectedProduct(product);
-              setIsModalOpen(true);
-            }}
+            className="border w-[380px] p-4 rounded-lg hover:shadow-lg transition-all cursor-pointer"
+            
           >
-            <h3 className="text-xl ">{product.name}</h3>
-            <p className="text-gray-500">{product.description}</p>
-            <div className="mt-2">
-              <p>
-                <strong>Growth:</strong> {product.growth}
-              </p>
-              <p>
-                <strong>Sales Volume:</strong> {product.salesVolume}
-              </p>
-              <p>
-                <strong>Total Revenue:</strong> {product.totalRevenue}
-              </p>
-              <p>
-                <strong>Latest Version:</strong> {product.latestVersion}
-              </p>
-              <p>
-                <strong>Stock:</strong> {product.stock}
-              </p>
-              <p>
-                <strong>Categories:</strong> {product.categories.join(", ")}
-              </p>
-              <p>
-                <strong>Location:</strong> {product.location}
-              </p>
+            <div onClick={() => { setSelectedProduct(product); setIsModalOpen(true); }}>
+              <h3 className="text-xl ">{product.name}</h3>
+              <p className="text-gray-500">{product.description}</p>
+              <div className="mt-2">
+                <p>
+                  <h1>Growth:</h1> <h2>{product.growth}</h2>
+                </p>
+                <p>
+                  <h1>Sales Volume:</h1><h2> {product.salesVolume}</h2>
+                </p>
+                <p>
+                  <h1>Total Revenue:</h1><h2> {product.totalRevenue}</h2>
+                </p>
+                <p>
+                  <h1>Latest Version:</h1><h2> {product.latestVersion}</h2>
+                </p>
+                <p>
+                  <h1>Stock:</h1> <h2>{product.stock}</h2>
+                </p>
+                <p>
+                  <h1>Categories:</h1><h2> {product.categories.join(", ")}</h2>
+                </p>
+                <p>
+                  <h1>Location:</h1> <h2>{product.location}</h2>
+                </p>
+              </div>
+              <div className="mt-4">{renderGrowthChart(product.growth)}</div>
             </div>
-            <div className="mt-4">{renderGrowthChart(product.growth)}</div>
             <Button
               onClick={() => handleAddToHub(product)}
             >

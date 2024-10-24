@@ -120,7 +120,7 @@ const TrendsDatabase: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
       <div className="flex justify-center mb-6">
         <input
           type="text"

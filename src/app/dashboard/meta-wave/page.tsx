@@ -68,7 +68,7 @@ const CategorySection = ({ title, items }: { title: string; items: any[] }) => (
 
 const MetaWavePage = () => {
   return (
-    <div className="container mx-auto p-8 bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
       <h1 className="text-3xl font-bold mb-12">Meta Trends</h1>
       
       <CategorySection title="Trending" items={categories.trending} />

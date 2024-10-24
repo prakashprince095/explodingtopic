@@ -1,18 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { Line } from 'react-chartjs-2';
 import Image from "next/image";
-import {
-  Chart as ChartJS,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Filler,
-  Tooltip,
-} from 'chart.js';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Button } from "@/components/ui/button";
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Filler, Tooltip);
 
 export type ProductSegment = {
   id: number;
@@ -74,14 +66,19 @@ type TrendPopupProps = {
   onClose: () => void;
 };
 
+type SalesVolumeChartProps = {
+  data: number[];
+  forecast: boolean;
+};
+
 // Popup for displaying product trend details
 const TrendPopup: React.FC<TrendPopupProps> = ({ trend, onClose }) => {
   if (!trend) return null;
 
   return (
-    <div className="absolute inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg relative">
-        <h2 className="text-2xl mb-4">{trend.name}</h2>
+    <Dialog open={Boolean(trend)} onOpenChange={onClose}>
+      <DialogContent className="bg-white rounded-lg p-6 shadow-lg max-w-lg">
+        <DialogTitle className="text-2xl mb-4">{trend.name}</DialogTitle>
         <div className="flex justify-between mb-4">
           <div>
             <h3 className="text-xl">{trend.volume}</h3>
@@ -90,23 +87,27 @@ const TrendPopup: React.FC<TrendPopupProps> = ({ trend, onClose }) => {
             </p>
           </div>
         </div>
-        <div className="mt-4">
-          <svg width="100%" height="100" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
-            <polyline
-              fill="none"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={trend.growthRate.startsWith('+') ? 'stroke-green-500' : 'stroke-red-500'}
-              points={trend.salesData.join(' ') || ''}
+        {/* Recharts Line Chart for Trend Data */}
+        <ResponsiveContainer width="100%" height={200}>
+          <LineChart data={trend.salesData.map((value, index) => ({ name: `Year ${index + 1}`, value }))}>
+            <XAxis dataKey="name" stroke="#888888" />
+            <YAxis stroke="#888888" />
+            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke={trend.growthRate.startsWith('+') ? '#22c55e' : '#ef4444'}
+              strokeWidth={2}
+              dot={false}
             />
-          </svg>
-        </div>
-        <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-black">
+          </LineChart>
+        </ResponsiveContainer>
+        <Button variant="secondary" onClick={onClose} className="mt-4">
           Close
-        </button>
-      </div>
-    </div>
+        </Button>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -116,11 +117,11 @@ const RelatedTrends: React.FC<{ trends: Trend[] }> = ({ trends }) => {
 
   return (
     <>
-      <h4 className="text-lg mb-4">Related Trends</h4>
+      <h1 className="text-lg mb-4">Related Trends</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {trends.map((trend, index) => (
           <div key={index} onClick={() => setSelectedTrend(trend)} className="border p-4 rounded-lg cursor-pointer">
-            <h5>{trend.name}</h5>
+            <h1>{trend.name}</h1>
             <p className={trend.growthRate.startsWith('+') ? 'text-green-500' : 'text-red-500'}>
               {trend.growthRate}
             </p>
@@ -138,7 +139,7 @@ const TopSellers: React.FC<{ sellers: ProductSegment['topSellers'] }> = ({ selle
 
   return (
     <div>
-      <h4 className="text-lg mb-4">Top Sellers</h4>
+      <h1 className="text-lg mb-4">Top Sellers</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {sellers.map((seller, index) => (
           <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
@@ -150,7 +151,7 @@ const TopSellers: React.FC<{ sellers: ProductSegment['topSellers'] }> = ({ selle
               height={20}
             />
             <div>
-              <h5 className="f">{seller.name}</h5>
+              <h1 className="f">{seller.name}</h1>
               <p className="text-sm text-gray-600">Revenue: {seller.revenue}</p>
               <p className="text-sm text-gray-600">Sales: {seller.sales}</p>
             </div>
@@ -167,7 +168,7 @@ const RelatedProducts: React.FC<{ products: ProductSegment['relatedProducts'] }>
 
   return (
     <div>
-      <h4 className="text-lg mb-4">Related Products</h4>
+      <h1 className="text-lg mb-4">Related Products</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products.map((product, index) => (
           <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
@@ -179,7 +180,7 @@ const RelatedProducts: React.FC<{ products: ProductSegment['relatedProducts'] }>
               height={20}
             />
             <div>
-              <h5 className="f">{product.name}</h5>
+              <h1 className="f">{product.name}</h1>
               <p className="text-sm text-gray-600">Price: {product.price}</p>
               <span className="text-yellow-500">{product.avgRating} ★</span>
             </div>
@@ -189,6 +190,37 @@ const RelatedProducts: React.FC<{ products: ProductSegment['relatedProducts'] }>
     </div>
   );
 };
+
+const SalesVolumeChart: React.FC<SalesVolumeChartProps> = ({ data, forecast }) => {
+  const chartData = data.map((value, index) => ({
+    name: `Year ${index + 1}`,
+    value,
+    forecastValue: forecast && index === data.length - 1 ? value * 1.15 : null,
+  }));
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={chartData}>
+        <XAxis dataKey="name" stroke="#888888" />
+        <YAxis stroke="#888888" />
+        <Tooltip />
+        <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+        <Line type="monotone" dataKey="value" stroke="#4B9CE2" strokeWidth={2} />
+        {forecast && (
+          <Line
+            type="monotone"
+            dataKey="forecastValue"
+            stroke="#FFA500"
+            strokeWidth={2}
+            dot={false}
+            strokeDasharray="5 5"
+          />
+        )}
+      </LineChart>
+    </ResponsiveContainer>
+  );
+};
+
 
 const timeframes = ['3 Months', '6 Months', '1 Year', '2 Years', '3 Years', '4 Years', '5 Years'];
 
@@ -284,7 +316,7 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
   ];
 
   return (
-    <div className="absolute inset-0 bg-gray-50 p-6 overflow-auto">
+    <div className="fixed h-screen w-screen inset-0 bg-gray-50 p-6 overflow-auto">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-7xl mx-auto border border-gray-200">
         {/* First Section: Product Overview */}
         <div className="flex items-center justify-center gap-3">
@@ -325,7 +357,7 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
           {/* Key Indicators */}
 
           <div className="w-[380px] h-[400px] rounded-lg bg-slate-100 p-3">
-            <h4 className="text-lg f mb-2">Key Indicators</h4>
+            <h1 className="text-lg f mb-2">Key Indicators</h1>
             <ul>
               <li>Growth: {product.keyIndicators?.growth}</li>
               <li>Speed: {product.keyIndicators?.speed}</li>
@@ -359,21 +391,7 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
             <option>1 Year</option>
           </select>
           <div>
-            <Line
-              data={chartData}
-              options={{
-                responsive: true,
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    ticks: { color: "black" },
-                  },
-                  x: {
-                    ticks: { color: "black" },
-                  },
-                },
-              }}
-            />
+             <SalesVolumeChart data={salesData} forecast={forecast} />
           </div>
           <div className="mt-4 flex items-center">
             <label className="mr-2 text-gray-600">Include Forecast</label>
@@ -392,12 +410,9 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
         {/* Related Trends */}
         <RelatedTrends trends={relatedTrends} />
         {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
+        <Button onClick={onClose} className="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
           Close
-        </button>
+        </Button>
       </div>
     </div>
   );

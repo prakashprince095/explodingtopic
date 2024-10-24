@@ -51,7 +51,7 @@ export default function ReportsLibrary() {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
       <h2 className="text-3xl mb-6">Reports Library</h2>
       
       {/* Grid Layout for Weekly Reports */}
