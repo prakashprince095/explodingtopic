@@ -2,7 +2,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Segment } from "@/app/dashboard/trending-segments/page";
+import { Segment } from "@/app/dashboard/trending-startups/page";
 
 interface HubContextType {
   hubItems: Segment[];

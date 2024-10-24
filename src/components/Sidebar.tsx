@@ -10,7 +10,7 @@ const Sidebar = () => {
   // Define links for the sidebar with associated images/icons
   const links = [
     { name: 'Insights hub', href: '/dashboard/insights-hub', imgSrc: '/sidebar/1.svg' },
-    { name: 'Trends Startups', href: '/dashboard/trending-segments', imgSrc: '/sidebar/2.svg' },
+    { name: 'Trends Startups', href: '/dashboard/trending-startups', imgSrc: '/sidebar/2.svg' },
     { name: 'Discover Products', href: '/dashboard/product-discovery', imgSrc: '/sidebar/3.svg' },
     { name: 'Insights Database', href: '/dashboard/insights-database', imgSrc: '/sidebar/4.svg' },
     { name: 'Meta Wave', href: '/dashboard/meta-wave', imgSrc: '/sidebar/5.svg' },

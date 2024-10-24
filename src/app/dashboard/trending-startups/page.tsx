@@ -1,11 +1,29 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { saveAs } from "file-saver"; // To export CSV
+import { saveAs } from "file-saver"; // For CSV export
 import StartupDetail from "./StartupDetail";
 import { useHub } from "@/context/HubContext";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { TrendingUp } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts';
+
 
 // Define the types for the segment data
 type KeyIndicators = {
@@ -59,7 +77,7 @@ const segmentsData: Segment[] = [
     employees: "1-10",
     category: ["Business", "Technology", "Finance"],
     location: "USA",
-    channels: [{ name: "Twitter", volume: 100 }, { name: "LinkedIn", volume: 200 }],
+    growthData: [120, 150, 180, 210, 250, 300], // Example growth data
     keyIndicators: {
       growth: "High",
       speed: "Fast",
@@ -83,31 +101,7 @@ const segmentsData: Segment[] = [
     employees: "11-50",
     category: ["Technology", "Software", "Programming"],
     location: "USA",
-    channels: [{ name: "Twitter", volume: 500 }, { name: "GitHub", volume: 300 }],
-    keyIndicators: {
-      growth: "High",
-      speed: "Moderate",
-      seasonality: "Low",
-      volatility: "High",
-      sentiment: "Neutral",
-      forecast: "Growing",
-    },
-  },
-  {
-    id: 3,
-    title: "Youtube",
-    description: "Realtime platform enabling content creators.",
-    foundedDate: "2021-05-15",
-    website: "https://youtube.com",
-    socialPlatforms: ["Twitter", "GitHub"],
-    growth: "+79%",
-    volume: "12.9K",
-    totalFunding: "$10B",
-    latestRound: "Series A",
-    employees: "200-500",
-    category: ["Technology", "Software", "entertainment"],
-    location: "USA",
-    channels: [{ name: "Twitter", volume: 500 }, { name: "GitHub", volume: 300 }],
+    growthData: [200, 150, 170, 120, 80, 40],
     keyIndicators: {
       growth: "High",
       speed: "Moderate",
@@ -118,6 +112,27 @@ const segmentsData: Segment[] = [
     },
   },
 ];
+
+// Chart configuration function for growth data
+export function GrowthChart({ growthData }: { growthData: number[] }) {
+  if (!growthData || growthData.length === 0) return null;
+
+  return (
+    <Card className="mt-4 p-1 border border-gray-300 ">
+      <CardContent>
+        <div className="h-[100px] max-w-[300px] ">
+          <ResponsiveContainer>
+            <LineChart data={growthData.map((val, index) => ({ name: `Month ${index + 1}`, value: val }))}>
+              <Tooltip />
+              <Line type="monotone" dataKey="value" stroke="#2563EB" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 
 export default function Trending() {
   const [selectedStartup, setSelectedStartup] = useState<Segment | null>(null);
@@ -137,13 +152,6 @@ export default function Trending() {
   const [sortBy, setSortBy] = useState<keyof Segment | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [showDetail, setShowDetail] = useState(false);
-
-  // Toggle saving a segment
-  const toggleSaveSegment = (id: number) => {
-    setSavedSegments((prev) =>
-      prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
-    );
-  };
 
   // Apply filters to segments
   const applyFilters = (segment: Segment) => {
@@ -179,19 +187,6 @@ export default function Trending() {
     });
   }, [filteredSegments, sortBy, sortOrder]);
 
-  // Clear all filters
-  const clearFilters = () => {
-    setFilters({
-      timeframe: "5 Years",
-      category: "All",
-      growth: "All",
-      volume: "All",
-      totalFunding: "All",
-      employees: "All",
-      location: "All",
-    });
-  };
-
   // Export to CSV
   const exportToCSV = () => {
     let csvContent =
@@ -214,38 +209,14 @@ export default function Trending() {
   };
 
   // Function to generate the SVG for the growth chart
-  const renderGrowthChart = (growth: string) => {
-    return (
-      <svg
-        width="100"
-        height="30"
-        viewBox="0 0 100 30"
-        xmlns="http://www.w3.org/2000/svg"
-        className="mt-2"
-      >
-        <polyline
-          fill="none"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={getGrowthColor(growth)} // Conditionally apply color
-          points={
-            growth.startsWith("+")
-              ? "0,30 20,15 40,10 60,5 80,0 100,5"
-              : "0,5 20,10 40,15 60,20 80,25 100,30"
-          } // Mocked points for graph
-        />
-      </svg>
-    );
+  const renderGrowthChart = (growthData: number[]) => {
+    return <GrowthChart growthData={growthData} />;
   };
 
   const handleStartupClick = (segment: Segment) => {
     setSelectedStartup(segment); // Set the clicked startup as the selected one
     setShowDetail(true); // Show detailed view when clicked
   };
-
-  const getGrowthColor = (growth: string) =>
-    growth.startsWith("+") ? "stroke-green-500" : "stroke-red-500";
 
   return (
     <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
@@ -345,47 +316,38 @@ export default function Trending() {
       </div>
 
       {/* 5. Startup Grid/List */}
-      <div className={`grid ${isGridView ? " grid-cols-2 md:grid-cols-3 gap-4" : "flex flex-col gap-3"}`}>
+      <div className={`flex ${isGridView ? " flex-row flex-wrap gap-3" : "flex flex-col gap-3"}`}>
         {sortedSegments.map((segment) => (
-          <div
-            key={segment.id}
-            className="border border-gray-300 p-4 rounded-lg bg-gray-100 cursor-pointer"
-
-          >
+          <div key={segment.id} className="border p-4 rounded-lg  bg-zinc-100 cursor-pointer">
             {isGridView && (
-              <div className="flex flex-col">
+              <div className="flex flex-col  max-w-[350px]">
                 <div onClick={() => handleStartupClick(segment)}>
                   <h3 className="text-2xl mb-3 text-center">{segment.title}</h3>
-                  <div className="flex items-center justify-between">
-                    <p className="text-[18px] text-gray-600">Volume: {segment.volume}</p>
-                    <div className="bg-black text-white px-3 py-2 rounded-full w-fit">
-                      <p className="text-[18px]">Funding: {segment.totalFunding}</p>
+                  <div className="flex items-center justify-between flex-wrap">
+                    <p className="text-[14px] text-gray-600">Volume: {segment.volume}</p>
+                    <div className="bg-black text-white px-2 py-2 rounded-full w-fit">
+                      <p className="text-[14px]">Funding: {segment.totalFunding}</p>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-4 items-center justify-between my-4 ">
-                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
-                      <p className=" flex flex-col items-center"><span className="text-gray-500">Round:</span><span className="text-[20px]"> {segment.latestRound}</span></p>
+                  <div className="flex flex-wrap gap-1 items-center  my-4 ">
+                    <div className="bg-white min-w-[170px] p-1 shadow-sm rounded-sm border">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Round:</span><span className="text-[18px]"> {segment.latestRound}</span></p>
                     </div>
-                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
-                      <p className=" flex flex-col items-center"><span className="text-gray-500">Employees:</span><span className="text-[20px]"> {segment.employees}</span></p>
+                    <div className="bg-white min-w-[170px] p-1 shadow-sm rounded-sm border">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Employees:</span><span className="text-[18px]"> {segment.employees}</span></p>
                     </div>
-                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
-                      <p className=" flex flex-col items-center"><span className="text-gray-500">Location:</span><span className="text-[20px]"> {segment.location}</span></p>
+                    <div className="bg-white min-w-[170px] p-1 shadow-sm rounded-sm border">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Location:</span><span className="text-[18px]"> {segment.location}</span></p>
                     </div>
-                    <div className="bg-white min-w-[150px] p-2 shadow-sm rounded-lg">
-                      <p className=" flex flex-col items-center"><span className="text-gray-500">Growth:</span> <span className="text-[20px]">{segment.growth}</span></p>
+                    <div className="bg-white min-w-[170px] p-1 shadow-sm rounded-sm border">
+                      <p className=" flex flex-col items-center"><span className="text-gray-500">Growth:</span> <span className="text-[18px]">{segment.growth}</span></p>
                     </div>
                   </div>
                   <div className="bg-gray-300 my-3 p-[.5px] rounded-full"></div>
-                  <p><span className="text-[20px]">Description:</span> <br /> <span className="text-[18px]">{segment.description}</span></p>
-                  {renderGrowthChart(segment.growth)}
+                  <p><span className="text-[18px] font-medium">Description:</span> <br /> <span className="text-[16px] text-gray-600">{segment.description}</span></p>
+                  {segment.growthData ? renderGrowthChart(segment.growthData) : null}
                 </div>
-                <Button
-                  onClick={() => addToHub(segment)}
-                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                  Add to Hub
-                </Button>
+                <Button className="my-3 w-fit" onClick={() => addToHub(segment)}>Add to Hub</Button>
               </div>
             )}
 
@@ -404,7 +366,7 @@ export default function Trending() {
                   <p className="text-[18px]">Description: {segment.description}</p>
                 </div>
                 <div className="ml-4 flex-shrink-0">
-                  {renderGrowthChart(segment.growth)}
+                  {segment.growthData ? renderGrowthChart(segment.growthData) : null}
                 </div>
                 <Button
                   onClick={() => addToHub(segment)}
