@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import appwriteService from '@/appwrite/config';
 import Link from 'next/link';
 
 const Login: React.FC = () => {
@@ -16,29 +15,7 @@ const Login: React.FC = () => {
   };
 
   const onLogin = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setLoading(true);
-    setErrorMessage('');
-  
-    if (!user.email || !user.password) {
-      setErrorMessage('Please fill in both email and password');
-      setLoading(false);
-      return;
-    }
-  
-    try {
-      await appwriteService.login({
-        email: user.email,
-        password: user.password,
-      });
-  
-      // Wait for navigation
-      await router.push('/dashboard/insight-hub');
-    } catch (error) {
-      setErrorMessage('Invalid email or password');
-    } finally {
-      setLoading(false);
-    }
+    
   };
   
 

@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import appwriteService from '@/appwrite/config';
 import Link from 'next/link';
 
 const SignUp: React.FC = () => {
@@ -17,33 +16,7 @@ const SignUp: React.FC = () => {
   };
 
   const onSignup = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setLoading(true);
-    setErrorMessage('');
-
-    // Simple form validation
-    if (!user.name || !user.email || !user.password) {
-      setErrorMessage('All fields are required');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Create the user account
-      await appwriteService.createUserAccount({
-        email: user.email,
-        password: user.password,
-        name: user.name,
-      });
-
-      // Automatically log the user in and redirect
-      await router.push('/dashboard/insight-hub');
-    } catch (error) {
-      // Display error message to the user
-      setErrorMessage(error instanceof Error ? error.message : 'Account creation failed');
-    } finally {
-      setLoading(false);
-    }
+   
   };
 
   return (
