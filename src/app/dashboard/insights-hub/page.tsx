@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { useHub } from "@/context/HubContext";
 import { useProductContext } from "@/context/ProductContext";
-import appwriteService from "@/appwrite/config";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -133,27 +132,6 @@ const InsightHub: React.FC = () => {
 
     undoStack.push(`favoriteProduct_${item.id}`);
     setUndoStack([...undoStack]);
-  };
-
-  // Save HubItem function with Appwrite integration
-  const saveHubItem = async (hubItem: HubItem) => {
-    const currentUser = await appwriteService.getCurrentUser();
-    if (currentUser) {
-      await appwriteService.saveHubItem(currentUser.$id, hubItem);
-      alert("Hub Item saved successfully!");
-    } else {
-      alert("User not logged in.");
-    }
-  };
-
-  const saveProductItem = async (productItem: ProductItem) => {
-    const currentUser = await appwriteService.getCurrentUser();
-    if (currentUser) {
-      await appwriteService.saveProductItem(currentUser.$id, productItem);
-      alert("Product Item saved successfully!");
-    } else {
-      alert("User not logged in.");
-    }
   };
 
   // Undo last action
@@ -373,12 +351,7 @@ const InsightHub: React.FC = () => {
                     >
                       {product.isFavorite ? "Unfavorite" : "Favorite"}
                     </button>
-                    <button
-                      onClick={() => saveProductItem(product)}
-                      className="text-lg text-blue-500"
-                    >
-                      Save Product
-                    </button>
+                    
                   </div>
                 ))}
               </div>

@@ -1,21 +1,11 @@
 'use client'
 import React from 'react'
 import { useProfileUser } from '@/context/UserContext';
-import appwriteService from '@/appwrite/config';
 import { useRouter } from 'next/navigation';
 
 const Profile: React.FC = () => {
   const router = useRouter();
   const { profileUser } = useProfileUser(); // Use profileUser from context
-
-  const handleLogout = async () => {
-    try {
-      await appwriteService.logout();
-      router.push('/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
 
   return (
     <div className="min-h-screen  flex items-center justify-center">
@@ -90,7 +80,7 @@ const Profile: React.FC = () => {
               <p className="text-gray-600">Email</p>
               <p className="text-black">support@explodingtopics.com</p>
             </div>
-            <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white p-2 rounded">
+            <button className="bg-red-500 hover:bg-red-600 text-white p-2 rounded">
               Logout
             </button>
           </div>
