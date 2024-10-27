@@ -1,5 +1,5 @@
 import { Client, Databases } from 'appwrite';
-import env from '@/env';
+import env from '@/app/env';
 
 // Initialize Appwrite Client
 const client = new Client();

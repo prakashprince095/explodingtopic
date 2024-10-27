@@ -318,7 +318,7 @@ export default function Trending() {
       {/* 5. Startup Grid/List */}
       <div className={`flex ${isGridView ? " flex-row flex-wrap gap-3" : "flex flex-col gap-3"}`}>
         {sortedSegments.map((segment) => (
-          <div key={segment.id} className="border p-4 rounded-lg  bg-zinc-100 cursor-pointer">
+          <div key={segment.id} className="border p-4 rounded-lg  hover:shadow-xl  bg-zinc-100 cursor-pointer">
             {isGridView && (
               <div className="flex flex-col  max-w-[350px]">
                 <div onClick={() => handleStartupClick(segment)}>
