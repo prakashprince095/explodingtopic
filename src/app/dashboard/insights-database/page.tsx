@@ -141,10 +141,10 @@ const TrendsDatabase: React.FC = () => {
                 onMouseEnter={() => setSelectedIndustry(industry.name)}
                 onClick={() => setSelectedIndustry(industry.name)}
               >
-                <div className="flex justify-between items-center">
+                <section className="flex justify-between items-center">
                   <span className="font-medium">{industry.name}</span>
                   <span className="text-gray-500">{industry.subcategories.length}</span>
-                </div>
+                </section>
               </li>
             ))}
           </ul>

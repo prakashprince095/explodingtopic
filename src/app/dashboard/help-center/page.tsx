@@ -54,39 +54,37 @@ function Help() {
                         <h3 className="text-xl ">Chat with us</h3>
                         <ul className="space-y-2">
                             <li>
-                                <h1 className=" flex items-center gap-2 hover:underline">
+                                <p className=" flex items-center gap-2 hover:underline">
                                     <img className='w-10' src="/contact/w.svg" alt="" />
-                                    <h1 className='text-[20px]'> Whats app</h1>
-                                </h1>
+                                    <p className='text-[20px]'> Whats app</p>
+                                </p>
                             </li>
                             <li>
-                                <h1 className=" flex items-center gap-2 hover:underline">
+                                <p className=" flex items-center gap-2 hover:underline">
                                     <img className='w-10' src="/contact/s.svg" alt="" />
-                                    <h1 className='text-[20px]'> Skype</h1>
-                                </h1>
+                                    <p className='text-[20px]'> Skype</p>
+                                </p>
                             </li>
                             <li>
-                                <h1 className=" flex items-center gap-2 hover:underline">
+                                <p className=" flex items-center gap-2 hover:underline">
                                     <img className='w-10' src="/contact/m.svg" alt="" />
-                                    <h1 className='text-[20px]'> Gmail</h1>
-                                </h1>
+                                    <p className='text-[20px]'> Gmail</p>
+                                </p>
                             </li>
                         </ul>
                     </div>
 
                     <div className="my-3">
                         <h3 className="text-xl ">Call us</h3>
-                        <p>
+                        <h1>
                             Call our team Mon-Fri from 8am to 5pm.
                             <br />
-                            <h1 className=" hover:underline flex items-center gap-3">
+                            <h2 className=" hover:underline flex items-center gap-3">
                                 <img className='w-10' src="/contact/c.svg" alt="" />
-                                <h1 className='text-[20px]'>+1 (555) 000-0000</h1>
-                            </h1>
-                        </p>
+                                <h3 className='text-[20px]'>+1 (555) 000-0000</h3>
+                            </h2>
+                        </h1>
                     </div>
-
-
                 </div>
             </section>
         </div>

@@ -342,27 +342,27 @@ export default function TrendingProducts() {
               <h3 className="text-xl ">{product.name}</h3>
               <p className="text-gray-500">{product.description}</p>
               <div className="mt-2">
-                <p>
-                  <h1>Growth:</h1> <h2>{product.growth}</h2>
-                </p>
-                <p>
-                  <h1>Sales Volume:</h1><h2> {product.salesVolume}</h2>
-                </p>
-                <p>
-                  <h1>Total Revenue:</h1><h2> {product.totalRevenue}</h2>
-                </p>
-                <p>
-                  <h1>Latest Version:</h1><h2> {product.latestVersion}</h2>
-                </p>
-                <p>
-                  <h1>Stock:</h1> <h2>{product.stock}</h2>
-                </p>
-                <p>
-                  <h1>Categories:</h1><h2> {product.categories.join(", ")}</h2>
-                </p>
-                <p>
-                  <h1>Location:</h1> <h2>{product.location}</h2>
-                </p>
+                <h1>
+                  <p>Growth:</p> <p>{product.growth}</p>
+                </h1>
+                <h1>
+                  <p>Sales Volume:</p><p> {product.salesVolume}</p>
+                </h1>
+                <h1>
+                  <p>Total Revenue:</p><p> {product.totalRevenue}</p>
+                </h1>
+                <h1>
+                  <p>Latest Version:</p><p> {product.latestVersion}</p>
+                </h1>
+                <h1>
+                  <p>Stock:</p> <p>{product.stock}</p>
+                </h1>
+                <h1>
+                  <p>Categories:</p><p> {product.categories.join(", ")}</p>
+                </h1>
+                <h1>
+                  <p>Location:</p> <p>{product.location}</p>
+                </h1>
               </div>
               <div className="mt-4">{renderGrowthChart(product.growth)}</div>
             </div>

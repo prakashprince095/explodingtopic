@@ -256,7 +256,7 @@ const InsightHub: React.FC = () => {
                 &times;
               </Button>
               {processedProductItems.length === 0 ? (
-                <p className="text-gray-500">No Product items found.</p>
+                <div className="text-gray-500">No Product items found.</div>
               ) : (
                 <div className="grid grid-cols-2 gap-6">
                   {processedHubItems.map((item) => (
