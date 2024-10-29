@@ -1,21 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useAuthStore } from "@/store/Auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const BottomGradient = () => {
-    return (
-        <>
-            <span className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-            <span className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
-        </>
-    );
-};
+const BottomGradient = () => (
+    <>
+        <span className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
+        <span className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
+    </>
+);
 
 const LabelInputContainer = ({
     children,
@@ -23,48 +22,58 @@ const LabelInputContainer = ({
 }: {
     children: React.ReactNode;
     className?: string;
-}) => {
-    return <div className={cn("flex w-full flex-col space-y-2", className)}>{children}</div>;
-};
+}) => (
+    <div className={cn("flex w-full flex-col space-y-2", className)}>{children}</div>
+);
 
 export default function Register() {
-    const { login, createAccount } = useAuthStore();
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState("");
+    const { login, createAccount, isAuthenticated } = useAuthStore();
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    // Redirect to insights page if user is already authenticated
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.push("/dashboard/insights-hub");
+        }
+    }, [isAuthenticated, router]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        const firstname = formData.get("firstname");
-        const lastname = formData.get("lastname");
-        const email = formData.get("email");
-        const password = formData.get("password");
+        const firstname = formData.get("firstname")?.toString() || "";
+        const lastname = formData.get("lastname")?.toString() || "";
+        const email = formData.get("email")?.toString() || "";
+        const password = formData.get("password")?.toString() || "";
 
         if (!firstname || !lastname || !email || !password) {
-            setError(() => "Please fill out all fields");
+            setError("Please fill out all fields");
             return;
         }
 
-        setIsLoading(() => true);
-        setError(() => "");
+        setIsLoading(true);
+        setError("");
 
         const response = await createAccount(
             `${firstname} ${lastname}`,
-            email.toString(),
-            password.toString()
+            email,
+            password
         );
 
-        if (response.error) {
-            setError(() => response.error!.message);
+        if (response?.error?.message) {
+            setError(response.error.message);
         } else {
-            const loginResponse = await login(email.toString(), password.toString());
-            if (loginResponse.error) {
-                setError(() => loginResponse.error!.message);
+            const loginResponse = await login(email, password);
+            if (loginResponse?.error?.message) {
+                setError(loginResponse.error.message);
+            } else {
+                router.push("/dashboard/insights-hub");
             }
         }
 
-        setIsLoading(() => false);
+        setIsLoading(false);
     };
 
     return (
@@ -73,12 +82,12 @@ export default function Register() {
                 Welcome to Riverflow
             </h2>
             <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-                Signup with riverflow if you you don&apos;t have an account.
+                Signup with Riverflow if you don&apos;t have an account.
                 <br /> If you already have an account,{" "}
                 <Link href="/login" className="text-orange-500 hover:underline">
                     login
                 </Link>{" "}
-                to riverflow
+                to Riverflow
             </p>
 
             {error && (
@@ -88,17 +97,29 @@ export default function Register() {
                 <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
                     <LabelInputContainer>
                         <Label htmlFor="firstname">First name</Label>
-                        <Input className="text-black" id="firstname" name="firstname" placeholder="Tyler" type="text" />
+                        <Input
+                            className="text-black"
+                            id="firstname"
+                            name="firstname"
+                            placeholder="Tyler"
+                            type="text"
+                        />
                     </LabelInputContainer>
                     <LabelInputContainer>
                         <Label htmlFor="lastname">Last name</Label>
-                        <Input className="text-black"  id="lastname" name="lastname" placeholder="Durden" type="text" />
+                        <Input
+                            className="text-black"
+                            id="lastname"
+                            name="lastname"
+                            placeholder="Durden"
+                            type="text"
+                        />
                     </LabelInputContainer>
                 </div>
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="email">Email Address</Label>
                     <Input
-                    className="text-black" 
+                        className="text-black"
                         id="email"
                         name="email"
                         placeholder="projectmayhem@fc.com"
@@ -107,7 +128,13 @@ export default function Register() {
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="password">Password</Label>
-                    <Input className="text-black"  id="password" name="password" placeholder="••••••••" type="password" />
+                    <Input
+                        className="text-black"
+                        id="password"
+                        name="password"
+                        placeholder="••••••••"
+                        type="password"
+                    />
                 </LabelInputContainer>
 
                 <button
@@ -128,9 +155,7 @@ export default function Register() {
                         disabled={isLoading}
                     >
                         <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                        <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                            Google
-                        </span>
+                        <span className="text-sm text-neutral-700 dark:text-neutral-300">Google</span>
                         <BottomGradient />
                     </button>
                     <button
@@ -139,9 +164,7 @@ export default function Register() {
                         disabled={isLoading}
                     >
                         <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                        <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                            GitHub
-                        </span>
+                        <span className="text-sm text-neutral-700 dark:text-neutral-300">GitHub</span>
                         <BottomGradient />
                     </button>
                 </div>
