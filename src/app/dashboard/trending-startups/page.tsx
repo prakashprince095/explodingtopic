@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { saveAs } from "file-saver"; // For CSV export
-import StartupDetail from "./StartupDetail";
+import StartupDetail from "./[startups]/page";
 import { useHub } from "@/context/HubContext";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";

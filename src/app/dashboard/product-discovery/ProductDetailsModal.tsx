@@ -325,9 +325,9 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
             <Image
               src={product.imageUrl || '/logos/1.svg'}  // Fallback image URL
               alt={product.name}
-              width={50}  // Set the width explicitly
-              height={50}  // Set the height explicitly
-              className=" rounded-lg mb-4"
+              width={50}
+              height={50}
+              className="rounded-lg mb-4"
             />
             <h2 className="text-2xl f mb-2">{product.name}</h2>
             <p>{product.description}</p>
@@ -391,7 +391,7 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose }) 
             <option>1 Year</option>
           </select>
           <div>
-             <SalesVolumeChart data={salesData} forecast={forecast} />
+            <SalesVolumeChart data={salesData} forecast={forecast} />
           </div>
           <div className="mt-4 flex items-center">
             <label className="mr-2 text-gray-600">Include Forecast</label>

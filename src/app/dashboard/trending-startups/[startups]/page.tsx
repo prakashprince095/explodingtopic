@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Segment } from './page';
+import { Segment } from '../page';
 import {
   LineChart,
   Line,
@@ -72,11 +72,10 @@ const TrendPopup: React.FC<TrendPopupProps> = ({ trend, onClose }) => {
           <div className="flex justify-between items-center w-full">
             <h3 className="text-xl">{trend.volume}</h3>
             <p
-              className={`${
-                trend.growthRate.startsWith('+')
-                  ? 'text-green-500 text-[20px]'
-                  : 'text-red-500 text-[20px]'
-              }`}
+              className={`${trend.growthRate.startsWith('+')
+                ? 'text-green-500 text-[20px]'
+                : 'text-red-500 text-[20px]'
+                }`}
             >
               {trend.growthRate}
             </p>
@@ -447,6 +446,7 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
           </div>
         </div>
 
+
         {/* Channel Breakdown Section */}
         <div className="flex flex-wrap gap-3 items-center justify-evenly py-5 w-full">
           <div className='p-3 h-[400px] w-[380px] bg-white border border-gray-400 rounded-lg'>
@@ -521,8 +521,8 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
           )}
           <RelatedTrends trends={relatedTrends} />
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 
