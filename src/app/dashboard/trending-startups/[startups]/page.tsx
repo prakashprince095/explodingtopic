@@ -1,15 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { Segment } from '../page';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-} from 'recharts';
+import { usePathname } from 'next/navigation';
+import { Segment, segmentsData } from '../page'; 
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, } from 'recharts';
 import Image from 'next/image';
 
 export type Startup = {
@@ -44,7 +37,7 @@ export type Startup = {
   growthData?: number[];
 };
 
-type StartupDetailProps = {
+export type StartupDetailProps = {
   startup: Segment;
   onClose: () => void;
 };
@@ -196,7 +189,6 @@ const RelatedStartups: React.FC<{ startups: Startup['relatedStartups'] }> = ({ s
   );
 };
 
-
 const timeframes = ['3 Months', '6 Months', '1 Year', '2 Years', '3 Years', '4 Years', '5 Years'];
 
 const mockGrowthData = {
@@ -283,34 +275,22 @@ const mockGrowthData = {
 };
 
 const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
-  const [selectedTimeframe, setSelectedTimeframe] = useState<string>(timeframes[5]);
+  const pathname = usePathname();
+  const [selectedTimeframe, setSelectedTimeframe] = useState<string>('5 Years');
   const [forecast, setForecast] = useState<boolean>(true);
+  
+  const startupName = pathname?.split('/').pop(); // Access dynamic route parameter safely
 
-  if (!startup) {
-    return <div className="text-center">Select a startup to view its details</div>;
-  }
+  // Find the startup based on the title in segmentsData
+  const startupDetail = segmentsData.find(
+    (s: Segment) => s.title.toLowerCase() === startupName?.toLowerCase()
+  );
+
+  if (!startupDetail) return <p>Startup not found</p>;
 
   const chartData = mockGrowthData[selectedTimeframe as keyof typeof mockGrowthData];
 
   const relatedTrends: Trend[] = [
-    {
-      name: 'Livekit Github',
-      growthRate: '+3800%',
-      volume: 'High Volume',
-      growthData: [10, 20, 30, 40, 35, 50, 60],
-    },
-    {
-      name: 'Livekit Webrtc',
-      growthRate: '+8800%',
-      volume: 'Medium Volume',
-      growthData: [20, 30, 40, 60, 80, 90, 100],
-    },
-    {
-      name: 'Livekit React',
-      growthRate: '+6400%',
-      volume: 'Low Volume',
-      growthData: [5, 10, 15, 20, 25, 30],
-    },
     {
       name: 'Livekit Github',
       growthRate: '+3800%',
@@ -354,28 +334,8 @@ const StartupDetail: React.FC<StartupDetailProps> = ({ startup, onClose }) => {
       description: "Innovative robotics for industrial automation.",
       growthRate: "+90%",
     },
-    {
-      id: 1,
-      logo: "",
-      name: "InnovateX",
-      description: "Pioneers in cloud computing technology.",
-      growthRate: "+75%",
-    },
-    {
-      id: 2,
-      logo: "",
-      name: "AI Wonders",
-      description: "Cutting-edge AI for medical applications.",
-      growthRate: "+50%",
-    },
-    {
-      id: 3,
-      logo: "",
-      name: "NextGen Robotics",
-      description: "Innovative robotics for industrial automation.",
-      growthRate: "+90%",
-    },
   ];
+
 
   return (
     <div className="fixed w-screen h-full inset-0 bg-white p-6 overflow-auto">

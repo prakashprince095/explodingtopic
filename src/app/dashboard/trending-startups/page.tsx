@@ -7,25 +7,10 @@ import { useHub } from "@/context/HubContext";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { TrendingUp } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer
-} from 'recharts';
+import Link from 'next/link';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-
-// Define the types for the segment data
 type KeyIndicators = {
   growth: string;
   speed: string;
@@ -62,7 +47,7 @@ export type Segment = {
 };
 
 // Mock data for segments
-const segmentsData: Segment[] = [
+export const segmentsData: Segment[] = [
   {
     id: 1,
     title: "DocuClipper",
@@ -132,7 +117,6 @@ export function GrowthChart({ growthData }: { growthData: number[] }) {
     </Card>
   );
 }
-
 
 export default function Trending() {
   const [selectedStartup, setSelectedStartup] = useState<Segment | null>(null);
@@ -321,6 +305,7 @@ export default function Trending() {
           <div key={segment.id} className="border p-4 rounded-lg  hover:shadow-xl  bg-zinc-100 cursor-pointer">
             {isGridView && (
               <div className="flex flex-col  max-w-[350px]">
+                <Link href={`/trending-startups/${segment.title.toLowerCase()}`}>
                 <div onClick={() => handleStartupClick(segment)}>
                   <h3 className="text-2xl mb-3 text-center">{segment.title}</h3>
                   <div className="flex items-center justify-between flex-wrap">
@@ -347,6 +332,7 @@ export default function Trending() {
                   <p><span className="text-[18px] font-medium">Description:</span> <br /> <span className="text-[16px] text-gray-600">{segment.description}</span></p>
                   {segment.growthData ? renderGrowthChart(segment.growthData) : null}
                 </div>
+                </Link>
                 <Button className="my-3 w-fit" onClick={() => addToHub(segment)}>Add to Hub</Button>
               </div>
             )}
