@@ -16,7 +16,7 @@ type KeyIndicators = {
   forecast: string;
 };
 
-type Segment = {
+type Startup = {
   id: number;
   title: string;
   description: string;
@@ -33,7 +33,7 @@ type Segment = {
   growthData?: number[];
 };
 
-export const segmentsData: Segment[] = [
+export const startupsData: Startup[] = [
   // Example data
   {
     id: 1,
@@ -67,7 +67,7 @@ export const segmentsData: Segment[] = [
     location: 'USA',
     growthData: [120, 150, 180, 210, 250, 300],
   },
-  // Additional segments...
+  // Additional startups...
 ];
 
 const GrowthChart = ({ growthData }: { growthData: number[] }) => (
@@ -91,31 +91,31 @@ export default function TrendingStartups() {
     growth: 'All',
   });
 
-  const applyFilters = (segment: Segment) => {
-    const matchesCategory = filters.category === 'All' || segment.category.includes(filters.category);
-    const matchesLocation = filters.location === 'All' || segment.location === filters.location;
+  const applyFilters = (startup: Startup) => {
+    const matchesCategory = filters.category === 'All' || startup.category.includes(filters.category);
+    const matchesLocation = filters.location === 'All' || startup.location === filters.location;
     return matchesCategory && matchesLocation;
   };
 
-  const filteredSegments = useMemo(() => {
-    return segmentsData
-      .filter((segment) => segment.title.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredstartups = useMemo(() => {
+    return startupsData
+      .filter((startup) => startup.title.toLowerCase().includes(searchQuery.toLowerCase()))
       .filter(applyFilters);
   }, [searchQuery, filters]);
 
   const exportToCSV = () => {
     const csvContent = [
       'Company Name,Growth,Volume,Total Funding,Latest Round,Employees,Categories,Location',
-      ...filteredSegments.map((segment) =>
+      ...filteredstartups.map((startup) =>
         [
-          segment.title,
-          segment.growth,
-          segment.volume,
-          segment.totalFunding,
-          segment.latestRound,
-          segment.employees,
-          segment.category.join(', '),
-          segment.location,
+          startup.title,
+          startup.growth,
+          startup.volume,
+          startup.totalFunding,
+          startup.latestRound,
+          startup.employees,
+          startup.category.join(', '),
+          startup.location,
         ].join(',')
       ),
     ].join('\n');
@@ -124,7 +124,7 @@ export default function TrendingStartups() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-white border border-gray-300 rounded-lg">
+    <div className="min-h-screen p-6 bg-neutral-50 border border-gray-300 rounded-lg">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Trending Startups</h2>
         <input
@@ -168,39 +168,39 @@ export default function TrendingStartups() {
       </div>
 
       <div className={`${isGridView ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4' : 'flex flex-col gap-4'}`}>
-        {filteredSegments.map((segment) => (
+        {filteredstartups.map((startup) => (
           <div
-            key={segment.id}
+            key={startup.id}
             className="p-4 border rounded-lg bg-gray-100 hover:shadow-lg transition cursor-pointer"
           >
-            <Link href={`/dashboard/trending-startups/${segment.title.toLowerCase()}`}>
+            <Link href={`/dashboard/trending-startups/${startup.title.toLowerCase()}`}>
               <div>
-                <h3 className="text-xl font-semibold">{segment.title}</h3>
+                <h3 className="text-xl font-semibold">{startup.title}</h3>
                 <div className="flex justify-between items-center mt-2">
-                  <span className="text-sm text-gray-600">Volume: {segment.volume}</span>
-                  <span className="text-sm bg-black text-white px-2 py-1 rounded-full">Funding: {segment.totalFunding}</span>
+                  <span className="text-sm text-gray-600">Volume: {startup.volume}</span>
+                  <span className="text-sm bg-black text-white px-2 py-1 rounded-full">Funding: {startup.totalFunding}</span>
                 </div>
                 <div className="flex flex-wrap gap-2 my-3">
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Round</span>
-                    <p className="text-lg font-semibold">{segment.latestRound}</p>
+                    <p className="text-lg font-semibold">{startup.latestRound}</p>
                   </div>
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Employees</span>
-                    <p className="text-lg font-semibold">{segment.employees}</p>
+                    <p className="text-lg font-semibold">{startup.employees}</p>
                   </div>
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Location</span>
-                    <p className="text-lg font-semibold">{segment.location}</p>
+                    <p className="text-lg font-semibold">{startup.location}</p>
                   </div>
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Growth</span>
-                    <p className="text-lg font-semibold">{segment.growth}</p>
+                    <p className="text-lg font-semibold">{startup.growth}</p>
                   </div>
                 </div>
                 <div className="my-2 border-b border-gray-300"></div>
-                <p className="text-sm text-gray-700">{segment.description}</p>
-                {segment.growthData && <GrowthChart growthData={segment.growthData} />}
+                <p className="text-sm text-gray-700">{startup.description}</p>
+                {startup.growthData && <GrowthChart growthData={startup.growthData} />}
               </div>
             </Link>
             <Button className="mt-4">Add to Hub</Button>

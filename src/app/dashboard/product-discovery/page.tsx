@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { saveAs } from "file-saver";
-import ProductDetailModal from "./ProductDetailsModal";
+import ProductDetail from "./[slug]/page";
 import { useProductContext } from "@/context/ProductContext";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 // Types for product segments
 export type ProductSegment = {
@@ -22,7 +23,7 @@ export type ProductSegment = {
 };
 
 // Initial data for product segments
-const productsData: ProductSegment[] = [
+export const productsData: ProductSegment[] = [
   {
     id: 1,
     name: "EcoWidget",
@@ -336,36 +337,38 @@ export default function TrendingProducts() {
           <div
             key={product.id}
             className="border w-[380px] p-4 rounded-lg hover:shadow-lg transition-all cursor-pointer"
-            
+
           >
-            <div onClick={() => { setSelectedProduct(product); setIsModalOpen(true); }}>
-              <h3 className="text-xl ">{product.name}</h3>
-              <p className="text-gray-500">{product.description}</p>
-              <div className="mt-2">
-                <h1>
-                  <p>Growth:</p> <p>{product.growth}</p>
-                </h1>
-                <h1>
-                  <p>Sales Volume:</p><p> {product.salesVolume}</p>
-                </h1>
-                <h1>
-                  <p>Total Revenue:</p><p> {product.totalRevenue}</p>
-                </h1>
-                <h1>
-                  <p>Latest Version:</p><p> {product.latestVersion}</p>
-                </h1>
-                <h1>
-                  <p>Stock:</p> <p>{product.stock}</p>
-                </h1>
-                <h1>
-                  <p>Categories:</p><p> {product.categories.join(", ")}</p>
-                </h1>
-                <h1>
-                  <p>Location:</p> <p>{product.location}</p>
-                </h1>
+            <Link href={`/dashboard/product-discovery/${product.name}`} key={product.id}>
+              <div onClick={() => { setSelectedProduct(product); setIsModalOpen(true); }}>
+                <h3 className="text-xl ">{product.name}</h3>
+                <p className="text-gray-500">{product.description}</p>
+                <div className="mt-2">
+                  <h1>
+                    <p>Growth:</p> <p>{product.growth}</p>
+                  </h1>
+                  <h1>
+                    <p>Sales Volume:</p><p> {product.salesVolume}</p>
+                  </h1>
+                  <h1>
+                    <p>Total Revenue:</p><p> {product.totalRevenue}</p>
+                  </h1>
+                  <h1>
+                    <p>Latest Version:</p><p> {product.latestVersion}</p>
+                  </h1>
+                  <h1>
+                    <p>Stock:</p> <p>{product.stock}</p>
+                  </h1>
+                  <h1>
+                    <p>Categories:</p><p> {product.categories.join(", ")}</p>
+                  </h1>
+                  <h1>
+                    <p>Location:</p> <p>{product.location}</p>
+                  </h1>
+                </div>
+                <div className="mt-4">{renderGrowthChart(product.growth)}</div>
               </div>
-              <div className="mt-4">{renderGrowthChart(product.growth)}</div>
-            </div>
+            </Link>
             <Button
               onClick={() => handleAddToHub(product)}
             >
@@ -376,7 +379,11 @@ export default function TrendingProducts() {
       </div>
 
       {isModalOpen && selectedProduct && (
-        <ProductDetailModal product={selectedProduct} onClose={() => setIsModalOpen(false)} />
+        <ProductDetail 
+        product={selectedProduct} 
+        onClose={() => setIsModalOpen(false)} 
+        params={{ slug: selectedProduct?.name || '' }}  // Pass params here
+    />    
       )}
 
     </div>

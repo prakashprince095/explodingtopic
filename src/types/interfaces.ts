@@ -16,6 +16,7 @@ export interface CompanyInsightsProps {
   };
 }
 
+// src/types.ts
 export type ProductSegment = {
   id: number;
   name: string;
@@ -27,9 +28,14 @@ export type ProductSegment = {
   stock: string;
   categories: string[];
   location: string;
-  avgRevenue?: string;          // Optional fields to match ProductDetailsModal.tsx
-  avgBSR?: string;              // Optional fields to match ProductDetailsModal.tsx
-  avgPrice?: string;            // Optional fields to match ProductDetailsModal.tsx
-  avgMonthlySales?: string;     // Optional fields to match ProductDetailsModal.tsx
+  imageUrl?: string;
+  avgRevenue?: string;
+  avgBSR?: string;
+  avgPrice?: string;
+  avgMonthlySales?: string;
+  avgReviews?: string;
+  salesData?: number[];
+  topSellers?: { id: number; logo: string; name: string; revenue: string; sales: string }[];
+  relatedProducts?: { id: number; logo: string; name: string; price: string; avgRating: string }[];
+  keyIndicators?: { growth: string; speed: string; seasonality: string; volatility: string; sentiment: string };
 };
-

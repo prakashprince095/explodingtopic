@@ -37,7 +37,7 @@ type Trend = {
   growthData: number[];
 };
 
-type Segment = {
+type Startup = {
   id: number;
   title: string;
   description: string;
@@ -58,7 +58,7 @@ type Segment = {
 };
 
 // Sample Data
-const segmentsData: Segment[] = [
+const startupsData: Startup[] = [
   {
     id: 1,
     title: 'DocuClipper',
@@ -177,11 +177,11 @@ export default function StartupDetail() {
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('5 Years');
   const [forecast, setForecast] = useState<boolean>(true);
   const [selectedTrend, setSelectedTrend] = useState<Trend | null>(null);
-  const [startup, setStartup] = useState<Segment | undefined>(undefined);
+  const [startup, setStartup] = useState<Startup | undefined>(undefined);
 
   useEffect(() => {
-    const foundStartup = segmentsData.find(
-      (s: Segment) => s.title.toLowerCase().replace(/\s+/g, '-') === slug
+    const foundStartup = startupsData.find(
+      (s: Startup) => s.title.toLowerCase().replace(/\s+/g, '-') === slug
     );
     setStartup(foundStartup);
   }, [slug]);
