@@ -155,6 +155,7 @@ export default function TrendingStartups() {
           <option value="All">All Locations</option>
           <option value="USA">USA</option>
         </select>
+        
       </div>
 
       <div className="flex justify-end mb-4">
