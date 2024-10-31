@@ -9,10 +9,10 @@ import { productsData } from "../page";
 import { ProductSegment } from "@/types/interfaces";
 
 type ProductDetailModalProps = {
-    product: ProductSegment; // Ensure product type matches
-    onClose: () => void;      // Ensure onClose is a function
-    params: { slug: string };  // Ensure params matches the expected shape
-  };
+    product: ProductSegment;
+    onClose: () => void;
+    params: { slug: string };
+  };  
 
 type Trend = {
     name: string;
