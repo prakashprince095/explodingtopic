@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { UserProvider } from '@/context/UserContext';
-// import Header from "@/components/Header";
-// import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 
 export const metadata: Metadata = {
@@ -20,11 +20,11 @@ export default function RootLayout({
       <body
        
       >
-        {/* <Header /> */}
+        <Header />
         <UserProvider>
           {children}
         </UserProvider>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
