@@ -167,15 +167,15 @@ export default function TrendingStartups() {
         </button>
       </div>
 
-      <div className={`${isGridView ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4' : 'flex flex-col gap-4'}`}>
+      <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
         {filteredstartups.map((startup) => (
           <div
             key={startup.id}
-            className="p-4 border rounded-lg bg-gray-100 hover:shadow-lg transition cursor-pointer"
+            className="p-4 border rounded-md bg-gray-100 hover:shadow-lg transition cursor-pointer"
           >
             <Link href={`/dashboard/trending-startups/${startup.title.toLowerCase()}`}>
               <div>
-                <h3 className="text-xl font-semibold">{startup.title}</h3>
+                <h3 className="text-xl ">{startup.title}</h3>
                 <div className="flex justify-between items-center mt-2">
                   <span className="text-sm text-gray-600">Volume: {startup.volume}</span>
                   <span className="text-sm bg-black text-white px-2 py-1 rounded-full">Funding: {startup.totalFunding}</span>
@@ -183,19 +183,19 @@ export default function TrendingStartups() {
                 <div className="flex flex-wrap gap-2 my-3">
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Round</span>
-                    <p className="text-lg font-semibold">{startup.latestRound}</p>
+                    <p className="text-lg ">{startup.latestRound}</p>
                   </div>
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Employees</span>
-                    <p className="text-lg font-semibold">{startup.employees}</p>
+                    <p className="text-lg ">{startup.employees}</p>
                   </div>
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Location</span>
-                    <p className="text-lg font-semibold">{startup.location}</p>
+                    <p className="text-lg ">{startup.location}</p>
                   </div>
                   <div className="bg-white p-2 border rounded-sm text-center">
                     <span className="text-gray-500 text-sm">Growth</span>
-                    <p className="text-lg font-semibold">{startup.growth}</p>
+                    <p className="text-lg ">{startup.growth}</p>
                   </div>
                 </div>
                 <div className="my-2 border-b border-gray-300"></div>

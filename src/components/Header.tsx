@@ -1,146 +1,141 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "./ui/button";
 
-type MenuItem = 'Product' | 'Solution' | 'Pricing' | 'Resources';
+// Define types for menu items and hover states
+type MenuItem = {
+  label: string;
+  links: { href: string; label: string }[];
+};
 
 const Header: React.FC = () => {
-  const [hoveredItem, setHoveredItem] = useState<MenuItem | null>(null);
-  const [clickedItem, setClickedItem] = useState<MenuItem | null>(null);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const hoverBoxRef = useRef<HTMLDivElement | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  const handleMouseEnter = (item: MenuItem) => {
-    setHoveredItem(item);
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
   };
 
-  const handleMouseLeave = () => {
-    setHoveredItem(null);
-  };
-
-  const handleItemClick = (item: MenuItem) => {
-    if (item !== 'Pricing') {
-      setClickedItem(item);
-      setIsVisible(true);
-    }
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (hoverBoxRef.current && !hoverBoxRef.current.contains(event.target as Node)) {
-      setIsVisible(false);
-    }
-  };
-
-  const hoverBoxStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: '73px',
-    width: '960px',
-    height: '400px',
-    backgroundColor: 'white',
-    borderRadius: '8px',
-    padding: '20px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-    backdropFilter: 'blur(100px)',
-    zIndex: 999,
-    left: '50%',
-    transform: 'translateX(-50%)',
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const items: MenuItem[] = ['Product', 'Solution', 'Pricing', 'Resources'];
+  const items: MenuItem[] = [
+    {
+      label: "Product",
+      links: [
+        { href: "/ClientOnboarding", label: "Client On-boarding" },
+        { href: "/CRM", label: "CRM" },
+        { href: "/Learning", label: "Learning" },
+      ],
+    },
+    {
+      label: "Solutions",
+      links: [
+        { href: "/GrowthStrategies", label: "Insight Hub" },
+        { href: "/InnovationToolkit", label: "Startup Trends" },
+        { href: "/Marketing", label: "Products Discovery" },
+        { href: "/Financial", label: "Insight Category" },
+        { href: "/Sales", label: "Meta Trends" },
+        { href: "/SmartInventory", label: "Deep Analysis" },
+        { href: "/AIRecomandation", label: "Reporting" },
+      ],
+    },
+    {
+      label: "Resources",
+      links: [
+        { href: "/Changelog", label: "Changelogs" },
+        { href: "/Faqs", label: "Faqs" },
+        { href: "/Blog", label: "Blog" },
+        { href: "/Feedback", label: "Feedback" },
+      ],
+    },
+  ];
 
   return (
-    <div className="text-black flex flex-row items-center border-white justify-between px-[60px] bg-opacity-800 backdrop-blur-xl shadow-sm h-[90px] lg:w-[1280px] rounded-full my-[20px] mx-auto">
-      <div className="w-[180px]">
-        <Link href="/">
-          <img src="/main/full-logo.svg" alt="Logo" />
-        </Link>
-      </div>
-      <div>
-        <ul className="flex flex-row ml-[90px] gap-[20px]">
-          {items.map((item) => (
+    <div className="text-[18px] text-zinc-700 h-[90px] flex justify-between items-center px-[40px]">
+      <Link href="/" className="w-[200px]">
+        <Image src="/logo.png" alt="Logo" width={200} height={90} />
+      </Link>
+      <div className="hidden xl:flex">
+        <ul className="relative flex gap-[30px] text-[20px]">
+          {items.map((item, index) => (
             <li
-              key={item}
-              className="px-[10px] py-[5px] cursor-pointer text-[15px] rounded-[4px] hover:bg-blue-200"
-              onMouseEnter={() => handleMouseEnter(item)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => handleItemClick(item)}
+              key={index}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="relative list-none"
             >
-              {item === 'Pricing' ? (
-                <Link href="/Pricing">{item}</Link>
-              ) : (
-                item
+              <span>{item.label}</span>
+              {hoveredIndex === index && (
+                <div className="absolute text-black z-20 top-[30px] rounded-md border border-gray-400 flex flex-col w-[300px] p-[20px] shadow-lg bg-white">
+                  {item.links.map((link, linkIndex) => (
+                    <Link key={linkIndex} href={link.href} className="text-[20px] p-[5px] hover:bg-blue-400 rounded-[5px]">
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
               )}
             </li>
           ))}
+          <Link href="/Pricing" className="list-none">
+            Pricing
+          </Link>
         </ul>
-        {isVisible && (
-          <div ref={hoverBoxRef}>
-            {clickedItem === 'Product' && (
-              <div className="flex flex-col gap-[8px]">
-                <Link href="/Training">
-                  <div className="flex flex-row items-center gap-[10px] p-[8px] w-[360px] border-black border-r-[2px] hover:bg-gray-100">
-                    <div className="w-[60px]">
-                      <img src="/Products/1.svg" alt="Training & Subscription Hub" />
-                    </div>
-                    <div>
-                      <h1 className="text-[20px]">Training & Subscription Hub</h1>
-                    </div>
-                  </div>
-                </Link>
-                {/* Additional Links */}
-              </div>
-            )}
-            {clickedItem === 'Solution' && (
-              <div className="flex flex-row flex-wrap gap-[8px]">
-                <Link href="/Financial">
-                  <div className="flex flex-row items-center gap-[5px] p-[8px] w-[300px] border-black border-r-[2px] hover:bg-gray-100">
-                    <div className="w-[60px]">
-                      <img src="/Products/1.png" alt="Financial Mastery" />
-                    </div>
-                    <div>
-                      <h1 className="text-[20px]">Financial Mastery</h1>
-                    </div>
-                  </div>
-                </Link>
-                {/* Additional Links */}
-              </div>
-            )}
-            {clickedItem === 'Resources' && (
-              <div>
-                <Link href="/Changelog">
-                  <div className="flex flex-row items-center gap-[5px] p-[8px] w-[300px] border-black border-r-[2px] hover:bg-gray-100">
-                    <div className="w-[60px]">
-                      <img src="/Products/8.png" alt="Change logs" />
-                    </div>
-                    <div>
-                      <h1 className="text-[20px]">Change logs</h1>
-                    </div>
-                  </div>
-                </Link>
-                {/* Additional Links */}
-              </div>
-            )}
-          </div>
-        )}
       </div>
-      <div>
-        <div className="flex flex-row gap-[10px] border-l-[1px] border-black pl-[10px]">
-          <Link href="/Register" className="bg-blue-200 shadow-md hover:bg-blue-200 py-[8px] px-[12px] rounded-[4px]">
+      <div className="hidden xl:flex gap-[20px]">
+        <Button>
+          <Link href="/register">
             Register
           </Link>
-          <Link href="/login" className="bg-blue-200 shadow-md hover:bg-blue-200 py-[8px] px-[12px] rounded-[4px]">
-            Login
-          </Link>
-        </div>
+        </Button>
+        <Button>
+        <Link href="/login">
+          Login
+        </Link>
+        </Button>
       </div>
+      <div className="xl:hidden border rounded-full p-[10px] cursor-pointer" onClick={toggleMenu}>
+        <Image src="/Header/header.svg" alt="Menu Icon" width={40} height={40} />
+      </div>
+      {menuOpen && (
+        <div className="absolute xl:hidden right-0 rounded-xl top-[90px] z-20 left-[0%] w-full p-[20px] border border-gray-300 bg-white flex flex-col">
+          <ul className="flex flex-col">
+            {items.map((item, index) => (
+              <li
+                key={index}
+                className="flex justify-between items-center hover:bg-[#3E8FC3] p-[10px] w-full rounded-[10px] relative"
+                onMouseEnter={() => setHoveredItem(item.label)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <span>{item.label}</span>
+                <Image src="/Header/arrow.png" alt="Arrow" width={14} height={14} />
+                {hoveredItem === item.label && (
+                  <div className="absolute z-50 top-0 left-[40%] bg-white shadow-md p-[10px] rounded-md border border-gray-400 flex flex-col w-[300px]">
+                    {item.links.map((link, linkIndex) => (
+                      <Link key={linkIndex} href={link.href} className="text-[20px] p-[5px] hover:bg-blue-400 rounded-[5px]">
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
+            <Link href="/Pricing" className="flex justify-between items-center hover:bg-[#3E8FC3] p-[10px] w-full rounded-[10px]">
+              <span>Pricing</span>
+              <Image src="/Header/arrow.png" alt="Arrow" width={14} height={14} />
+            </Link>
+          </ul>
+          <div className="flex items-center justify-between border-t p-[20px] border-t-white mt-[20px]">
+            <Link href="/register" >
+              Register
+            </Link>
+            <Link href="/login">
+              Login
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

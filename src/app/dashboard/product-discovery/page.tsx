@@ -281,14 +281,14 @@ export default function TrendingProducts() {
       </div>
 
       {/* 3. Additional Filters */}
-      <div className="flex items-center justify-end gap-3 my-4">
+      <div className="flex items-center justify-end gap-6 my-4">
         <button
           onClick={clearFilters}
           className="flex items-center gap-2 "
         >
           <Image
             src="/product/filter.svg"
-            width={30}
+            width={20}
             height={25}
             alt="Picture of the grid items"
           />
@@ -302,7 +302,7 @@ export default function TrendingProducts() {
           >
             <Image
               src="/startups/grid.svg"
-              width={30}
+              width={20}
               height={25}
               alt="Picture of the grid items"
             />
@@ -313,7 +313,7 @@ export default function TrendingProducts() {
           >
             <Image
               src="/startups/list.svg"
-              width={30}
+              width={20}
               height={25}
               alt="Picture of the grid items"
             />
@@ -322,13 +322,16 @@ export default function TrendingProducts() {
 
         <button
           onClick={exportToCSV}
+          className="flex items-center gap-2 bg"
         >
           <Image
             src="/product/export.svg"
-            width={30}
+            width={20}
             height={25}
             alt="Picture of the grid items"
+          
           />
+          <h1>Export</h1>
         </button>
       </div>
 
