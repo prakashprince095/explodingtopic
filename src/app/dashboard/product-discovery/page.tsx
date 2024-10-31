@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { saveAs } from "file-saver";
 import ProductDetail from "./[slug]/page";
 import { useProductContext } from "@/context/ProductContext";
@@ -122,14 +122,6 @@ export default function TrendingProducts() {
     addProductToHub(product);
   };
 
-  const toggleSaveProduct = (id: number) => {
-    if (savedProducts.includes(id)) {
-      setSavedProducts(savedProducts.filter((prodId) => prodId !== id));
-    } else {
-      setSavedProducts([...savedProducts, id]);
-    }
-  };
-
   const applyFilters = (product: ProductSegment) => {
     const matchesCategory =
       filters.category === "All" || product.categories.includes(filters.category);
@@ -137,6 +129,8 @@ export default function TrendingProducts() {
       filters.location === "All" || product.location === filters.location;
     return matchesCategory && matchesLocation;
   };
+
+  
 
   const sortProducts = (products: ProductSegment[]) => {
     if (!sortBy) return products;

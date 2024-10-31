@@ -82,11 +82,11 @@ export default function TrendingStartups() {
     return matchesCategory && matchesLocation;
   };
 
-  const filteredstartups = useMemo(() => {
+  const filteredstartups: Startup[] = useMemo(() => {
     return startupsData
       .filter((startup) => startup.title.toLowerCase().includes(searchQuery.toLowerCase()))
       .filter(applyFilters);
-  }, [searchQuery, filters]);
+  }, [searchQuery, filters, applyFilters]);   
 
   const exportToCSV = () => {
     const csvContent = [
@@ -107,6 +107,8 @@ export default function TrendingStartups() {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'startups.csv');
   };
+
+  
 
   return (
     <div className="min-h-screen p-6 bg-neutral-50 border border-gray-300 rounded-lg">

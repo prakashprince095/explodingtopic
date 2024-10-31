@@ -9,10 +9,10 @@ import { productsData } from "../page";
 import { ProductSegment } from "@/types/interfaces";
 
 type ProductDetailModalProps = {
-    product: ProductSegment;
-    onClose: () => void;
-    params: { slug: string };  // Ensure params is defined correctly
-};
+    product: ProductSegment; // Ensure product type matches
+    onClose: () => void;      // Ensure onClose is a function
+    params: { slug: string };  // Ensure params matches the expected shape
+  };
 
 type Trend = {
     name: string;
@@ -220,15 +220,6 @@ const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose, pa
         }
         fetchParams();
     }, [params]);  // No need to access params.slug directly in the dependency array
-    
-
-    const handleChangeTimeframe = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedTimeframe(e.target.value);
-    };
-
-    const handleToggleForecast = () => {
-        setForecast(!forecast);
-    };
 
     const salesData = product?.salesData || [0, 2, 3, 4.5, 6.5];
     const chartData = generateChartData(salesData, forecast);

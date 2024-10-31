@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/Auth"; // Assuming you're using Zustand for auth
 import { cn } from "@/lib/utils";
@@ -72,7 +73,7 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-2">
-        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <Image className="rounded-full" width="32" height="32" alt="" src={img} />
         <div className="flex flex-col">
           <figcaption className="text-sm font-medium dark:text-white">
             {name}
@@ -90,15 +91,13 @@ export default function HomePage() {
   const { isAuthenticated, verfiySession } = useAuthStore();
   const router = useRouter();
 
-  useEffect(() => {
-    // Verify session on mount
-    verfiySession();
 
-    // Redirect if the user is authenticated
+  useEffect(() => {
+    verfiySession();
     if (isAuthenticated) {
       router.push("/dashboard/insights-hub");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, verfiySession]);
 
   return (
     <>
