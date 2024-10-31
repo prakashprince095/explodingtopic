@@ -51,22 +51,7 @@ export const startupsData: Startup[] = [
     location: 'USA',
     growthData: [120, 150, 180, 210, 250, 300],
   },
-  {
-    id: 1,
-    title: 'DocuClipper',
-    description: 'OCR software for financial documents.',
-    foundedDate: '2020-01-01',
-    website: 'https://docuclipper.com',
-    socialPlatforms: ['Twitter', 'LinkedIn'],
-    growth: '+99%',
-    volume: '4.4K',
-    totalFunding: 'Undisclosed',
-    latestRound: 'Bootstrapped',
-    employees: '1-10',
-    category: ['Business', 'Technology', 'Finance'],
-    location: 'USA',
-    growthData: [120, 150, 180, 210, 250, 300],
-  },
+  
   // Additional startups...
 ];
 
