@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { saveAs } from 'file-saver';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import fetchCrunchbaseData from '@/utils/fetchCrunchbaseData';
 
 type KeyIndicators = {
   growth: string;
@@ -33,28 +34,6 @@ type Startup = {
   growthData?: number[];
 };
 
-export const startupsData: Startup[] = [
-  // Example data
-  {
-    id: 1,
-    title: 'DocuClipper',
-    description: 'OCR software for financial documents.',
-    foundedDate: '2020-01-01',
-    website: 'https://docuclipper.com',
-    socialPlatforms: ['Twitter', 'LinkedIn'],
-    growth: '+99%',
-    volume: '4.4K',
-    totalFunding: 'Undisclosed',
-    latestRound: 'Bootstrapped',
-    employees: '1-10',
-    category: ['Business', 'Technology', 'Finance'],
-    location: 'USA',
-    growthData: [120, 150, 180, 210, 250, 300],
-  },
-  
-  // Additional startups...
-];
-
 const GrowthChart = ({ growthData }: { growthData: number[] }) => (
   <div className="mt-4 p-1 border border-gray-300 rounded-md">
     <ResponsiveContainer width="100%" height={100}>
@@ -75,6 +54,19 @@ export default function TrendingStartups() {
     location: 'All',
     growth: 'All',
   });
+  const [startupsData, setStartupsData] = useState<Startup[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const startups = await fetchCrunchbaseData(searchQuery);
+        setStartupsData(startups);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    };
+    loadData();
+  }, [searchQuery, filters]);
 
   const applyFilters = (startup: Startup) => {
     const matchesCategory = filters.category === 'All' || startup.category.includes(filters.category);
@@ -86,7 +78,7 @@ export default function TrendingStartups() {
     return startupsData
       .filter((startup) => startup.title.toLowerCase().includes(searchQuery.toLowerCase()))
       .filter(applyFilters);
-  }, [searchQuery, filters, applyFilters]);   
+  }, [searchQuery, filters, startupsData]);
 
   const exportToCSV = () => {
     const csvContent = [
@@ -107,8 +99,6 @@ export default function TrendingStartups() {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'startups.csv');
   };
-
-  
 
   return (
     <div className="min-h-screen p-6 bg-neutral-50 border border-gray-300 rounded-lg">
@@ -142,7 +132,6 @@ export default function TrendingStartups() {
           <option value="All">All Locations</option>
           <option value="USA">USA</option>
         </select>
-        
       </div>
 
       <div className="flex justify-end mb-4">
