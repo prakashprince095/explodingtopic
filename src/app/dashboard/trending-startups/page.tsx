@@ -59,14 +59,26 @@ export default function TrendingStartups() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const startups = await fetchCrunchbaseData(searchQuery);
+        const response = await fetch('/api/crunchbase', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: searchQuery })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+  
+        const { startups } = await response.json();
         setStartupsData(startups);
       } catch (error) {
-        console.error("Error loading data:", error);
+        console.error("Error loading data from API route:", error);
       }
     };
+  
     loadData();
   }, [searchQuery, filters]);
+  
 
   const applyFilters = (startup: Startup) => {
     const matchesCategory = filters.category === 'All' || startup.category.includes(filters.category);
