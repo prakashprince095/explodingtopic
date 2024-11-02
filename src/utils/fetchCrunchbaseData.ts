@@ -1,44 +1,42 @@
 import env from "@/app/env";
 
-const fetchCrunchbaseData = async (query: string) => {
-    try {
-        const response = await fetch(`${env.crunchbase.endpoint}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-cb-user-key': env.crunchbase.apikey,
-            },
-            body: JSON.stringify({
-                query,
-                collection_ids: ["companies"],
-            }),
-        });
+const fetchCrunchbaseData = async (organizationId: string) => {
+  try {
+    const url = `${env.crunchbase.endpoint}/organizations/${organizationId}?user_key=${env.crunchbase.apikey}`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-cb-user-key': env.crunchbase.apikey,
+      },
+    });
 
-        if (!response.ok) {
-            console.error("API request failed with status:", response.status, response.statusText);
-            throw new Error(`Error fetching data: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.entities.map((entity: any) => ({
-            id: entity.id,
-            title: entity.properties.name,
-            description: entity.properties.short_description,
-            foundedDate: entity.properties.founded_on,
-            website: entity.properties.website,
-            growth: entity.properties.growth_score,
-            volume: entity.properties.rank,
-            totalFunding: entity.properties.total_funding_usd,
-            latestRound: entity.properties.last_funding_type,
-            employees: entity.properties.num_employees_enum,
-            category: entity.categories,
-            location: entity.properties.location_city,
-        }));
-    } catch (error) {
-        console.error("Failed to fetch Crunchbase data:", error);
-        return [];
+    if (!response.ok) {
+      console.error("API request failed with status:", response.status, response.statusText);
+      throw new Error(`Error fetching data: ${response.statusText}`);
     }
+
+    const data = await response.json();
+
+    return {
+      id: data.uuid,
+      title: data.properties.name,
+      description: data.properties.short_description,
+      foundedDate: data.properties.founded_on,
+      website: data.properties.website,
+      growth: data.properties.growth_score,
+      volume: data.properties.rank,
+      totalFunding: data.properties.total_funding_usd,
+      latestRound: data.properties.last_funding_type,
+      employees: data.properties.num_employees_enum,
+      category: data.categories,
+      location: data.properties.location_city,
+    };
+  } catch (error) {
+    console.error("Failed to fetch Crunchbase data:", error);
+    return null;
+  }
 };
 
 export default fetchCrunchbaseData;
-

@@ -23,7 +23,7 @@ type Startup = {
   description: string;
   foundedDate: string;
   website: string;
-  socialPlatforms: string[];
+  socialPlatforms?: string[]; // Make socialPlatforms optional
   growth: string;
   volume: string;
   totalFunding: string;
@@ -33,6 +33,7 @@ type Startup = {
   location: string;
   growthData?: number[];
 };
+
 
 const GrowthChart = ({ growthData }: { growthData: number[] }) => (
   <div className="mt-4 p-1 border border-gray-300 rounded-md">
@@ -59,26 +60,28 @@ export default function TrendingStartups() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch('/api/crunchbase', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: searchQuery })
-        });
+        const startups = await fetchCrunchbaseData('crunchbase');
         
-        if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}`);
+        // Check if `startups` is defined and is an array
+        if (startups && Array.isArray(startups)) {
+          const startupsWithDefaults = startups.map((startup: any) => ({
+            ...startup,
+            socialPlatforms: startup.socialPlatforms || [], // Default to an empty array if missing
+          }));
+          setStartupsData(startupsWithDefaults);
+        } else {
+          console.warn("Expected array but received:", startups);
+          setStartupsData([]); // Set to empty array if not an array
         }
-  
-        const { startups } = await response.json();
-        setStartupsData(startups);
       } catch (error) {
-        console.error("Error loading data from API route:", error);
+        console.error("Error loading data from Crunchbase:", error);
       }
     };
   
     loadData();
   }, [searchQuery, filters]);
   
+
 
   const applyFilters = (startup: Startup) => {
     const matchesCategory = filters.category === 'All' || startup.category.includes(filters.category);

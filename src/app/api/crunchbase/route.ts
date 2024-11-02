@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import env from "@/app/env";
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { query } = req.body;
-
     try {
         const response = await fetch(`${env.crunchbase.endpoint}`, {
             method: 'POST',
@@ -16,14 +14,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 collection_ids: ["companies"],
             }),
         });
-
-        console.log("Response Status:", response.status); // Debugging log
-        console.log("Response Headers:", response.headers); // Debugging log
-
+        console.log("Response Status:", response.status); // Debugging log 
+        console.log("Response Headers:", response.headers); // Debugging log 
         if (!response.ok) {
             throw new Error(`Error fetching data: ${response.statusText}`);
         }
-
         const data = await response.json();
         const startups = data.entities.map((entity: any) => ({
             id: entity.id,
@@ -39,7 +34,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             category: entity.categories,
             location: entity.properties.location_city,
         }));
-
         res.status(200).json({ startups });
     } catch (error) {
         console.error("Failed to fetch Crunchbase data:", error);
