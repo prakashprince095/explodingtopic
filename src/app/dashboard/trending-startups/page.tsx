@@ -61,7 +61,7 @@ export default function TrendingStartups() {
     const loadData = async () => {
       try {
         const startups = await fetchCrunchbaseData('crunchbase');
-        
+
         // Check if `startups` is defined and is an array
         if (startups && Array.isArray(startups)) {
           const startupsWithDefaults = startups.map((startup: any) => ({
@@ -77,10 +77,10 @@ export default function TrendingStartups() {
         console.error("Error loading data from Crunchbase:", error);
       }
     };
-  
+
     loadData();
   }, [searchQuery, filters]);
-  
+
 
 
   const applyFilters = (startup: Startup) => {
@@ -116,17 +116,19 @@ export default function TrendingStartups() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-neutral-50 border border-gray-300 rounded-lg">
+    <div className="min-h-screen p-6 bg-slate-50 border border-gray-300 rounded-lg">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Trending Startups</h2>
-        <input
-          type="text"
-          placeholder="Search Startups"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border p-2 rounded-sm min-w-[300px] border-gray-400"
-        />
-        <Button onClick={exportToCSV}>Export to CSV</Button>
+        <h2 className="text-2xl ">Trending Startups</h2>
+        <div className='flex gap-3'>
+          <input
+            type="text"
+            placeholder="Search Startups"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border p-2 rounded-sm min-w-[300px] border-gray-400"
+          />
+          <Button onClick={exportToCSV}>Export to CSV</Button>
+        </div>
       </div>
 
       <div className="flex items-center gap-5 mb-4">

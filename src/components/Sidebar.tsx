@@ -27,7 +27,7 @@ const Sidebar = () => {
       <nav className="mt-4">
         <ul className='mx-3'>
           {links.map((link) => (
-            <li key={link.href} className={pathname === link.href ? 'bg-gray-300 rounded-md' : ''}>
+            <li key={link.href} className={pathname === link.href ? 'border-l-4 border-blue-400 bg-blue-100 rounded-r-md' : ''}>
               <Link href={link.href} className="flex items-center my-2 p-2 hover:bg-gray-200 rounded-md">
                 {/* Image next to the link */}
                 <img src={link.imgSrc} alt={link.name} className="w-5 h-5 mr-2" />
