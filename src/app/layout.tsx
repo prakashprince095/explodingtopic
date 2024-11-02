@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { UserProvider } from '@/context/UserContext';
 
-import Footer from "@/components/Footer";
+
 
 
 export const metadata: Metadata = {
@@ -24,7 +24,6 @@ export default function RootLayout({
         <UserProvider>
           {children}
         </UserProvider>
-        <Footer />
       </body>
     </html>
   );

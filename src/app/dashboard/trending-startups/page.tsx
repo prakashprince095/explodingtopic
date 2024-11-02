@@ -116,7 +116,7 @@ export default function TrendingStartups() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-slate-50 border border-gray-300 rounded-lg">
+    <div className="min-h-screen p-6 bg-sky-50  rounded-lg">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl ">Trending Startups</h2>
         <div className='flex gap-3'>
@@ -150,55 +150,56 @@ export default function TrendingStartups() {
           <option value="USA">USA</option>
         </select>
       </div>
+      <div className='bg-white h-screen border border-zinc-300 p-2 rounded-lg shadow-sm '>
+        <div className="flex justify-end mb-4">
+          <button onClick={() => setIsGridView(true)} className={`p-2 ${isGridView ? 'bg-gray-200 rounded-md' : ''}`}>
+            <Image src="/startups/grid.svg" width={24} height={24} alt="Grid View" />
+          </button>
+          <button onClick={() => setIsGridView(false)} className={`p-2 ${!isGridView ? 'bg-gray-200 rounded-md' : ''}`}>
+            <Image src="/startups/list.svg" width={24} height={24} alt="List View" />
+          </button>
+        </div>
 
-      <div className="flex justify-end mb-4">
-        <button onClick={() => setIsGridView(true)} className={`p-2 ${isGridView ? 'bg-gray-200 rounded-md' : ''}`}>
-          <Image src="/startups/grid.svg" width={24} height={24} alt="Grid View" />
-        </button>
-        <button onClick={() => setIsGridView(false)} className={`p-2 ${!isGridView ? 'bg-gray-200 rounded-md' : ''}`}>
-          <Image src="/startups/list.svg" width={24} height={24} alt="List View" />
-        </button>
-      </div>
-
-      <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
-        {filteredstartups.map((startup) => (
-          <div
-            key={startup.id}
-            className="p-4 border rounded-md bg-gray-100 hover:shadow-lg transition cursor-pointer"
-          >
-            <Link href={`/dashboard/trending-startups/${startup.title.toLowerCase()}`}>
-              <div>
-                <h3 className="text-xl ">{startup.title}</h3>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="text-sm text-gray-600">Volume: {startup.volume}</span>
-                  <span className="text-sm bg-black text-white px-2 py-1 rounded-full">Funding: {startup.totalFunding}</span>
+        <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
+          {filteredstartups.map((startup) => (
+            <div
+              key={startup.id}
+              className="p-4 border rounded-md bg-gray-100 hover:shadow-lg transition cursor-pointer"
+            >
+              <Link href={`/dashboard/trending-startups/${startup.title.toLowerCase()}`}>
+                <div>
+                  <h3 className="text-xl ">{startup.title}</h3>
+                  <div className="flex justify-between items-center mt-2">
+                    <span className="text-sm text-gray-600">Volume: {startup.volume}</span>
+                    <span className="text-sm bg-black text-white px-2 py-1 rounded-full">Funding: {startup.totalFunding}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2 my-3">
+                    <div className="bg-white p-2 border rounded-sm text-center">
+                      <span className="text-gray-500 text-sm">Round</span>
+                      <p className="text-lg ">{startup.latestRound}</p>
+                    </div>
+                    <div className="bg-white p-2 border rounded-sm text-center">
+                      <span className="text-gray-500 text-sm">Employees</span>
+                      <p className="text-lg ">{startup.employees}</p>
+                    </div>
+                    <div className="bg-white p-2 border rounded-sm text-center">
+                      <span className="text-gray-500 text-sm">Location</span>
+                      <p className="text-lg ">{startup.location}</p>
+                    </div>
+                    <div className="bg-white p-2 border rounded-sm text-center">
+                      <span className="text-gray-500 text-sm">Growth</span>
+                      <p className="text-lg ">{startup.growth}</p>
+                    </div>
+                  </div>
+                  <div className="my-2 border-b border-gray-300"></div>
+                  <p className="text-sm text-gray-700">{startup.description}</p>
+                  {startup.growthData && <GrowthChart growthData={startup.growthData} />}
                 </div>
-                <div className="flex flex-wrap gap-2 my-3">
-                  <div className="bg-white p-2 border rounded-sm text-center">
-                    <span className="text-gray-500 text-sm">Round</span>
-                    <p className="text-lg ">{startup.latestRound}</p>
-                  </div>
-                  <div className="bg-white p-2 border rounded-sm text-center">
-                    <span className="text-gray-500 text-sm">Employees</span>
-                    <p className="text-lg ">{startup.employees}</p>
-                  </div>
-                  <div className="bg-white p-2 border rounded-sm text-center">
-                    <span className="text-gray-500 text-sm">Location</span>
-                    <p className="text-lg ">{startup.location}</p>
-                  </div>
-                  <div className="bg-white p-2 border rounded-sm text-center">
-                    <span className="text-gray-500 text-sm">Growth</span>
-                    <p className="text-lg ">{startup.growth}</p>
-                  </div>
-                </div>
-                <div className="my-2 border-b border-gray-300"></div>
-                <p className="text-sm text-gray-700">{startup.description}</p>
-                {startup.growthData && <GrowthChart growthData={startup.growthData} />}
-              </div>
-            </Link>
-            <Button className="mt-4">Add to Hub</Button>
-          </div>
-        ))}
+              </Link>
+              <Button className="mt-4">Add to Hub</Button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
