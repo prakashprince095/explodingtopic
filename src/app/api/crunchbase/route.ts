@@ -14,8 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 collection_ids: ["companies"],
             }),
         });
-        console.log("Response Status:", response.status); // Debugging log 
-        console.log("Response Headers:", response.headers); // Debugging log 
+        console.log("Response Status:", response.status); 
+        console.log("Response Headers:", response.headers); 
         if (!response.ok) {
             throw new Error(`Error fetching data: ${response.statusText}`);
         }
