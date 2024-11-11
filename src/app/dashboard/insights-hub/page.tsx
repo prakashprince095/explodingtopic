@@ -5,8 +5,17 @@ import { useHub } from "@/context/HubContext";
 import { useProductContext } from "@/context/ProductContext";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-// Define types for HubItem and ProductItem
 interface HubItem {
   id: number;
   title: string;
@@ -38,7 +47,6 @@ interface ProductItem {
 const InsightHub: React.FC = () => {
   const { hubItems = [] }: { hubItems?: HubItem[] } = useHub();
   const { productItems = [] }: { productItems?: ProductItem[] } = useProductContext();
-
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [filterBy, setFilterBy] = useState("");
@@ -50,7 +58,6 @@ const InsightHub: React.FC = () => {
   const [recentlyViewedProductItems, setRecentlyViewedProductItems] = useState<ProductItem[]>([]);
   const [undoStack, setUndoStack] = useState<string[]>([]);
 
-  // Auto-save to local storage for search & filter terms
   useEffect(() => {
     const savedSearch = localStorage.getItem('searchTerm');
     const savedFilter = localStorage.getItem('filterBy');
@@ -66,49 +73,40 @@ const InsightHub: React.FC = () => {
     localStorage.setItem('sortBy', sortBy);
   }, [searchTerm, filterBy, sortBy]);
 
-  // Search function for Hub items
   const handleSearchHub = (items: HubItem[], term: string) =>
     items.filter((item) => item.title.toLowerCase().includes(term.toLowerCase()));
 
-  // Search function for Product items
   const handleSearchProduct = (items: ProductItem[], term: string) =>
     items.filter((item) => item.name.toLowerCase().includes(term.toLowerCase()));
 
-  // Sort function for Hub items
   const handleSortHub = (items: HubItem[], key: keyof HubItem) =>
     [...items].sort((a, b) => {
-      const valueA = a[key] ?? ''; // Use a fallback value if undefined or null
-      const valueB = b[key] ?? ''; // Use a fallback value if undefined or null
+      const valueA = a[key] ?? '';
+      const valueB = b[key] ?? '';
 
       if (valueA > valueB) return 1;
       if (valueA < valueB) return -1;
-      return 0; // If equal, return 0
+      return 0;
     });
 
-
-  // Sort function for Product items
   const handleSortProduct = (items: ProductItem[], key: keyof ProductItem) =>
     [...items].sort((a, b) => {
-      const valueA = a[key] ?? ''; // Use a fallback value if undefined or null
-      const valueB = b[key] ?? ''; // Use a fallback value if undefined or null
+      const valueA = a[key] ?? '';
+      const valueB = b[key] ?? '';
 
       if (valueA > valueB) return 1;
       if (valueA < valueB) return -1;
-      return 0; // If equal, return 0
+      return 0;
     });
 
-
-  // Filter function for Hub items by category
   const handleFilterHub = (items: HubItem[], category: string) =>
     category ? items.filter((item) => item.category.includes(category)) : items;
 
-  // Filter function for Product items by category
   const handleFilterProduct = (items: ProductItem[], category: string) =>
     category ? items.filter((item) => item.categories.includes(category)) : items;
 
-  // Toggle favorite status for HubItem
   const toggleFavoriteHubItem = (item?: HubItem) => {
-    if (!item) return; // Ensure item is not undefined
+    if (!item) return;
 
     if (item.isFavorite) {
       setFavoriteHubItems(favoriteHubItems.filter(favItem => favItem.id !== item.id));
@@ -120,21 +118,18 @@ const InsightHub: React.FC = () => {
     setUndoStack([...undoStack]);
   };
 
-  // Toggle favorite status for ProductItem
   const toggleFavoriteProductItem = (item?: ProductItem) => {
-    if (!item) return; // Ensure item is not undefined
+    if (!item) return;
 
     if (item.isFavorite) {
       setFavoriteProductItems(favoriteProductItems.filter(favItem => favItem.id !== item.id));
     } else {
       setFavoriteProductItems([...favoriteProductItems, { ...item, isFavorite: true }]);
     }
-
     undoStack.push(`favoriteProduct_${item.id}`);
     setUndoStack([...undoStack]);
   };
 
-  // Undo last action
   const undoLastAction = () => {
     const lastAction = undoStack[undoStack.length - 1];
     if (!lastAction) return;
@@ -152,10 +147,9 @@ const InsightHub: React.FC = () => {
       if (item) toggleFavoriteProductItem(item);
     }
 
-    setUndoStack(updatedUndoStack); // Update state with the copied undo stack
+    setUndoStack(updatedUndoStack);
   };
 
-  // Processed Hub and Product items based on search, filter, and sort
   const processedHubItems = handleSortHub(
     handleFilterHub(handleSearchHub(hubItems ?? [], searchTerm), filterBy),
     "category"
@@ -164,39 +158,63 @@ const InsightHub: React.FC = () => {
     handleFilterProduct(handleSearchProduct(productItems ?? [], searchTerm), filterBy),
     "categories"
   );
-
-  // Updated logic for "See More" functionality for Hub Items
   const hubDisplayLimit = showMoreHub ? processedHubItems.length : 3;
-
-  // Updated logic for "See More" functionality for Product Items
   const productDisplayLimit = showMoreProduct ? processedProductItems.length : 3;
 
-
+  const totalHubItems = hubItems.length;
+  const totalProductItems = productItems.length;
+  const totalFavoriteHubItems = favoriteHubItems.length;
+  const totalFavoriteProductItems = favoriteProductItems.length;
 
   return (
-    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
+    <div className="min-h-screen bg-slate-50 border border-gray-300 p-3 rounded-lg">
       <header className="flex flex-row items-center justify-between rounded-lg">
-        <section className="mb-5">
+        <section className="flex gap-2 mb-5">
+          <Image width={30} height={30} src='/sidebar/1.svg' alt='insight-hub-icon' />
           <h1 className="text-2xl font-normal text-black">Insight Hub</h1>
         </section>
 
-        {/* Search, Sort, and Filter Options */}
         <section className="flex items-center gap-4 mb-3">
           <input
             type="text"
             placeholder="Search..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-gray-300 p-2 rounded-lg transition-shadow"
+            className="border w-[300px] shadow-sm border-gray-200 p-2 rounded-md transition-shadow"
           />
-          <select
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="Sort By" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="category">Category</SelectItem>
+                <SelectItem value="volume">Volume</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          {/* <select
             onChange={(e) => setSortBy(e.target.value)}
             className="border border-gray-300 p-2 rounded-lg transition-shadow"
           >
-            <option value="">Sort By</option>
-            <option value="category">Category</option>
-          </select>
-          <select
+            <option value=""></option>
+            <option value="category"></option>
+          </select> */}
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="Filter By Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+              <SelectItem value="Filter">Filter</SelectItem>
+                <SelectItem value="Tech">Tech</SelectItem>
+                <SelectItem value="Health">Health</SelectItem>
+                <SelectItem value="Automobile">Automobile</SelectItem>
+                <SelectItem value="Finance">Finance</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          {/* <select
             onChange={(e) => setFilterBy(e.target.value)}
             className="border border-gray-300 p-2 rounded-lg transition-shadow"
           >
@@ -204,12 +222,30 @@ const InsightHub: React.FC = () => {
             <option value="Tech">Tech</option>
             <option value="Health">Health</option>
             <option value="Finance">Finance</option>
-          </select>
+          </select> */}
         </section>
       </header>
 
-      {/* Trending Startups Section */}
-      <section className="mb-12 p-3 rounded-lg border border-gray-300 min-h-[500px] flex flex-col justify-between bg-gray-50">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-4 bg-white min-w-[300px] w-full rounded-md border border-gray-300 ">
+          <h3 className="text-lg font-normal">Total Startups</h3>
+          <p className="text-2xl  ">{totalHubItems}</p>
+        </div>
+        <div className="p-4 bg-white min-w-[300px] w-full rounded-md border border-gray-300 ">
+          <h3 className="text-lg font-normal">Total Products</h3>
+          <p className="text-2xl  ">{totalProductItems}</p>
+        </div>
+        <div className="p-4 bg-white min-w-[300px] w-full rounded-md border border-gray-300 ">
+          <h3 className="text-lg font-normal">Favorite Startups</h3>
+          <p className="text-2xl  ">{totalFavoriteHubItems}</p>
+        </div>
+        <div className="p-4 bg-white min-w-[300px] w-full rounded-md border border-gray-300 ">
+          <h3 className="text-lg font-normal">Favorite Products</h3>
+          <p className="text-2xl  ">{totalFavoriteProductItems}</p>
+        </div>
+      </div>
+
+      <section className="mb-12 p-3 rounded-lg border border-gray-300 min-h-[500px] flex flex-col justify-between bg-white">
         <h2 className="text-xl text-gray-700 mb-6">Trending Startups</h2>
         {processedHubItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3">
@@ -245,7 +281,6 @@ const InsightHub: React.FC = () => {
           {showMoreHub ? "Show Less" : "See More"}
         </Button>
 
-        {/* Overlay for "See More" in Trending Startups */}
         {showMoreHub && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="relative bg-white p-8 w-[800px] h-[800px] overflow-auto rounded-lg shadow-lg">
@@ -286,15 +321,15 @@ const InsightHub: React.FC = () => {
       </section>
 
       {/* Product Discover Section */}
-      <section className="mb-12 p-3 rounded-lg border border-gray-300 min-h-[500px] flex flex-col justify-between bg-gray-50">
+      <section className="mb-12 p-3 rounded-lg border border-gray-300 min-h-[500px] flex flex-col justify-between bg-white">
         <h2 className="text-xl text-gray-700 mb-6">Product Discover</h2>
         {processedProductItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3">
-          <h1 className="text-gray-800 text-[20px] text-center">Add Product in your Hub.</h1>
-          <Button>
-            <Link className="" href='/dashboard/trending-segments'>Product</Link>
-          </Button>
-        </div>
+            <h1 className="text-gray-800 text-[20px] text-center">Add Product in your Hub.</h1>
+            <Button>
+              <Link className="" href='/dashboard/trending-segments'>Product</Link>
+            </Button>
+          </div>
         ) : (
           <div className="flex flex-wrap gap-6">
             {processedProductItems.slice(0, productDisplayLimit).map((product) => (
@@ -351,7 +386,6 @@ const InsightHub: React.FC = () => {
                     >
                       {product.isFavorite ? "Unfavorite" : "Favorite"}
                     </button>
-                    
                   </div>
                 ))}
               </div>
@@ -359,12 +393,10 @@ const InsightHub: React.FC = () => {
           </div>
         )}
       </section>
-
-      {/* Undo Button */}
       <Button onClick={undoLastAction} className="mt-6">
         Undo Last Action
       </Button>
-    </div >
+    </div>
   );
 };
 

@@ -20,7 +20,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-[200px] h-screen bg- text-black fixed">
+    <aside className="w-[200px] h-screen  text-black fixed">
       <div className="p-4">
         <Link href="/" className="text-md">Dashboard</Link>
       </div>

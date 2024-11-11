@@ -7,7 +7,15 @@ import { useProductContext } from "@/context/ProductContext";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 // Types for product segments
 export type ProductSegment = {
   id: number;
@@ -230,7 +238,96 @@ export default function TrendingProducts() {
 
       {/* 2. Filter Options */}
       <div className="flex items-center gap-3">
-        <select
+      <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="All Categories" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="Technology">Technology</SelectItem>
+              <SelectItem value="Business">Business</SelectItem>
+              <SelectItem value="Business">Socials</SelectItem>
+              <SelectItem value="Business">Beauty</SelectItem>
+              <SelectItem value="Business">HealthCare</SelectItem>
+              <SelectItem value="Business">Finance</SelectItem>
+              <SelectItem value="Business">Food</SelectItem>
+              <SelectItem value="Business">HealthCare</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="Sort By" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">USA</SelectItem>
+              <SelectItem value="volume">Canada</SelectItem>
+              <SelectItem value="volume">India</SelectItem>
+              <SelectItem value="volume">China</SelectItem>
+              <SelectItem value="volume">UK</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="Sort by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">Name</SelectItem>
+              <SelectItem value="volume">Volume</SelectItem>
+              <SelectItem value="volume">Profits</SelectItem>
+              <SelectItem value="volume">Loss</SelectItem>
+              <SelectItem value="volume">Searches</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="TimeFrame" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">3 months</SelectItem>
+              <SelectItem value="volume">6 months</SelectItem>
+              <SelectItem value="volume">1 year</SelectItem>
+              <SelectItem value="volume">2 year</SelectItem>
+              <SelectItem value="volume">3 year</SelectItem>
+              <SelectItem value="volume">4 year</SelectItem>
+              <SelectItem value="volume">5 year</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="Total Funding" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">USA</SelectItem>
+              <SelectItem value="volume">Canada</SelectItem>
+              <SelectItem value="volume">India</SelectItem>
+              <SelectItem value="volume">China</SelectItem>
+              <SelectItem value="volume">UK</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="No of employees" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">1-25</SelectItem>
+              <SelectItem value="volume">25-50</SelectItem>
+              <SelectItem value="volume">50-100</SelectItem>
+              <SelectItem value="volume">100-1000</SelectItem>
+              <SelectItem value="volume">1000-5000</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {/* <select
           value={filters.timeframe}
           onChange={(e) =>
             setFilters({ ...filters, timeframe: e.target.value })
@@ -239,9 +336,9 @@ export default function TrendingProducts() {
         >
           <option value="1 Year">1 Year</option>
           <option value="5 Years">5 Years</option>
-        </select>
+        </select> */}
 
-        <select
+        {/* <select
           value={filters.category}
           onChange={(e) => setFilters({ ...filters, category: e.target.value })}
           className="border p-2 rounded bg-transparent min-w-[300px]"
@@ -249,21 +346,20 @@ export default function TrendingProducts() {
           <option value="All">All Categories</option>
           <option value="Technology">Technology</option>
           <option value="Home">Home</option>
-          {/* Add other categories */}
-        </select>
+        </select> */}
 
-        <select
+        {/* <select
           value={filters.location}
           onChange={(e) => setFilters({ ...filters, location: e.target.value })}
           className="border p-2 rounded bg-transparent min-w-[300px]"
         >
           <option value="All">All Locations</option>
           <option value="USA">USA</option>
-          {/* Add other locations */}
-        </select>
+          
+        </select> */}
 
         {/* Add Growth, Sales Volume, etc. filters */}
-        <select
+        {/* <select
           value={filters.growth}
           onChange={(e) => setFilters({ ...filters, growth: e.target.value })}
           className="border p-2 rounded bg-transparent min-w-[300px]"
@@ -271,7 +367,7 @@ export default function TrendingProducts() {
           <option value="All">All Growth Rates</option>
           <option value="Above 50%">Above 50%</option>
           <option value="Below 50%">Below 50%</option>
-        </select>
+        </select> */}
       </div>
 
       {/* 3. Additional Filters */}

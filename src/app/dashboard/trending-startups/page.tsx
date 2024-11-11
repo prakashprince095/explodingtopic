@@ -7,6 +7,15 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import fetchCrunchbaseData from '@/utils/fetchCrunchbaseData';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 type KeyIndicators = {
   growth: string;
@@ -23,7 +32,7 @@ type Startup = {
   description: string;
   foundedDate: string;
   website: string;
-  socialPlatforms?: string[]; // Make socialPlatforms optional
+  socialPlatforms?: string[];
   growth: string;
   volume: string;
   totalFunding: string;
@@ -62,16 +71,15 @@ export default function TrendingStartups() {
       try {
         const startups = await fetchCrunchbaseData('crunchbase');
 
-        // Check if `startups` is defined and is an array
         if (startups && Array.isArray(startups)) {
           const startupsWithDefaults = startups.map((startup: any) => ({
             ...startup,
-            socialPlatforms: startup.socialPlatforms || [], // Default to an empty array if missing
+            socialPlatforms: startup.socialPlatforms || [],
           }));
           setStartupsData(startupsWithDefaults);
         } else {
           console.warn("Expected array but received:", startups);
-          setStartupsData([]); // Set to empty array if not an array
+          setStartupsData([]);
         }
       } catch (error) {
         console.error("Error loading data from Crunchbase:", error);
@@ -116,7 +124,7 @@ export default function TrendingStartups() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-sky-50  rounded-lg">
+    <div className="min-h-screen p-6 bg-slate-50 border border-gray-300 rounded-lg">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl ">Trending Startups</h2>
         <div className='flex gap-3'>
@@ -132,12 +140,101 @@ export default function TrendingStartups() {
       </div>
 
       <div className="flex items-center gap-5 mb-4">
-        <select
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="All Categories" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="Technology">Technology</SelectItem>
+              <SelectItem value="Business">Business</SelectItem>
+              <SelectItem value="Business">Socials</SelectItem>
+              <SelectItem value="Business">Beauty</SelectItem>
+              <SelectItem value="Business">HealthCare</SelectItem>
+              <SelectItem value="Business">Finance</SelectItem>
+              <SelectItem value="Business">Food</SelectItem>
+              <SelectItem value="Business">HealthCare</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="Sort By" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">USA</SelectItem>
+              <SelectItem value="volume">Canada</SelectItem>
+              <SelectItem value="volume">India</SelectItem>
+              <SelectItem value="volume">China</SelectItem>
+              <SelectItem value="volume">UK</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="Sort by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">Name</SelectItem>
+              <SelectItem value="volume">Volume</SelectItem>
+              <SelectItem value="volume">Profits</SelectItem>
+              <SelectItem value="volume">Loss</SelectItem>
+              <SelectItem value="volume">Searches</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="TimeFrame" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">3 months</SelectItem>
+              <SelectItem value="volume">6 months</SelectItem>
+              <SelectItem value="volume">1 year</SelectItem>
+              <SelectItem value="volume">2 year</SelectItem>
+              <SelectItem value="volume">3 year</SelectItem>
+              <SelectItem value="volume">4 year</SelectItem>
+              <SelectItem value="volume">5 year</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="Total Funding" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">USA</SelectItem>
+              <SelectItem value="volume">Canada</SelectItem>
+              <SelectItem value="volume">India</SelectItem>
+              <SelectItem value="volume">China</SelectItem>
+              <SelectItem value="volume">UK</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[150px] shadow-sm">
+            <SelectValue placeholder="No of employees" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="category">1-25</SelectItem>
+              <SelectItem value="volume">25-50</SelectItem>
+              <SelectItem value="volume">50-100</SelectItem>
+              <SelectItem value="volume">100-1000</SelectItem>
+              <SelectItem value="volume">1000-5000</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {/* <select
           value={filters.category}
           onChange={(e) => setFilters({ ...filters, category: e.target.value })}
           className="border p-2 rounded bg-transparent border-gray-400 min-w-[200px]"
         >
-          <option value="All">All Categories</option>
+          <option value="All"></option>
           <option value="Technology">Technology</option>
           <option value="Business">Business</option>
         </select>
@@ -148,7 +245,7 @@ export default function TrendingStartups() {
         >
           <option value="All">All Locations</option>
           <option value="USA">USA</option>
-        </select>
+        </select> */}
       </div>
       <div className='bg-white h-screen border border-zinc-300 p-2 rounded-lg shadow-sm '>
         <div className="flex justify-end mb-4">
