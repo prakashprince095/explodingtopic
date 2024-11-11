@@ -147,19 +147,18 @@ const relatedStartupsData: RelatedStartup[] = [
   },
 ];
 
-
 const timeframes = ['3 Months', '6 Months', '1 Year', '2 Years', '3 Years', '4 Years', '5 Years'];
 
 function RelatedStartups({ startups }: { startups: RelatedStartup[] }) {
   return (
     <div className="mt-8">
-      <h3 className="text-xl font-semibold mb-4">Related Startups</h3>
+      <h3 className="text-xl  mb-4">Related Startups</h3>
       <div className="grid grid-cols-2 gap-4">
         {startups.map((related, index) => (
           <div key={`${related.id}-${index}`} className="p-4 border border-gray-300 rounded-lg flex items-center space-x-4">
             <Image src={related.logo || '/default-logo.png'} alt={related.name} width={40} height={40} className="rounded-full" />
             <div>
-              <h4 className="font-bold">{related.name}</h4>
+              <h4 className="">{related.name}</h4>
               <p className="text-gray-600">{related.description}</p>
               <span className={related.growthRate.startsWith('+') ? 'text-green-500' : 'text-red-500'}>
                 Growth Rate: {related.growthRate}
@@ -180,10 +179,12 @@ export default function StartupDetail() {
   const [startup, setStartup] = useState<Startup | undefined>(undefined);
 
   useEffect(() => {
-    const foundStartup = startupsData.find(
-      (s: Startup) => s.title.toLowerCase().replace(/\s+/g, '-') === slug
-    );
-    setStartup(foundStartup);
+    // Ensure slug is a string before proceeding
+    if (typeof slug === 'string') {
+      const startupId = parseInt(slug);
+      const foundStartup = startupsData.find((s) => s.id === startupId);
+      setStartup(foundStartup);
+    }
   }, [slug]);
 
   if (!startup) {
@@ -196,37 +197,40 @@ export default function StartupDetail() {
     <div className="min-h-screen p-6 bg-white border border-gray-300 rounded-lg">
       {/* Header Section */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">{startup.title}</h1>
+        <h1 className="text-3xl ">{startup.title}</h1>
         <p className="text-gray-600 mt-2">{startup.description}</p>
       </div>
 
       {/* Detail Information */}
       <div className="grid grid-cols-2 gap-8">
         <div>
-          <h3 className="text-lg font-semibold">Details</h3>
+          <h3 className="text-lg ">Details</h3>
           <ul className="text-gray-700 space-y-2 mt-4">
-            <li><strong>Founded:</strong> {startup.foundedDate}</li>
-            <li><strong>Employees:</strong> {startup.employees}</li>
-            <li><strong>Total Funding:</strong> {startup.totalFunding}</li>
-            <li><strong>Latest Round:</strong> {startup.latestRound}</li>
-            <li><strong>Location:</strong> {startup.location}</li>
-            <li><strong>Website:</strong> <a href={startup.website} className="text-blue-500 underline">{startup.website}</a></li>
-            <li><strong>Social Platforms:</strong> {startup.socialPlatforms.join(', ')}</li>
+            <li><strong className='font-normal'>Founded:</strong> {startup.foundedDate}</li>
+            <li><strong className='font-normal'>Employees:</strong> {startup.employees}</li>
+            <li><strong className='font-normal'>Total Funding:</strong> {startup.totalFunding}</li>
+            <li><strong className='font-normal'>Latest Round:</strong> {startup.latestRound}</li>
+            <li><strong className='font-normal'>Location:</strong> {startup.location}</li>
+            <li><strong className='font-normal'>Website:</strong> <a href={startup.website} className="text-blue-500 underline">{startup.website}</a></li>
+            <li><strong className='font-normal'>Social Platforms:</strong> {startup.socialPlatforms.join(', ')}</li>
           </ul>
         </div>
 
         {/* Growth Chart */}
         <div>
-          <h3 className="text-lg font-semibold">Growth</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={chartData}>
-              <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" />
-              <XAxis dataKey="index" hide />
-              <YAxis hide />
-              <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
+          {/* Growth Chart with ShadCN Styling */}
+          <div className="p-4 border border-gray-300 rounded-lg">
+            <h3 className="text-lg mb-4">Growth</h3>
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={chartData}>
+                <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" />
+                <XAxis dataKey="index" hide />
+                <YAxis hide />
+                <Tooltip />
+                <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
 
           <div className="flex justify-between mt-4">
             <label>
@@ -258,22 +262,22 @@ export default function StartupDetail() {
       <div className="mt-8 grid grid-cols-3 gap-4">
         {/* Key Indicators */}
         <div className="p-4 border border-gray-300 rounded-lg">
-          <h4 className="text-xl font-semibold mb-2">Key Indicators</h4>
+          <h4 className="text-xl  mb-2">Key Indicators</h4>
           {startup.keyIndicators && (
             <ul className="space-y-2 text-gray-600">
-              <li><strong>Growth:</strong> {startup.keyIndicators.growth}</li>
-              <li><strong>Speed:</strong> {startup.keyIndicators.speed}</li>
-              <li><strong>Seasonality:</strong> {startup.keyIndicators.seasonality}</li>
-              <li><strong>Volatility:</strong> {startup.keyIndicators.volatility}</li>
-              <li><strong>Sentiment:</strong> {startup.keyIndicators.sentiment}</li>
-              <li><strong>Forecast:</strong> {startup.keyIndicators.forecast}</li>
+              <li><strong className='font-normal'>Growth:</strong> {startup.keyIndicators.growth}</li>
+              <li><strong className='font-normal'>Speed:</strong> {startup.keyIndicators.speed}</li>
+              <li><strong className='font-normal'>Seasonality:</strong> {startup.keyIndicators.seasonality}</li>
+              <li><strong className='font-normal'>Volatility:</strong> {startup.keyIndicators.volatility}</li>
+              <li><strong className='font-normal'>Sentiment:</strong> {startup.keyIndicators.sentiment}</li>
+              <li><strong className='font-normal'>Forecast:</strong> {startup.keyIndicators.forecast}</li>
             </ul>
           )}
         </div>
 
         {/* Channels */}
         <div className="p-4 border border-gray-300 rounded-lg">
-          <h4 className="text-xl font-semibold mb-2">Channels</h4>
+          <h4 className="text-xl  mb-2">Channels</h4>
           <ul className="space-y-2">
             {startup.channels?.map((channel) => (
               <li key={channel.name} className="text-gray-600">
@@ -285,7 +289,7 @@ export default function StartupDetail() {
 
         {/* Categories */}
         <div className="p-4 border border-gray-300 rounded-lg">
-          <h4 className="text-xl font-semibold mb-2">Categories</h4>
+          <h4 className="text-xl  mb-2">Categories</h4>
           <div className="flex flex-wrap gap-2">
             {startup.category.map((cat, idx) => (
               <span key={idx} className="bg-blue-100 text-blue-500 p-1 rounded border border-blue-400">
@@ -299,7 +303,7 @@ export default function StartupDetail() {
       {/* Related Startups */}
       {startup.relatedStartups && startup.relatedStartups.length > 0 && (
         <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4">Related Startups</h3>
+          <h3 className="text-xl  mb-4">Related Startups</h3>
           <div className="grid grid-cols-2 gap-4">
             {startup.relatedStartups.map((related, index) => (
               <div key={`${related.id}-${index}`} className="p-4 border border-gray-300 rounded-lg flex items-center space-x-4">
@@ -311,7 +315,7 @@ export default function StartupDetail() {
                   className="rounded-full"
                 />
                 <div>
-                  <h4 className="font-bold">{related.name}</h4>
+                  <h4 className="">{related.name}</h4>
                   <p className="text-gray-600">{related.description}</p>
                   <span className={related.growthRate.startsWith('+') ? 'text-green-500' : 'text-red-500'}>
                     Growth Rate: {related.growthRate}
@@ -325,27 +329,27 @@ export default function StartupDetail() {
 
       {/* Related Trends */}
       <div className="mt-8">
-        <h3 className="text-xl font-semibold mb-4">Related Trends</h3>
+        <h3 className="text-xl  mb-4">Related Trends</h3>
         <div className="grid grid-cols-2 gap-4">
-          {relatedTrends.map((trend, index) => (
-            <div
-              key={`${trend.name}-${index}`} // Ensure uniqueness with `name` and `index`
-              onClick={() => setSelectedTrend(trend)}
-              className="p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100"
-            >
-              <h4 className="font-semibold">{trend.name}</h4>
-              <p className={trend.growthRate.startsWith('+') ? 'text-green-500' : 'text-red-500'}>
-                {trend.growthRate}
-              </p>
-              <ResponsiveContainer width="100%" height={100}>
-                <LineChart data={trend.growthData.map((value, idx) => ({ idx, value }))}>
-                  <XAxis dataKey="idx" hide />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke={trend.growthRate.startsWith('+') ? '#16a34a' : '#dc2626'} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          ))}
+            {relatedTrends.map((trend, index) => (
+              <div
+                key={`${trend.name}-${index}`}
+                onClick={() => setSelectedTrend(trend)}
+                className="p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100"
+              >
+                <h4 className="">{trend.name}</h4>
+                <p className={trend.growthRate.startsWith('+') ? 'text-green-500' : 'text-red-500'}>
+                  {trend.growthRate}
+                </p>
+                <ResponsiveContainer width="100%" height={100}>
+                  <LineChart data={trend.growthData.map((value, idx) => ({ idx, value }))}>
+                    <XAxis dataKey="idx" hide />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="value" stroke={trend.growthRate.startsWith('+') ? '#16a34a' : '#dc2626'} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            ))}
         </div>
 
         {selectedTrend && (

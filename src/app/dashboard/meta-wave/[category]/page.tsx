@@ -168,7 +168,7 @@ const CategoryPage = () => {
         <div className="col-span-1 space-y-6">
           {/* Displaying the main trend information */}
           <div className="p-6 bg-white shadow-md rounded-md">
-            <h2 className="text-2xl font-semibold">{data.title}</h2>
+            <h2 className="text-2xl ">{data.title}</h2>
             <div className="mt-4 flex justify-between items-center">
               <p className="text-gray-600">{data.volume} Volume</p>
               <p className="text-green-500">{data.growth} Growth</p>
@@ -178,14 +178,14 @@ const CategoryPage = () => {
 
           {/* Background & Analysis */}
           <div className="p-6 bg-white shadow-md rounded-md">
-            <h3 className="text-xl font-semibold">Background & Analysis</h3>
+            <h3 className="text-xl ">Background & Analysis</h3>
             <p className="mt-2 text-gray-600">{data.background}</p>
             <button className="mt-4 text-blue-500">Read More</button>
           </div>
 
           {/* Related Meta Trends */}
           <div className="p-6 bg-white shadow-md rounded-md">
-            <h3 className="text-xl font-semibold">Related Meta Trends</h3>
+            <h3 className="text-xl ">Related Meta Trends</h3>
             <ul className="mt-2 space-y-2">
               {data.relatedTrends.map((trend, index) => (
                 <li key={index} className="text-blue-500 cursor-pointer">{trend}</li>
@@ -196,7 +196,7 @@ const CategoryPage = () => {
 
         {/* Right Section: Placeholder for the network diagram */}
         <div className="col-span-2 p-6 bg-white shadow-md rounded-md">
-          <h3 className="text-xl font-semibold">Network of Related Topics</h3>
+          <h3 className="text-xl ">Network of Related Topics</h3>
           <div className="mt-6 w-full h-96 bg-gray-200 flex items-center justify-center">
             <p>Network Visualization Here</p>
           </div>

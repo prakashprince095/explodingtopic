@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Select from "react-select";
 import countryList from "react-select-country-list";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { ChartData, ChartOptions } from "chart.js";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
+import { Button } from "@/components/ui/button";
+
 
 type Data = {
   volume: string;
@@ -89,50 +91,58 @@ const DeepAnalytics = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
+    <div className="h-screen bg-white border border-gray-300 p-3 rounded-lg">
       {/* Search Section */}
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-3xl p-6 mb-8">
-        <div className="flex space-x-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full p-3 border rounded-lg focus:outline-none"
-          />
-          <Select
-            options={options}
-            onChange={(value) => setCountry(value?.label || "")}
-            placeholder="Worldwide"
-          />
-          <button
-            onClick={handleSearch}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-          >
-            Search
-          </button>
+      <div className="flex justify-center items-center flex-col h-screen">
+        <div className="bg-white border border-gray-200 rounded-lg w-full max-w-3xl p-3 mb-8">
+          <div className="flex space-x-4">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-[500px] p-1  rounded-md border border-gray-400 focus:outline-none"
+            />
+            <Select onValueChange={(value) => setCountry(value)}>
+              <SelectTrigger className="w-[250px]">
+                <SelectValue placeholder="Worldwide" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {options.map((option) => (
+                    <SelectItem key={option.value} value={option.label}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button onClick={handleSearch} >
+              Search
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Data Overlay */}
       {data && (
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full h-full top-0 left-0 absolute ">
-          <div className="flex justify-between mb-8">
-            <div className="flex-1">
-              <div className="h-60">
-                <Line data={lineChartData} options={chartOptions} />
-              </div>
+        <div className="bg-slate-100 flex flex-col items-center justify-center p-8 rounded-lg shadow-lg w-full  top-0 left-0 absolute ">
+          <div className="flex justify-center mb-8 h-[400px]">
+            <div className="bg-white flex flex-col items-start p-3 w-[600px] rounded-lg shadow-md">
               <div className="text-center mt-4">
-                <h3 className="text-xl font-semibold">
+                <h3 className="text-xl ">
                   Volume: {data.volume} | Growth: {data.growth}
                 </h3>
               </div>
+              <div className="w-[500px] h-[300px]">
+                <Line data={lineChartData} options={chartOptions} />
+              </div>
             </div>
-            <div className="flex-1 ml-8">
-              <h4 className="font-bold mb-4">Channel Breakdown</h4>
+            <div className="bg-white ml-8 w-[600px] h-[400px] p-3 rounded-lg shadow-md">
+              <h4 className=" mb-4 text-xl">Channel Breakdown</h4>
               <ul className="space-y-2">
                 {Object.entries(data.channels).map(([key, value]) => (
                   <li key={key} className="flex items-center">
                     <span className="flex-1 capitalize">{key}</span>
-                    <div className="w-full bg-gray-200 rounded-full h-2 ml-2">
+                    <div className="w-[500px] bg-gray-200 rounded-full h-2 ml-2">
                       <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${value}%` }}></div>
                     </div>
                   </li>
@@ -140,24 +150,23 @@ const DeepAnalytics = () => {
               </ul>
             </div>
           </div>
-
           {/* Related Trends Section */}
-          <div>
-            <h4 className="font-bold mb-4">Related Trends</h4>
-            <table className="w-full bg-gray-100 rounded-lg">
+          <div className="bg-white p-3 shadow-md rounded-md w-[1280px]">
+            <h4 className="text-xl mb-4">Related Trends</h4>
+            <table className="w-[1200px]  rounded-lg">
               <thead>
-                <tr className="bg-blue-200 text-left">
-                  <th className="p-3">Topic</th>
-                  <th className="p-3">Growth</th>
-                  <th className="p-3">Volume</th>
-                  <th className="p-3">Track</th>
+                <tr className="bg-slate-100 text-left">
+                  <th className="p-3 font-normal">Topic</th>
+                  <th className="p-3 font-normal">Growth</th>
+                  <th className="p-3 font-normal">Volume</th>
+                  <th className="p-3 font-normal">Track</th>
                 </tr>
               </thead>
               <tbody>
                 {data.relatedTrends.map((trend, index) => (
                   <tr key={index} className="border-t">
                     <td className="p-3 flex items-center justify-between"><h1>{trend.topic}</h1>
-                    <div className="w-40 h-20">
+                      <div className="w-40 h-20">
                         <Line
                           data={{
                             labels: trend.trendData,
@@ -176,7 +185,7 @@ const DeepAnalytics = () => {
                     <td className="p-3">{trend.growth}</td>
                     <td className="p-3">{trend.volume}</td>
                     <td className="p-3 flex items-center">
-                      
+
                       <button className="ml-3 bg-green-500 text-white px-3 py-1 rounded-lg">
                         Track Topic
                       </button>

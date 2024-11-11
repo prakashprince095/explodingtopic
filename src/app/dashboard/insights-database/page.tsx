@@ -120,18 +120,18 @@ const TrendsDatabase: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
+    <div className="min-h-screen flex flex-col items-center w-full bg-white border border-gray-300 p-3 rounded-lg">
       <div className="flex justify-center mb-6">
         <input
           type="text"
           placeholder="Search Trends Database"
           value={searchTerm}
           onChange={handleSearch}
-          className ="w-1/2 p-3 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500"
+          className="border p-2 rounded-sm min-w-[300px] border-gray-400"
         />
       </div>
 
-      <div className="flex bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="flex bg-white shadow-lg w-[1280px] rounded-lg overflow-hidden">
         <div className="w-1/4 bg-gray-50 p-4 overflow-auto">
           <ul>
             {filteredIndustries.map((industry) => (

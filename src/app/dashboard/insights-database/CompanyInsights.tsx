@@ -88,27 +88,29 @@ const CompanyInsights: React.FC<CompanyInsightsProps> = ({ companyName, data }) 
   };
 
   return (
-    <div className="absolute inset-0 bg-gray-50 p-6 overflow-auto">
+    <div className="absolute inset-0 bg-gray-50 flex flex-col items-center p-6 overflow-auto">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-[#1f2937]">{companyName}</h2>
+        <div>
+          <h2 className="text-2xl text-black">{companyName}</h2>
+        </div>
         <div className="flex items-center gap-4">
-          <span className="text-2xl font-bold text-[#10b981]">{data.volume}</span>
+          <span className="text-2xl text-[#10b981]">{data.volume}</span>
           <span className="text-lg text-[#10b981]">+{data.growth}% Growth</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-8">
-        <div className="col-span-2 bg-white shadow-md rounded-lg p-6">
+      <div className="w-[1280px]  h-[800px]">
+        <div className="col-span-2 bg-white mb-4  rounded-lg p-6">
           <Line data={volumeChartData} options={chartOptions} />
-        </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h3 className="text-lg  mb-4">Channel Breakdown</h3>
-          <Bar data={channelChartData} options={chartOptions} />
         </div>
       </div>
 
-      <div className="w-full flex  gap-6 mb-8">
-        <div className="bg-white shadow-md rounded-lg p-6">
+      <div className="w-full flex max-w-[1280px] items-center justify-center gap-4 mb-8">
+        <div className="bg-white  rounded-lg p-6 w-[400px] h-[400px]">
+          <h3 className="text-lg  mb-4">Channel Breakdown</h3>
+          <Bar data={channelChartData} options={chartOptions} />
+        </div>
+        <div className="bg-white  rounded-lg p-6 w-[400px] h-[400px]">
           <h3 className="text-lg  mb-4">Key Indicators</h3>
           {data.keyIndicators.map((indicator, index) => (
             <div key={index} className="mb-4 w-full">
@@ -122,22 +124,22 @@ const CompanyInsights: React.FC<CompanyInsightsProps> = ({ companyName, data }) 
             </div>
           ))}
         </div>
-        <div className="w-full col-span-2 bg-white shadow-md rounded-lg p-6">
+        <div className=" col-span-2 bg-white  rounded-lg p-6 w-[400px] h-[400px]">
           <h3 className="text-lg  mb-4">About the Topic</h3>
           <p className="text-gray-600">{data.aboutTopic}</p>
         </div>
       </div>
 
-      <div className="bg-white shadow-md rounded-lg p-6">
+      <div className="max-w-[1280px] rounded-lg">
         <h3 className="text-lg  mb-4">Related Trends</h3>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="flex items-center gap-4 max-w-[1280px] rounded-lg ">
           {data.relatedTrends.map((trend, index) => (
-            <div key={index} className="flex items-center justify-between p-4 border-b last:border-b-0">
+            <div key={index} className="gap-2 flex flex-col bg-white items-start justify-between w-[400px] h-[300px] p-4 border-b last:border-b-0">
               <div>
                 <h4 className="">{trend.name}</h4>
-                <p className="text-sm text-gray-500">+{trend.growth}% Growth</p>
+                <p className="text-sm text-gray-900">+{trend.growth}% Growth</p>
               </div>
-              <div className="w-2/3">
+              <div className=" h-[300px]">
                 <Line
                   data={{
                     labels: trend.labels,

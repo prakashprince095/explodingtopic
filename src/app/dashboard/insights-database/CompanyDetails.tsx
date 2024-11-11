@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { Button } from '@/components/ui/button';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +13,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -110,19 +113,61 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ company, onClick }) => 
   return (
     <div className="absolute inset-0 bg-gray-50 p-6 overflow-auto">
       {/* Controls */}
-      <div className="flex justify-between items-center mb-6">
-        <input
-          type="text"
-          className="border p-2 rounded"
-          placeholder="Search by company name..."
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
+      <div className='flex justify-between items-center mb-5'>
+        <h1 className='text-[28px]'>Insights-database</h1>
+        <div className="flex gap-3 items-center mb-6">
+          <div>
+            <input
+              type="text"
+              className="border p-2 rounded-sm min-w-[300px] border-gray-400"
+              placeholder="Search by company name..."
+              value={searchTerm}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+          </div>
 
-        <div className="flex space-x-4">
-          <select className="border p-2 rounded" value={sortType} onChange={(e) => handleSort(e.target.value)}>
-            <option value="Growth">Sort by Growth</option>
-            <option value="Volume">Sort by Volume</option>
+          <div className="flex gap-3">
+            <Select>
+              <SelectTrigger className="w-[150px] shadow-sm">
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="growth">Sort by Growth</SelectItem>
+                  <SelectItem value="vloume">Sort by Volume</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger className="w-[150px] shadow-sm">
+                <SelectValue placeholder="TimeFrame" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="volume">3 months</SelectItem>
+                  <SelectItem value="volume">6 months</SelectItem>
+                  <SelectItem value="volume">1 year</SelectItem>
+                  <SelectItem value="volume">2 year</SelectItem>
+                  <SelectItem value="volume">3 year</SelectItem>
+                  <SelectItem value="volume">4 year</SelectItem>
+                  <SelectItem value="volume">5 year</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger className="w-[150px] shadow-sm">
+                <SelectValue placeholder="All Types" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Brands">Brands</SelectItem>
+                  <SelectItem value="Non-Brands">Non-Brands</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {/* <select className="border p-2 rounded" value={sortType} onChange={(e) => handleSort(e.target.value)}>
+            <option value="Growth"></option>
+            <option value="Volume"></option>
           </select>
           <select className="border p-2 rounded" value={timeframe} onChange={(e) => setTimeframe(e.target.value)}>
             <option value="5 Years">5 Years</option>
@@ -130,23 +175,23 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ company, onClick }) => 
             <option value="1 Year">1 Year</option>
           </select>
           <select className="border p-2 rounded" value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="All">All Types</option>
-            <option value="Brands">Brands</option>
+            <option value="All"></option>
+            <option value="Brands"></option>
             <option value="Non-Brands">Non-Brands</option>
-          </select>
+          </select> */}
+          </div>
+
+          <Button onClick={handleExport}>
+            Export Data
+          </Button>
         </div>
-
-        <button className="bg-blue-500 text-white p-2 rounded" onClick={handleExport}>
-          Export Data
-        </button>
       </div>
-
       {/* Company List */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="flex flex-wrap justify-center gap-5">
         {filteredCompanies.map((company) => (
-          <div  onClick={onClick} key={company.name} className="p-4 border rounded-lg">
+          <div onClick={onClick} key={company.name} className="p-4 w-[500px] border rounded-md border-gray-300">
             <div className="flex justify-between mb-4">
-              <h2 className="text-xl font-semibold">{company.name}</h2>
+              <h2 className="text-xl ">{company.name}</h2>
               <div className="flex space-x-4">
                 <div>
                   <h3 className="text-blue-500">{company.volume}</h3>
@@ -158,7 +203,7 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ company, onClick }) => 
                 </div>
               </div>
             </div>
-            <div className="w-full">
+            <div className="w-[450px]">
               <Line
                 data={{
                   labels: ['2020', '2021', '2022', '2023', '2024'],
@@ -175,7 +220,7 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ company, onClick }) => 
                 options={chartOptions}
               />
             </div>
-            <p className="mt-4 text-gray-500">{company.description}</p>
+            <p className="mt-4 text-gray-900">{company.description}</p>
           </div>
         ))}
       </div>

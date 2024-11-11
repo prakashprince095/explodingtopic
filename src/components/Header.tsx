@@ -58,7 +58,7 @@ const Header: React.FC = () => {
         <Image src="/logo.png" alt="Logo" width={200} height={90} />
       </Link>
       <div className="hidden xl:flex">
-        <ul className="relative flex gap-[30px] text-[20px]">
+        <ul className="relative flex gap-[30px] text-[14px]">
           {items.map((item, index) => (
             <li
               key={index}
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
               {hoveredIndex === index && (
                 <div className="absolute text-black z-20 top-[30px] rounded-md border border-gray-400 flex flex-col w-[300px] p-[20px] shadow-lg bg-white">
                   {item.links.map((link, linkIndex) => (
-                    <Link key={linkIndex} href={link.href} className="text-[20px] p-[5px] hover:bg-blue-400 rounded-[5px]">
+                    <Link key={linkIndex} href={link.href} className="text-[14px] p-[5px] hover:bg-blue-400 rounded-[5px]">
                       {link.label}
                     </Link>
                   ))}

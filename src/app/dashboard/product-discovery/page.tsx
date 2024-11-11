@@ -138,7 +138,7 @@ export default function TrendingProducts() {
     return matchesCategory && matchesLocation;
   };
 
-  
+
 
   const sortProducts = (products: ProductSegment[]) => {
     if (!sortBy) return products;
@@ -223,7 +223,7 @@ export default function TrendingProducts() {
   };
 
   return (
-    <div className="min-h-screen bg-white border border-gray-300 p-3 rounded-lg">
+    <div className="min-h-screen  p-6 bg-slate-50 border border-gray-300 rounded-lg">
       {/* 1. Search Bar */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl ">Trending Products</h2>
@@ -238,7 +238,7 @@ export default function TrendingProducts() {
 
       {/* 2. Filter Options */}
       <div className="flex items-center gap-3">
-      <Select>
+        <Select>
           <SelectTrigger className="w-[150px] shadow-sm">
             <SelectValue placeholder="All Categories" />
           </SelectTrigger>
@@ -327,52 +327,11 @@ export default function TrendingProducts() {
             </SelectGroup>
           </SelectContent>
         </Select>
-        {/* <select
-          value={filters.timeframe}
-          onChange={(e) =>
-            setFilters({ ...filters, timeframe: e.target.value })
-          }
-          className="border p-2 rounded bg-transparent min-w-[300px]"
-        >
-          <option value="1 Year">1 Year</option>
-          <option value="5 Years">5 Years</option>
-        </select> */}
-
-        {/* <select
-          value={filters.category}
-          onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          className="border p-2 rounded bg-transparent min-w-[300px]"
-        >
-          <option value="All">All Categories</option>
-          <option value="Technology">Technology</option>
-          <option value="Home">Home</option>
-        </select> */}
-
-        {/* <select
-          value={filters.location}
-          onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-          className="border p-2 rounded bg-transparent min-w-[300px]"
-        >
-          <option value="All">All Locations</option>
-          <option value="USA">USA</option>
-          
-        </select> */}
-
-        {/* Add Growth, Sales Volume, etc. filters */}
-        {/* <select
-          value={filters.growth}
-          onChange={(e) => setFilters({ ...filters, growth: e.target.value })}
-          className="border p-2 rounded bg-transparent min-w-[300px]"
-        >
-          <option value="All">All Growth Rates</option>
-          <option value="Above 50%">Above 50%</option>
-          <option value="Below 50%">Below 50%</option>
-        </select> */}
       </div>
 
       {/* 3. Additional Filters */}
-      <div className="flex items-center justify-end gap-6 my-4">
-        <button
+      <div className="flex items-center justify-end gap-4 my-4">
+        <Button
           onClick={clearFilters}
           className="flex items-center gap-2 "
         >
@@ -383,34 +342,37 @@ export default function TrendingProducts() {
             alt="Picture of the grid items"
           />
           <h1>Filter</h1>
-        </button>
+        </Button>
 
-        <div className="my-4 flex gap-1 justify-end">
+        <div className="flex border border-gray-400 p-1 rounded-sm">
           <button
             onClick={() => setIsGridView(true)}
-            className={`p-1  ${isGridView ? "bg-gray-200 rounded-md" : ""}`}
+            className={`p-1 ${isGridView ? 'bg-[#3985ED] rounded-sm' : ''}`}
           >
             <Image
               src="/startups/grid.svg"
               width={20}
               height={25}
-              alt="Picture of the grid items"
+              alt="Grid View"
+              className={isGridView ? 'filter invert' : ''}
             />
           </button>
           <button
             onClick={() => setIsGridView(false)}
-            className={`p-1  ${!isGridView ? "bg-gray-200 rounded-md" : ""}`}
+            className={`p-1 ${!isGridView ? 'bg-[#3985ED] rounded-sm' : ''}`}
           >
             <Image
               src="/startups/list.svg"
               width={20}
               height={25}
-              alt="Picture of the grid items"
+              alt="List View"
+              className={!isGridView ? 'filter invert' : ''}
             />
           </button>
+
         </div>
 
-        <button
+        <Button
           onClick={exportToCSV}
           className="flex items-center gap-2 bg"
         >
@@ -419,64 +381,64 @@ export default function TrendingProducts() {
             width={20}
             height={25}
             alt="Picture of the grid items"
-          
+
           />
           <h1>Export</h1>
-        </button>
+        </Button>
       </div>
-
-      <div className={isGridView ? "flex flex-row flex-wrap gap-3" : "flex flex-col"}>
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="border w-[380px] p-4 rounded-lg hover:shadow-lg transition-all cursor-pointer"
-
-          >
-            <Link href={`/dashboard/product-discovery/${product.name}`} key={product.id}>
-              <div onClick={() => { setSelectedProduct(product); setIsModalOpen(true); }}>
-                <h3 className="text-xl ">{product.name}</h3>
-                <p className="text-gray-500">{product.description}</p>
-                <div className="mt-2">
-                  <h1>
-                    <p>Growth:</p> <p>{product.growth}</p>
-                  </h1>
-                  <h1>
-                    <p>Sales Volume:</p><p> {product.salesVolume}</p>
-                  </h1>
-                  <h1>
-                    <p>Total Revenue:</p><p> {product.totalRevenue}</p>
-                  </h1>
-                  <h1>
-                    <p>Latest Version:</p><p> {product.latestVersion}</p>
-                  </h1>
-                  <h1>
-                    <p>Stock:</p> <p>{product.stock}</p>
-                  </h1>
-                  <h1>
-                    <p>Categories:</p><p> {product.categories.join(", ")}</p>
-                  </h1>
-                  <h1>
-                    <p>Location:</p> <p>{product.location}</p>
-                  </h1>
-                </div>
-                <div className="mt-4">{renderGrowthChart(product.growth)}</div>
-              </div>
-            </Link>
-            <Button
-              onClick={() => handleAddToHub(product)}
+      <div className='bg-white overflow-auto h-screen border border-zinc-300 p-2 rounded-lg shadow-sm '>
+        <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="p-4 border rounded-md bg-gray-100 hover:shadow-lg transition cursor-pointer"
             >
-              Add to Hub
-            </Button>
-          </div>
-        ))}
+              <Link href={`/dashboard/product-discovery/${product.name}`} key={product.id}>
+                <div onClick={() => { setSelectedProduct(product); setIsModalOpen(true); }}>
+                  <h3 className="text-xl ">{product.name}</h3>
+                  <p className="text-gray-500">{product.description}</p>
+                  <div className="mt-2">
+                    <h1>
+                      <p>Growth:</p> <p>{product.growth}</p>
+                    </h1>
+                    <h1>
+                      <p>Sales Volume:</p><p> {product.salesVolume}</p>
+                    </h1>
+                    <h1>
+                      <p>Total Revenue:</p><p> {product.totalRevenue}</p>
+                    </h1>
+                    <h1>
+                      <p>Latest Version:</p><p> {product.latestVersion}</p>
+                    </h1>
+                    <h1>
+                      <p>Stock:</p> <p>{product.stock}</p>
+                    </h1>
+                    <h1>
+                      <p>Categories:</p><p> {product.categories.join(", ")}</p>
+                    </h1>
+                    <h1>
+                      <p>Location:</p> <p>{product.location}</p>
+                    </h1>
+                  </div>
+                  <div className="mt-4">{renderGrowthChart(product.growth)}</div>
+                </div>
+              </Link>
+              <Button
+                onClick={() => handleAddToHub(product)}
+              >
+                Add to Hub
+              </Button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {isModalOpen && selectedProduct && (
-        <ProductDetail 
-        product={selectedProduct} 
-        onClose={() => setIsModalOpen(false)} 
-        params={{ slug: selectedProduct?.name || '' }}  // Pass params here
-    />    
+        <ProductDetail
+          product={selectedProduct}
+          onClose={() => setIsModalOpen(false)}
+          params={{ slug: selectedProduct?.name || '' }}  // Pass params here
+        />
       )}
 
     </div>

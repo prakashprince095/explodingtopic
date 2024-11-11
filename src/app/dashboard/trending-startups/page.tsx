@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import fetchCrunchbaseData from '@/utils/fetchCrunchbaseData';
 import {
   Select,
   SelectContent,
@@ -43,7 +42,6 @@ type Startup = {
   growthData?: number[];
 };
 
-
 const GrowthChart = ({ growthData }: { growthData: number[] }) => (
   <div className="mt-4 p-1 border border-gray-300 rounded-md">
     <ResponsiveContainer width="100%" height={100}>
@@ -64,33 +62,40 @@ export default function TrendingStartups() {
     location: 'All',
     growth: 'All',
   });
-  const [startupsData, setStartupsData] = useState<Startup[]>([]);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const startups = await fetchCrunchbaseData('crunchbase');
-
-        if (startups && Array.isArray(startups)) {
-          const startupsWithDefaults = startups.map((startup: any) => ({
-            ...startup,
-            socialPlatforms: startup.socialPlatforms || [],
-          }));
-          setStartupsData(startupsWithDefaults);
-        } else {
-          console.warn("Expected array but received:", startups);
-          setStartupsData([]);
-        }
-      } catch (error) {
-        console.error("Error loading data from Crunchbase:", error);
-      }
-    };
-
-    loadData();
-  }, [searchQuery, filters]);
-
-
-
+  const [startupsData, setStartupsData] = useState<Startup[]>([
+    {
+      id: 1,
+      title: 'Tech Innovators',
+      description: 'A leading company in AI-driven technology solutions.',
+      foundedDate: '2015-06-23',
+      website: 'https://techinnovators.com',
+      socialPlatforms: ['Twitter', 'LinkedIn'],
+      growth: 'High',
+      volume: '120K',
+      totalFunding: '$10M',
+      latestRound: 'Series B',
+      employees: '250',
+      category: ['Technology', 'AI'],
+      location: 'USA',
+      growthData: [10, 15, 20, 25, 30, 35, 40],
+    },
+    {
+      id: 2,
+      title: 'Health First',
+      description: 'Revolutionizing healthcare with telemedicine solutions.',
+      foundedDate: '2018-04-12',
+      website: 'https://healthfirst.com',
+      socialPlatforms: ['Facebook', 'LinkedIn'],
+      growth: 'Medium',
+      volume: '80K',
+      totalFunding: '$5M',
+      latestRound: 'Series A',
+      employees: '100',
+      category: ['Healthcare', 'Technology'],
+      location: 'Canada',
+      growthData: [5, 10, 15, 18, 22, 24, 28],
+    },
+  ]);
   const applyFilters = (startup: Startup) => {
     const matchesCategory = filters.category === 'All' || startup.category.includes(filters.category);
     const matchesLocation = filters.location === 'All' || startup.location === filters.location;
@@ -139,123 +144,127 @@ export default function TrendingStartups() {
         </div>
       </div>
 
-      <div className="flex items-center gap-5 mb-4">
-        <Select>
-          <SelectTrigger className="w-[150px] shadow-sm">
-            <SelectValue placeholder="All Categories" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="Technology">Technology</SelectItem>
-              <SelectItem value="Business">Business</SelectItem>
-              <SelectItem value="Business">Socials</SelectItem>
-              <SelectItem value="Business">Beauty</SelectItem>
-              <SelectItem value="Business">HealthCare</SelectItem>
-              <SelectItem value="Business">Finance</SelectItem>
-              <SelectItem value="Business">Food</SelectItem>
-              <SelectItem value="Business">HealthCare</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger className="w-[150px] shadow-sm">
-            <SelectValue placeholder="Sort By" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="category">USA</SelectItem>
-              <SelectItem value="volume">Canada</SelectItem>
-              <SelectItem value="volume">India</SelectItem>
-              <SelectItem value="volume">China</SelectItem>
-              <SelectItem value="volume">UK</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger className="w-[150px] shadow-sm">
-            <SelectValue placeholder="Sort by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="category">Name</SelectItem>
-              <SelectItem value="volume">Volume</SelectItem>
-              <SelectItem value="volume">Profits</SelectItem>
-              <SelectItem value="volume">Loss</SelectItem>
-              <SelectItem value="volume">Searches</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger className="w-[150px] shadow-sm">
-            <SelectValue placeholder="TimeFrame" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="category">3 months</SelectItem>
-              <SelectItem value="volume">6 months</SelectItem>
-              <SelectItem value="volume">1 year</SelectItem>
-              <SelectItem value="volume">2 year</SelectItem>
-              <SelectItem value="volume">3 year</SelectItem>
-              <SelectItem value="volume">4 year</SelectItem>
-              <SelectItem value="volume">5 year</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger className="w-[150px] shadow-sm">
-            <SelectValue placeholder="Total Funding" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="category">USA</SelectItem>
-              <SelectItem value="volume">Canada</SelectItem>
-              <SelectItem value="volume">India</SelectItem>
-              <SelectItem value="volume">China</SelectItem>
-              <SelectItem value="volume">UK</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger className="w-[150px] shadow-sm">
-            <SelectValue placeholder="No of employees" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="category">1-25</SelectItem>
-              <SelectItem value="volume">25-50</SelectItem>
-              <SelectItem value="volume">50-100</SelectItem>
-              <SelectItem value="volume">100-1000</SelectItem>
-              <SelectItem value="volume">1000-5000</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        {/* <select
-          value={filters.category}
-          onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          className="border p-2 rounded bg-transparent border-gray-400 min-w-[200px]"
-        >
-          <option value="All"></option>
-          <option value="Technology">Technology</option>
-          <option value="Business">Business</option>
-        </select>
-        <select
-          value={filters.location}
-          onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-          className="border p-2 rounded bg-transparent border-gray-400 min-w-[200px]"
-        >
-          <option value="All">All Locations</option>
-          <option value="USA">USA</option>
-        </select> */}
+      <div className="flex items-center justify-between  mb-4">
+        <div className='flex items-center gap-3 flex-wrap'>
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="Technology">Technology</SelectItem>
+                <SelectItem value="Business">Business</SelectItem>
+                <SelectItem value="Business">Socials</SelectItem>
+                <SelectItem value="Business">Beauty</SelectItem>
+                <SelectItem value="Business">HealthCare</SelectItem>
+                <SelectItem value="Business">Finance</SelectItem>
+                <SelectItem value="Business">Food</SelectItem>
+                <SelectItem value="Business">HealthCare</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="Countries" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="category">USA</SelectItem>
+                <SelectItem value="Canada">Canada</SelectItem>
+                <SelectItem value="India">India</SelectItem>
+                <SelectItem value="China">China</SelectItem>
+                <SelectItem value="UK">UK</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="category">Name</SelectItem>
+                <SelectItem value="volume">Volume</SelectItem>
+                <SelectItem value="volume">Profits</SelectItem>
+                <SelectItem value="volume">Loss</SelectItem>
+                <SelectItem value="volume">Searches</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="TimeFrame" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="category">3 months</SelectItem>
+                <SelectItem value="volume">6 months</SelectItem>
+                <SelectItem value="volume">1 year</SelectItem>
+                <SelectItem value="volume">2 year</SelectItem>
+                <SelectItem value="volume">3 year</SelectItem>
+                <SelectItem value="volume">4 year</SelectItem>
+                <SelectItem value="volume">5 year</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="Total Funding" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="category">USA</SelectItem>
+                <SelectItem value="volume">Canada</SelectItem>
+                <SelectItem value="volume">India</SelectItem>
+                <SelectItem value="volume">China</SelectItem>
+                <SelectItem value="volume">UK</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-[150px] shadow-sm">
+              <SelectValue placeholder="No of employees" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="category">1-25</SelectItem>
+                <SelectItem value="volume">25-50</SelectItem>
+                <SelectItem value="volume">50-100</SelectItem>
+                <SelectItem value="volume">100-1000</SelectItem>
+                <SelectItem value="volume">1000-5000</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex border border-gray-400 p-[2px] rounded-sm">
+          <button
+            onClick={() => setIsGridView(true)}
+            className={`p-1 ${isGridView ? 'bg-[#3985ED] rounded-sm' : ''}`}
+          >
+            <Image
+              src="/startups/grid.svg"
+              width={20}
+              height={25}
+              alt="Grid View"
+              className={isGridView ? 'filter invert' : ''}
+            />
+          </button>
+          <button
+            onClick={() => setIsGridView(false)}
+            className={`p-1 ${!isGridView ? 'bg-[#3985ED] rounded-sm' : ''}`}
+          >
+            <Image
+              src="/startups/list.svg"
+              width={20}
+              height={25}
+              alt="List View"
+              className={!isGridView ? 'filter invert' : ''}
+            />
+          </button>
+
+        </div>
       </div>
       <div className='bg-white h-screen border border-zinc-300 p-2 rounded-lg shadow-sm '>
-        <div className="flex justify-end mb-4">
-          <button onClick={() => setIsGridView(true)} className={`p-2 ${isGridView ? 'bg-gray-200 rounded-md' : ''}`}>
-            <Image src="/startups/grid.svg" width={24} height={24} alt="Grid View" />
-          </button>
-          <button onClick={() => setIsGridView(false)} className={`p-2 ${!isGridView ? 'bg-gray-200 rounded-md' : ''}`}>
-            <Image src="/startups/list.svg" width={24} height={24} alt="List View" />
-          </button>
-        </div>
 
         <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
           {filteredstartups.map((startup) => (
@@ -263,7 +272,7 @@ export default function TrendingStartups() {
               key={startup.id}
               className="p-4 border rounded-md bg-gray-100 hover:shadow-lg transition cursor-pointer"
             >
-              <Link href={`/dashboard/trending-startups/${startup.title.toLowerCase()}`}>
+              <Link href={`/dashboard/trending-startups/${startup.id}`}>
                 <div>
                   <h3 className="text-xl ">{startup.title}</h3>
                   <div className="flex justify-between items-center mt-2">

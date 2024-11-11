@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-
+import { Button } from "@/components/ui/button";
 // Report Interface
 interface Report {
   id: number;
@@ -59,17 +59,16 @@ export default function ReportsLibrary() {
         {reports.map((report) => (
           <div key={report.id} className="p-6 border border-gray-400  rounded-lg shadow-md">
             <h3 className="text-lg">{report.title}</h3>
-            <ul className="list-disc pl-5 mt-2">
+            <ul className="list-disc pl-5 mb-2">
               {report.companies.map((company, index) => (
                 <li key={index}>{company}</li>
               ))}
             </ul>
-            <button
+            <Button
               onClick={() => handleReportClick(report)}
-              className="mt-4 px-4 py-2 bg-white text-black rounded"
             >
               Read Report
-            </button>
+            </Button>
           </div>
         ))}
       </div>
@@ -77,7 +76,7 @@ export default function ReportsLibrary() {
       {/* Full-Screen Modal for Report Details */}
       {selectedReport && (
         <div className="fixed  inset-0  bg-opacity-75 flex justify-center items-center z-50">
-          <div className="border bg-slate-50 p-8 rounded-lg max-w-4xl w-full">
+          <div className="border bg-slate-50 shadow-lg p-8 rounded-lg max-w-4xl w-full">
             <h2 className="text-2xl mb-4">{selectedReport.title} Report</h2>
             <p className="mb-4">{selectedReport.description}</p>
 
@@ -86,12 +85,11 @@ export default function ReportsLibrary() {
               <span className="text-gray-500">Line Graph Placeholder</span>
             </div>
 
-            <button
+            <Button
               onClick={closeReportModal}
-              className="px-4 py-2 bg-red-500 text-black rounded"
             >
               Close Report
-            </button>
+            </Button>
           </div>
         </div>
       )}
