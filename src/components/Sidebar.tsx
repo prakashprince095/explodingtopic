@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 const Sidebar = () => {
   const pathname = usePathname();
 
-  // Define links for the sidebar with associated images/icons
   const links = [
     { name: 'Insights Hub', href: '/dashboard/insights-hub', imgSrc: '/sidebar/1.svg' },
     { name: 'Trending Startups', href: '/dashboard/trending-startups', imgSrc: '/sidebar/2.svg' },

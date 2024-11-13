@@ -1,4 +1,3 @@
-// src/context/ProductContext.tsx
 
 "use client";
 import React, { createContext, useContext, useState } from "react";
@@ -9,7 +8,7 @@ type ProductContextType = {
   addProductToHub: (product: ProductSegment) => void;
 };
 
-const ProductContext = createContext<ProductContextType | undefined>(undefined);
+const ProductContext = createContext<ProductContextType | undefined>();
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [productItems, setProductItems] = useState<ProductSegment[]>([]);
