@@ -139,7 +139,6 @@ export default function TrendingProducts() {
   };
 
 
-
   const sortProducts = (products: ProductSegment[]) => {
     if (!sortBy) return products;
     return products.sort((a, b) => {
@@ -223,7 +222,7 @@ export default function TrendingProducts() {
   };
 
   return (
-    <div className="min-h-screen  p-6 bg-slate-50 border border-gray-300 rounded-lg">
+    <div className="p-6 min-h-screen  bg-slate-50 border border-gray-300 rounded-lg">
       {/* 1. Search Bar */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl ">Trending Products</h2>
@@ -437,10 +436,11 @@ export default function TrendingProducts() {
         <ProductDetail
           product={selectedProduct}
           onClose={() => setIsModalOpen(false)}
-          params={{ slug: selectedProduct?.name || '' }}  // Pass params here
+          params={{ slug: selectedProduct?.name || '' }}  // Pass params here
         />
       )}
 
     </div>
   );
 }
+
