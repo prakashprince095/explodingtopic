@@ -13,8 +13,6 @@ import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
 import { AnimatedBeamMultipleInputDemo } from "./pages/Data";
 import Footer from "@/components/Footer";
 
-
-// Declare reviews array first to avoid errors
 const reviews = [
   {
     name: "Jack",
@@ -54,7 +52,6 @@ const reviews = [
   },
 ];
 
-// Now you can use reviews to set firstRow and secondRow
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
 

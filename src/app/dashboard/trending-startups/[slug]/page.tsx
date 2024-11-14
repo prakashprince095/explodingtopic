@@ -4,14 +4,14 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContai
 import Image from 'next/image';
 import { useStartup } from '@/context/StartupContext';
 
-interface Trend {
+export interface Trend {
   name: string;
   growthRate: string;
-  growthData: Array<{ idx: number; value: number }>;
+  growthData: { idx: number; value: number }[];
 }
 
 interface RelatedStartup {
-  id: number;  // Update if the backend always provides a number
+  id: number;  
   name: string;
   description: string;
   logo: string;
@@ -32,7 +32,7 @@ interface Startup {
   keyIndicators?: Record<string, string>;
   channels?: Array<{ name: string; volume: number }>;
   category: string[];
-  relatedTrends?: Trend[]; // Ensure this is defined in Startup interface
+  relatedTrends?: string[];
   relatedStartups?: RelatedStartup[];
 }
 
@@ -166,9 +166,11 @@ const StartupDetails = () => {
         <RelatedStartups startups={selectedStartup.relatedStartups} />
       )}
 
-      {/* Related Trends */}
-      <RelatedTrends relatedTrends={selectedStartup?.relatedTrends || []} selectedTrend={selectedTrend} setSelectedTrend={setSelectedTrend}/>
-
+      <RelatedTrends
+        relatedTrends={selectedStartup?.relatedTrends || []}
+        selectedTrend={selectedTrend}
+        setSelectedTrend={setSelectedTrend}
+      />
     </div>
   );
 };
@@ -179,7 +181,17 @@ const RelatedStartups: React.FC<RelatedStartupsProps> = ({ startups }) => (
     <div className="grid grid-cols-2 gap-4">
       {startups.map((related: RelatedStartup, index: number) => (
         <div key={`${related.id}-${index}`} className="p-4 border border-gray-300 rounded-lg flex items-center space-x-4">
-          <Image src={related.logo || '/default-logo.png'} alt={related.name} width={40} height={40} className="rounded-full" />
+          <Image
+            src={related.logo || '/logos/1.svg'}
+            alt={related.name}
+            width={40}
+            height={40}
+            className="rounded-full"
+            unoptimized
+            onError={(e) => {
+              e.currentTarget.src = '/logos/1.svg';
+            }}
+          />
           <div>
             <h4>{related.name}</h4>
             <p className="text-gray-600">{related.description}</p>
