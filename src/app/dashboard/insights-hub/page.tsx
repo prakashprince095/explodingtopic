@@ -393,9 +393,6 @@ const InsightHub: React.FC = () => {
           </div>
         )}
       </section>
-      {/* <Button onClick={undoLastAction} className="mt-6">
-        Undo Last Action
-      </Button> */}
     </div>
   );
 };

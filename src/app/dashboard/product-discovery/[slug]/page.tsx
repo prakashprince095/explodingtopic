@@ -26,7 +26,7 @@ type TrendPopupProps = {
   onClose: () => void;
 };
 
-type SalesVolumeChartProps = {
+type SalesVolumeChart = {
   data: number[];
   forecast: boolean;
 };
@@ -146,7 +146,7 @@ const RelatedProducts: React.FC<{ products: ProductSegment['relatedProducts'] }>
   );
 };
 
-const SalesVolumeChart: React.FC<SalesVolumeChartProps> = ({ data, forecast }) => {
+const SalesVolumeChart: React.FC<SalesVolumeChart> = ({ data, forecast }) => {
   const chartData = data.map((value, index) => ({
     name: `Year ${index + 1}`,
     value,
@@ -212,14 +212,14 @@ const ProductDetail: React.FC<ProductDetail> = ({ product, onClose, params }) =>
 
   useEffect(() => {
     async function fetchParams() {
-      const paramsValue = await params;  // Unwrap params from the Promise
+      const paramsValue = await params;
       if (paramsValue.slug) {
         const foundProduct = productsData.find((p) => p.name === paramsValue.slug);
         setSelectedProduct(foundProduct || null);
       }
     }
     fetchParams();
-  }, [params]);  // No need to access params.slug directly in the dependency array
+  }, [params]); 
 
   const salesData = product?.salesData || [0, 2, 3, 4.5, 6.5];
   const chartData = generateChartData(salesData, forecast);

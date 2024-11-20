@@ -16,7 +16,6 @@ export interface CompanyInsightsProps {
   };
 }
 
-// src/types.ts
 export type ProductSegment = {
   id: number;
   name: string;

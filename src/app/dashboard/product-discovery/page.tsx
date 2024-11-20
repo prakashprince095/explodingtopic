@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-// Types for product segments
+
 export type ProductSegment = {
   id: number;
   name: string;
@@ -30,7 +30,6 @@ export type ProductSegment = {
   location: string;
 };
 
-// Initial data for product segments
 export const productsData: ProductSegment[] = [
   {
     id: 1,

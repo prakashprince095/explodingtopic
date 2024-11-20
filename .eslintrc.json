@@ -1,7 +1,11 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "no-unused-vars": "warn",
-    "react/display-name": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-undef": "off"
   }
 }
+// "rules": {
+//     "no-unused-vars": "warn",
+//     "react/display-name": "off"
+//   }
