@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button";
 import { productsData } from "../page";
 import { ProductSegment } from "@/types/interfaces";
 
-type ProductDetailModalProps = {
+type ProductDetail = {
   product: ProductSegment;
   onClose: () => void;
-  params: { slug: string };
+  params: { slug: string }; 
 };
 
 type Trend = {
@@ -205,7 +205,7 @@ const generateChartData = (data: number[], forecast: boolean) => {
   };
 };
 
-const ProductDetail: React.FC<ProductDetailModalProps> = ({ product, onClose, params }) => {
+const ProductDetail: React.FC<ProductDetail> = ({ product, onClose, params }) => {
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('5 Years');
   const [forecast, setForecast] = useState<boolean>(true);
   const [selectedProduct, setSelectedProduct] = useState<ProductSegment | null>(null);
