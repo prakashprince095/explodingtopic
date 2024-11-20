@@ -7,10 +7,8 @@ import { ProductProvider } from '@/context/ProductContext';
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex">
-      {/* Include the Sidebar on the left */}
       <Sidebar />
 
-      {/* Main content area for the child pages */}
       <main className="ml-[200px] py-3  w-full  min-h-screen">
           <HubProvider>
             <ProductProvider>

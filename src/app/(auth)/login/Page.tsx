@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
-import { useAuthStore } from "@/store/Auth";
+// import { useAuthStore } from "@/store/Auth";
 import Link from "next/link";
 
 const BottomGradient = () => {
@@ -28,32 +28,32 @@ const LabelInputContainer = ({
 };
 
 export default function Login() {
-    const { login } = useAuthStore();
+    // const { login } = useAuthStore();
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState("");
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        const email = formData.get("email");
-        const password = formData.get("password");
+    //     const formData = new FormData(e.currentTarget);
+    //     const email = formData.get("email");
+    //     const password = formData.get("password");
 
-        if (!email || !password) {
-            setError(() => "Please fill out all fields");
-            return;
-        }
+    //     if (!email || !password) {
+    //         setError(() => "Please fill out all fields");
+    //         return;
+    //     }
 
-        setIsLoading(() => true);
-        setError(() => "");
+    //     setIsLoading(() => true);
+    //     setError(() => "");
 
-        const loginResponse = await login(email.toString(), password.toString());
-        if (loginResponse.error) {
-            setError(() => loginResponse.error!.message);
-        }
+    //     const loginResponse = await login(email.toString(), password.toString());
+    //     if (loginResponse.error) {
+    //         setError(() => loginResponse.error!.message);
+    //     }
 
-        setIsLoading(() => false);
-    };
+    //     setIsLoading(() => false);
+    // };
 
     return (
         <div className="mx-auto w-full max-w-md rounded-none border border-solid border-white/30 bg-white p-4 shadow-input dark:bg-black md:rounded-2xl md:p-8">
@@ -72,7 +72,7 @@ export default function Login() {
             {error && (
                 <p className="mt-8 text-center text-sm text-red-500 dark:text-red-400">{error}</p>
             )}
-            <form className="my-8" onSubmit={handleSubmit}>
+            <form className="my-8" >
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="email">Email Address</Label>
                     <Input

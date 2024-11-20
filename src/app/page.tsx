@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/Auth";
+// import { useAuthStore } from "@/store/Auth";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,17 +16,15 @@ import { cn } from "@/lib/utils";
 import SignupSection from "@/components/SignupSection";
 
 export default function HomePage() {
-  const { isAuthenticated, verfiySession } = useAuthStore();
+  // const { isAuthenticated, verfiySession } = useAuthStore();
   const router = useRouter();
 
-  useEffect(() => {
-    verfiySession();
-    if (isAuthenticated) {
-      router.push("/dashboard/insights-hub");
-    }
-  }, [isAuthenticated, router, verfiySession]);
-
-
+  // useEffect(() => {
+  //   verfiySession();
+  //   if (isAuthenticated) {
+  //     router.push("/dashboard/insights-hub");
+  //   }
+  // }, [isAuthenticated, router, verfiySession]);
 
   return (
     <>

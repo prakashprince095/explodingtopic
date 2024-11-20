@@ -50,7 +50,7 @@ const Header: React.FC = () => {
     <div className="text-[18px] text-zinc-700 h-[90px] flex justify-between items-center px-[40px]">
       {/* Logo */}
       <Link href="/" className="w-[200px]">
-        <Image src="/logo.png" alt="Logo" width={200} height={90} />
+        <Image src="/logos/1.svg" alt="Logo" width={70} height={70} />
       </Link>
 
       {/* Navigation */}
@@ -89,6 +89,9 @@ const Header: React.FC = () => {
         </Button>
         <Button>
           <Link href="/login">Login</Link>
+        </Button>
+        <Button>
+          <Link href="/dashboard/insights-hub">Dashboard</Link>
         </Button>
       </div>
 

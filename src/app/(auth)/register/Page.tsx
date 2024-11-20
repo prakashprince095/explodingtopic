@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
-import { useAuthStore } from "@/store/Auth";
+// import { useAuthStore } from "@/store/Auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -27,54 +27,54 @@ const LabelInputContainer = ({
 );
 
 export default function Register() {
-    const { login, createAccount, isAuthenticated } = useAuthStore();
+    // const { login, createAccount, isAuthenticated } = useAuthStore();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
     // Redirect to insights page if user is already authenticated
-    useEffect(() => {
-        if (isAuthenticated) {
-            router.push("/dashboard/insights-hub");
-        }
-    }, [isAuthenticated, router]);
+    // useEffect(() => {
+    //     if (isAuthenticated) {
+    //         router.push("/dashboard/insights-hub");
+    //     }
+    // }, [isAuthenticated, router]);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        const firstname = formData.get("firstname")?.toString() || "";
-        const lastname = formData.get("lastname")?.toString() || "";
-        const email = formData.get("email")?.toString() || "";
-        const password = formData.get("password")?.toString() || "";
+    //     const formData = new FormData(e.currentTarget);
+    //     const firstname = formData.get("firstname")?.toString() || "";
+    //     const lastname = formData.get("lastname")?.toString() || "";
+    //     const email = formData.get("email")?.toString() || "";
+    //     const password = formData.get("password")?.toString() || "";
 
-        if (!firstname || !lastname || !email || !password) {
-            setError("Please fill out all fields");
-            return;
-        }
+    //     if (!firstname || !lastname || !email || !password) {
+    //         setError("Please fill out all fields");
+    //         return;
+    //     }
 
-        setIsLoading(true);
-        setError("");
+    //     setIsLoading(true);
+    //     setError("");
 
-        const response = await createAccount(
-            `${firstname} ${lastname}`,
-            email,
-            password
-        );
+    //     const response = await createAccount(
+    //         `${firstname} ${lastname}`,
+    //         email,
+    //         password
+    //     );
 
-        if (response?.error?.message) {
-            setError(response.error.message);
-        } else {
-            const loginResponse = await login(email, password);
-            if (loginResponse?.error?.message) {
-                setError(loginResponse.error.message);
-            } else {
-                router.push("/dashboard/insights-hub");
-            }
-        }
+    //     if (response?.error?.message) {
+    //         setError(response.error.message);
+    //     } else {
+    //         const loginResponse = await login(email, password);
+    //         if (loginResponse?.error?.message) {
+    //             setError(loginResponse.error.message);
+    //         } else {
+    //             router.push("/dashboard/insights-hub");
+    //         }
+    //     }
 
-        setIsLoading(false);
-    };
+    //     setIsLoading(false);
+    // };
 
     return (
         <div className="mx-auto w-full max-w-md rounded-none border border-solid border-white/30 bg-white p-4 shadow-input dark:bg-black md:rounded-2xl md:p-8">
@@ -93,7 +93,7 @@ export default function Register() {
             {error && (
                 <p className="mt-8 text-center text-sm text-red-500 dark:text-red-400">{error}</p>
             )}
-            <form className="my-8" onSubmit={handleSubmit}>
+            <form className="my-8" >
                 <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
                     <LabelInputContainer>
                         <Label htmlFor="firstname">First name</Label>
