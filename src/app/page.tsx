@@ -30,11 +30,14 @@ export default function HomePage() {
     <>
       <Header />
       <main className="flex min-h-screen flex-col items-center justify-between ">
-        <div className="relative flex flex-col gap-4 h-[500px]  w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
-          <h1 className="z-10 whitespace-pre-wrap text-center text-[70px] max-w-[700px] font-medium tracking-tighter text-black dark:text-white">
-            Stay ahead by spotting trends before they ignite
+        <div className="relative flex flex-col gap-4 h-[400px]  w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
+          <h1 className="z-20 whitespace-pre-wrap text-center text-[70px] max-w-[700px] font-medium tracking-tighter text-black dark:text-white">
+            Stay ahead by spotting trends <span className="text-gradient">before they ignite</span>
           </h1>
-          <Button>Get Started</Button>
+          <div className="flex gap-4">
+            <Button>Get Started →</Button>
+            <button className="bg-white z-50 border px-4 py-2 rounded-md shadow-sm hover:bg-gray-200">Try Free ↗</button>
+          </div>
           <AnimatedGridPattern
             numSquares={60}
             maxOpacity={0.3}
@@ -47,10 +50,19 @@ export default function HomePage() {
           />
         </div>
         <ReviewsSection />
+        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
         <FeaturesSection />
+        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
         <AnalyticsSection />
-        <FeaturesSectionDemo />
+        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+        <div className="flex flex-col items-center">
+          <h1 className="text-[40px] text-center">Features Designed for <span className="text-gradient font-medium">Your Success</span></h1>
+          <p className=" text-center w-[800px] text-[#686868] text-[16px] font-normal mb-5">Highlighting the platform’s standout features ensures users recognize its unique value proposition. Each feature card explains how it solves user pain points or creates opportunities.</p>
+          <FeaturesSectionDemo />
+        </div>
+        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
         <SignupSection />
+        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
       </main>
       <Footer />
     </>

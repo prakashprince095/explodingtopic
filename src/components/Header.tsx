@@ -18,21 +18,21 @@ const Header: React.FC = () => {
         {
             label: 'Product',
             links: [
-                { href: '/root/products/team-Permission', label: 'Team & Permissions' },
-                { href: '/root/products/bid-Management', label: 'Bid Management' },
-                { href: '/root/products/time-Tracking', label: 'Time Tracking' },
-                { href: '/root/products/task-Management', label: 'Task Management' },
+                { href: '/root/products/team-Permission', label: 'Insights-Hub' },
+                { href: '/root/products/bid-Management', label: 'Trending-Startups' },
+                { href: '/root/products/time-Tracking', label: 'Trending-Products' },
+                { href: '/root/products/task-Management', label: 'Deep Dive Analysis' },
             ],
         },
         {
             label: 'Solutions',
             links: [
-                { href: '/root/solutions/overview', label: 'Dashboard Overview' },
-                { href: '/root/solutions/rfi-Management', label: 'RFI Management' },
-                { href: '/root/solutions/changeOrderManagement', label: 'Change Order Management' },
-                { href: '/root/solutions/purchaseOrderManagement', label: 'Purchase Order Management' },
-                { href: '/root/solutions/documentManagement', label: 'Document Management' },
-                { href: '/root/solutions/customFormBuilder', label: 'Custom Forms Builder' },
+                { href: '/root/solutions/overview', label: 'Startup Details' },
+                { href: '/root/solutions/rfi-Management', label: 'Products Details' },
+                { href: '/root/solutions/changeOrderManagement', label: 'Meta Wave' },
+                { href: '/root/solutions/purchaseOrderManagement', label: 'Reports Center' },
+                { href: '/root/solutions/documentManagement', label: 'Insight Database' },
+                { href: '/root/solutions/customFormBuilder', label: 'Niche Data Explorer' },
             ],
         },
         {
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
     ];
 
     return (
-        <div className="text-[18px] text-zinc-700 h-[90px] flex justify-between items-center px-[40px]">
+        <div className="text-[18px] bg-background text-zinc-700 h-[90px] flex justify-between items-center px-[40px]">
             {/* Logo */}
             <Link href="/" className="w-[200px]">
                 <Image src="/logos/1.svg" alt="Logo" width={50} height={50} />
@@ -62,7 +62,7 @@ const Header: React.FC = () => {
                             <NavigationMenuItem key={index}>
                                 <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
                                 <NavigationMenuContent>
-                                    <ul className="bg-white shadow-md rounded-md p-4 w-[400px]">
+                                    <ul className=" shadow-md rounded-md p-4 w-[400px]">
                                         {item.links.map((link, linkIndex) => (
                                             <li key={linkIndex} className="p-2 hover:bg-gray-100 rounded-md">
                                                 <NavigationMenuLink asChild>
