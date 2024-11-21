@@ -205,7 +205,7 @@ const generateChartData = (data: number[], forecast: boolean) => {
   };
 };
 
-const ProductDetail: React.FC<ProductDetail> = ({ product, onClose, params }) => {
+const productDetail: React.FC<ProductDetail> = ({ product, onClose, params }) => {
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('5 Years');
   const [forecast, setForecast] = useState<boolean>(true);
   const [selectedProduct, setSelectedProduct] = useState<ProductSegment | null>(null);
@@ -382,5 +382,5 @@ const ProductDetail: React.FC<ProductDetail> = ({ product, onClose, params }) =>
   );
 };
 
-export default ProductDetail;
+export default productDetail;
 

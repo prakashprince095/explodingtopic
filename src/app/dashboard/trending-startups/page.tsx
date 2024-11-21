@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import { useHub } from '@/context/HubContext';
 
 const startupsData: Startup[] = [
   {
@@ -53,7 +53,7 @@ const startupsData: Startup[] = [
           { idx: 1, value: 15 },
         ],
       },
-    ],    
+    ],
   },
 ];
 
@@ -69,6 +69,11 @@ const Startups = () => {
   const [timeFrame, setTimeFrame] = useState('');
   const [fundingFilter, setFundingFilter] = useState('');
   const [employeeFilter, setEmployeeFilter] = useState('');
+  const { addToHub } = useHub();
+
+  const handleAddToHub = (startup: Startup) => {
+    addToHub(startup);
+  };
 
   const handleStartupClick = (startup: Startup) => {
     setSelectedStartup(startup);
@@ -93,7 +98,7 @@ const Startups = () => {
         .join('\n');
     saveAs(new Blob([csvContent], { type: 'text/csv' }), 'startups.csv');
   };
-  
+
 
   const GrowthChart = ({ growthData }: { growthData: number[] }) => (
     <div className="mt-4 p-1 border border-gray-300 rounded-md">
@@ -245,28 +250,28 @@ const Startups = () => {
       {/* Startup Cards */}
       <div className="bg-white h-screen border border-zinc-300 p-2 rounded-lg shadow-sm">
         <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
-          {filteredStartups.map((startup) => (
-            <div
-              key={startup.id}
-              onClick={() => handleStartupClick(startup)}
-              className="p-3 w-[350px] h-[400px] border rounded-md bg-white hover:bg-gray-100 hover:shadow-lg transition cursor-pointer"
-            >
-              <Link href={`/dashboard/trending-startups/${startup.title}`}>
-                <div>
-                  <h3 className="text-xl">{startup.title}</h3>
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-sm text-gray-600">Volume: {startup.volume}</span>
-                    <span className="text-sm bg-black text-white px-2 py-1 rounded-full">
-                      Funding: {startup.totalFunding}
-                    </span>
+          <div className="p-3 w-[350px] h-[400px] border rounded-md bg-white hover:bg-gray-100 hover:shadow-lg transition cursor-pointer">
+            {filteredStartups.map((startup) => (
+              <div
+                key={startup.id}
+                onClick={() => handleStartupClick(startup)}>
+                <Link href={`/dashboard/trending-startups/${startup.title}`}>
+                  <div>
+                    <h3 className="text-xl">{startup.title}</h3>
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="text-sm text-gray-600">Volume: {startup.volume}</span>
+                      <span className="text-sm bg-black text-white px-2 py-1 rounded-full">
+                        Funding: {startup.totalFunding}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-700 mt-3">{startup.description}</p>
+                    {startup.growthData && <GrowthChart growthData={startup.growthData} />}
                   </div>
-                  <p className="text-sm text-gray-700 mt-3">{startup.description}</p>
-                  {startup.growthData && <GrowthChart growthData={startup.growthData} />}
-                </div>
-              </Link>
-              <Button className="mt-4">Add to Hub</Button>
-            </div>
-          ))}
+                </Link>
+              </div>
+            ))}
+            <Button className="mt-4" onClick={() => handleAddToHub(startup)}>Add to Hub</Button>
+          </div>
         </div>
       </div>
     </div>

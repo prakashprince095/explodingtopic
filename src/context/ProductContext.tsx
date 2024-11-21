@@ -1,7 +1,7 @@
 
 "use client";
 import React, { createContext, useContext, useState } from "react";
-import { ProductSegment } from "@/app/dashboard/product-discovery/ProductDetailsModal";
+import { ProductSegment } from "@/app/dashboard/product-discovery/ProductDetail";
 
 type ProductContextType = {
   productItems: ProductSegment[];

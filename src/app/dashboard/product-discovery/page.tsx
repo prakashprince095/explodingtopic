@@ -435,7 +435,7 @@ export default function TrendingProducts() {
         <ProductDetail
           product={selectedProduct}
           onClose={() => setIsModalOpen(false)}
-          params={{ slug: selectedProduct?.name || '' }}  // Pass params here
+          params={{ slug: selectedProduct?.name || '' }} 
         />
       )}
 

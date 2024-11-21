@@ -30,7 +30,7 @@ export default function HomePage() {
     <>
       <Header />
       <main className="flex min-h-screen flex-col items-center justify-between ">
-        <div className="relative flex flex-col gap-4 h-[500px] w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
+        <div className="relative flex flex-col gap-4 h-[500px]  w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
           <h1 className="z-10 whitespace-pre-wrap text-center text-[70px] max-w-[700px] font-medium tracking-tighter text-black dark:text-white">
             Stay ahead by spotting trends before they ignite
           </h1>
@@ -42,7 +42,7 @@ export default function HomePage() {
             repeatDelay={1}
             className={cn(
               "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-              "inset-x-0 inset-y-[-10%] h-[200%] ",
+              "inset-x-0 inset-y-[-10%] h-[100%] ",
             )}
           />
         </div>

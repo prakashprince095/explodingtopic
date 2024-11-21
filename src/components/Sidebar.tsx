@@ -28,7 +28,7 @@ const Sidebar = () => {
             const isActive = pathname === link.href;
             return (
               <li key={link.href} className={isActive ? 'bg-[#3985ED] rounded-md' : ''}>
-                <Link href={link.href} className="flex items-center my-2 p-2 hover:bg-slate-200 rounded-md">
+                <Link href={link.href} className="flex items-center my-2 p-2  rounded-md">
                   <img 
                     src={link.imgSrc} 
                     alt={link.name} 

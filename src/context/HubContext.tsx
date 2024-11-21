@@ -1,30 +1,53 @@
-// HubContext.tsx
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
-import { Segment } from "@/app/dashboard/trending-startups/page";
+import React, { createContext, useContext, useState } from "react";
 
-interface HubContextType {
-  hubItems: Segment[];
-  addToHub: (item: Segment) => void;
+// Define the structure of a Startup
+interface Startup {
+  id: string;
+  title: string;
+  description: string;
+  employees: number;
+  volume: number;
+  totalFunding: string;
+  latestRound: string;
+  category: string[];
+  location: string;
+  growth: string;
+  isFavorite?: boolean;
 }
 
-const HubContext = createContext<HubContextType | undefined>(undefined);
+// Define the context type
+interface HubContextType {
+  hubItems: Startup[];
+  addToHub: (startup: Startup) => void;
+}
 
-export const HubProvider = ({ children }: { children: ReactNode }) => {
-  const [hubItems, setHubItems] = useState<Segment[]>([]);
+// Create the HubContext
+export const HubContext = createContext<HubContextType | undefined>(undefined);
 
-  const addToHub = (item: Segment) => {
-    setHubItems((prevItems) => [...prevItems, item]);
+// Provide the context to components
+export const HubProvider = ({ children }: { children: React.ReactNode }) => {
+  const [hubItems, setHubItems] = useState<Startup[]>([]);
+
+  const addToHub = (startup: Startup) => {
+    setHubItems((prevItems) => {
+      // Avoid duplicates
+      if (!prevItems.find((item) => item.id === startup.id)) {
+        return [...prevItems, startup];
+      }
+      return prevItems;
+    });
   };
 
   return (
     <HubContext.Provider value={{ hubItems, addToHub }}>
       {children}
-    </HubContext.Provider>  
+    </HubContext.Provider>
   );
 };
 
+// Custom hook to use the HubContext
 export const useHub = () => {
   const context = useContext(HubContext);
   if (!context) {
