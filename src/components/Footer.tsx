@@ -8,11 +8,7 @@ export default function Footer() {
                 {/* Left Side - Logo and Contact Info */}
                 <div className="mb-6 md:mb-0">
                     <h2 className="text-2xl  text-gray-800">Exploding</h2>
-                    <p className="mt-2 text-gray-600">
-                        exploding helps top companies <br/>
-                        <a href="#" className="text-blue-500">see the future before it happens</a>
-                    </p>
-                    <p className="mt-2 text-gray-600"><a href="mailto:hello@meetexploding.com">hello@meetexploding.com</a></p>
+                    <p className="mt-2 text-gray-600"></p>
                     <p className="text-gray-600">Mumbai, India</p>
                 </div>
 
