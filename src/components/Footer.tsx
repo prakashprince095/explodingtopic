@@ -9,10 +9,17 @@ export default function Footer() {
                 <div className="mb-6 md:mb-0">
                     <h2 className="text-2xl  text-gray-800">Exploding</h2>
                     <p className="mt-2 text-gray-600">
+<<<<<<< Updated upstream
                         exploding helps top companies <br/>
                         <a href="#" className="text-blue-500">see the future before it happens</a>
                     </p>
                     <p className="mt-2 text-gray-600"><a href="mailto:hello@meetexploding.com">hello@meetexploding.com</a></p>
+=======
+                        Exploding helps top companies <br/>
+                        <a href="#" className="text-blue-500">see the future before it happens</a>
+                    </p>
+                    <p className="mt-2 text-gray-600"><a href="mailto:hello@meetExploding.com">hello@meetExploding.com</a></p>
+>>>>>>> Stashed changes
                     <p className="text-gray-600">Mumbai, India</p>
                 </div>
 
