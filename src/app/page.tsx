@@ -45,7 +45,7 @@ export default function HomePage() {
             repeatDelay={1}
             className={cn(
               "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-              "inset-x-0 inset-y-[-10%] h-[100%] ",
+              "inset-x-[20%] inset-y-[-10%] h-[100%] ",
             )}
           />
         </div>
