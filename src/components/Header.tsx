@@ -13,7 +13,7 @@ const menuItems = [
         label: 'Product',
         links: [
             { href: '/products/insight-Hub', label: 'Insights-Hub' },
-            { href: '/products/Trending-Startups', label: 'Trending-Startups' },
+            { href: '/products/Trending-Startup', label: 'Trending-Startups' },
             { href: '/products/Trending-Products', label: 'Trending-Products' },
             { href: '/products/Deep-Dive-Analysis', label: 'Deep Dive Analysis' },
         ],
