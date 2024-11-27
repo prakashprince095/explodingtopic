@@ -1,124 +1,273 @@
-'use client';
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useStartup } from '@/context/StartupContext';
-import { Startup } from '@/types/index';
-import { saveAs } from 'file-saver';
-import { LineChart, Line, CartesianGrid, XAxis, Tooltip } from 'recharts';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useHub } from '@/context/HubContext';
+// 'use client';
 
-const startupsData: Startup[] = [
-  {
-    id: 1,
-    title: 'TechInnovatorsInc.',
-    description: 'Leading the future of AI technology.',
-    foundedDate: '2019',
-    website: 'https://techinnovators.com',
-    socialPlatforms: ['Twitter', 'LinkedIn'],
-    growth: 'High',
-    volume: '500K',
-    totalFunding: '$10M',
-    latestRound: 'Series A',
-    employees: '50-100',
-    category: ['AI', 'Tech'],
-    location: 'San Francisco, CA',
-    growthData: [10, 20, 30, 40],
-    relatedStartups: [
-      {
-        id: 3,
-        logo: 'https://via.placeholder.com/50',
-        name: 'Startup B',
-        description: 'AI-driven solutions for modern problems.',
-        growthRate: 'Fast',
-      },
-    ],
-    keyIndicators: {
-      growth: 'High',
-      speed: 'Moderate',
-      seasonality: 'Low',
-      volatility: 'Medium',
-      sentiment: 'Positive',
-      forecast: 'Upward',
-    },
-    relatedTrends: [
-      {
-        name: 'Trend 1',
-        growthRate: '+15%',
-        growthData: [
-          { idx: 0, value: 10 },
-          { idx: 1, value: 15 },
-        ],
-      },
-    ],
-  },
-];
+// import React, { useEffect, useState } from 'react';
+// import { useRouter } from 'next/navigation';
+// import { saveAs } from 'file-saver';
+// import Link from 'next/link';
+// import { Button } from '@/components/ui/button';
+
+// type Startup = {
+//   uuid: string;
+//   name: string;
+//   short_description: string;
+//   description: string;
+//   web: string;
+//   city: string;
+//   region: string;
+//   country: string;
+//   founded_on: string;
+//   rank: number;
+//   number_of_employees_min: number;
+//   number_of_employees_max: number;
+//   twitter_url: string;
+//   linkedin_url: string;
+//   facebook_url: string;
+//   number_of_investments: number;
+// };
+
+// const Startups = () => {
+//   const router = useRouter();
+//   const [startups, setStartups] = useState<Startup[]>([]);
+//   const [filteredStartups, setFilteredStartups] = useState<Startup[]>([]);
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [isGridView, setIsGridView] = useState(true);
+
+//   // Fetch data from local JSON file
+//   useEffect(() => {
+//     const fetchStartups = async () => {
+//       try {
+//         const response = await fetch('http://localhost:3000/data/response.json'); // Fetching from the public folder
+//         const json = await response.json();
+    
+//         const startupsData = json.data.organization.similar_companies.map((company: any, index: number) => ({
+//           uuid: company.url.split('/').pop() || `${index}`,
+//           name: company.name,
+//           short_description: json.data.organization.about,
+//           description: json.data.organization.full_description,
+//           web: company.url,
+//           city: json.data.organization.locations.find((loc: any) => loc.location_type === 'city')?.value || '',
+//           region: json.data.organization.locations.find((loc: any) => loc.location_type === 'region')?.value || '',
+//           country: json.data.organization.locations.find((loc: any) => loc.location_type === 'country')?.value || '',
+//           founded_on: json.data.organization.founded_date,
+//           rank: json.data.organization.rank_company,
+//           number_of_employees_min: 0,
+//           number_of_employees_max: 0,
+//           twitter_url: json.data.organization.social_media.find((s: any) => s.name === 'twitter')?.link || '',
+//           linkedin_url: json.data.organization.social_media.find((s: any) => s.name === 'linkedin')?.link || '',
+//           facebook_url: json.data.organization.social_media.find((s: any) => s.name === 'facebook')?.link || '',
+//           number_of_investments: json.data.organization.num_investments,
+//         }));
+    
+//         setStartups(startupsData);
+//         setFilteredStartups(startupsData);
+//       } catch (error) {
+//         console.error('Error fetching startups data:', error);
+//       }
+//     };
+    
+
+//     fetchStartups();
+//   }, []);
+
+//   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const query = e.target.value.toLowerCase();
+//     setSearchQuery(query);
+//     setFilteredStartups(
+//       startups.filter((startup) =>
+//         startup.name.toLowerCase().includes(query)
+//       )
+//     );
+//   };
+
+//   const exportToCSV = () => {
+//     const csvContent =
+//       'data:text/csv;charset=utf-8,' +
+//       filteredStartups
+//         .map((s) => Object.values(s).join(','))
+//         .join('\n');
+//     saveAs(new Blob([csvContent], { type: 'text/csv' }), 'startups.csv');
+//   };
+
+//   const handleStartupClick = (startup: Startup) => {
+//     router.push(`/dashboard/startups/${startup.uuid}`);
+//   };
+
+//   return (
+//     <div className="min-h-screen p-6 bg-slate-50 border border-gray-300 rounded-lg">
+//       <div className="flex justify-between items-center mb-6">
+//         <h2 className="text-2xl">Trending Startups</h2>
+//         <div className="flex gap-3">
+//           <input
+//             type="text"
+//             placeholder="Search Startups"
+//             value={searchQuery}
+//             onChange={handleSearch}
+//             className="border p-2 rounded-sm min-w-[300px] border-gray-400"
+//           />
+//           <Button onClick={exportToCSV}>Export to CSV</Button>
+//         </div>
+//       </div>
+
+//       <div className="bg-white h-screen border border-zinc-300 p-2 rounded-lg shadow-sm">
+//         <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
+//           {filteredStartups && filteredStartups.length > 0 ? (
+//             filteredStartups.map((startup) => (
+//               <div
+//                 key={startup.uuid}
+//                 className="p-3 w-[350px] h-[400px] border rounded-md bg-white hover:bg-gray-100 hover:shadow-lg transition cursor-pointer"
+//                 onClick={() => handleStartupClick(startup)}
+//               >
+//                 <h3 className="text-xl">{startup.name}</h3>
+//                 <p className="text-sm text-gray-700 mt-2">{startup.short_description}</p>
+//                 <div className="flex justify-between items-center mt-2">
+//                   <span className="text-sm text-gray-600">City: {startup.city}</span>
+//                   <span className="text-sm text-gray-600">Country: {startup.country}</span>
+//                 </div>
+//                 <div className="mt-4">
+//                   <Link href={startup.web} target="_blank" className="text-blue-500 underline">
+//                     Visit Website
+//                   </Link>
+//                 </div>
+//               </div>
+//             ))
+//           ) : (
+//             <p className="text-gray-500">No startups found.</p>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Startups;
+
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+
+import localResponseData from '@/data/response.json';
+
+type Startup = {
+  uuid: string;
+  name: string;
+  short_description: string;
+  description: string;
+  web: string;
+  city: string;
+  region: string;
+  country: string;
+  founded_on: string;
+  rank: number;
+  number_of_employees_min: number;
+  number_of_employees_max: number;
+  twitter_url: string;
+  linkedin_url: string;
+  facebook_url: string;
+  number_of_investments: number;
+};
 
 const Startups = () => {
-  const router = useRouter();
-  const { setSelectedStartup } = useStartup();
+  const [startupsData, setStartupsData] = useState<Startup[]>([]);
+  const [filteredStartups, setFilteredStartups] = useState<Startup[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isGridView, setIsGridView] = useState(true);
-  const [filteredStartups, setFilteredStartups] = useState(startupsData);
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [countryFilter, setCountryFilter] = useState('');
-  const [sortBy, setSortBy] = useState('');
-  const [timeFrame, setTimeFrame] = useState('');
-  const [fundingFilter, setFundingFilter] = useState('');
-  const [employeeFilter, setEmployeeFilter] = useState('');
-  const { addToHub } = useHub();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleAddToHub = (startup: Startup) => {
-    addToHub(startup);
+  // Transform raw data into the desired structure
+  const transformData = (data: any): Startup[] => {
+    return data.data.organization.similar_companies.map(
+      (company: any, index: number): Startup => ({
+        uuid: company.url.split('/').pop() || `${index}`,
+        name: company.name,
+        short_description: data.data.organization.about,
+        description: data.data.organization.full_description,
+        web: company.url,
+        city:
+          data.data.organization.locations.find(
+            (loc: { location_type: string; value: string }) =>
+              loc.location_type === 'city'
+          )?.value || '',
+        region:
+          data.data.organization.locations.find(
+            (loc: { location_type: string; value: string }) =>
+              loc.location_type === 'region'
+          )?.value || '',
+        country:
+          data.data.organization.locations.find(
+            (loc: { location_type: string; value: string }) =>
+              loc.location_type === 'country'
+          )?.value || '',
+        founded_on: data.data.organization.founded_date,
+        rank: data.data.organization.rank_company,
+        number_of_employees_min: 0,
+        number_of_employees_max: 0,
+        twitter_url:
+          data.data.organization.social_media.find(
+            (s: { name: string; link: string }) => s.name === 'twitter'
+          )?.link || '',
+        linkedin_url:
+          data.data.organization.social_media.find(
+            (s: { name: string; link: string }) => s.name === 'linkedin'
+          )?.link || '',
+        facebook_url: '',
+        number_of_investments: data.data.organization.num_investments,
+      })
+    );
   };
 
-  const handleStartupClick = (startup: Startup) => {
-    setSelectedStartup(startup);
-    router.push(`/dashboard/trending-startups/${startup.title}`);
-  };
+  useEffect(() => {
+    const fetchStartups = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const useBackend = process.env.NEXT_PUBLIC_CRUNCHBASE_API === 'true';
+
+        if (useBackend) {
+          const response = await fetch('/api/startups');
+          if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+          }
+          const data = await response.json();
+          const transformedData = transformData(data);
+          setStartupsData(transformedData);
+          setFilteredStartups(transformedData);
+        } else {
+          const transformedData = transformData(localResponseData);
+          setStartupsData(transformedData);
+          setFilteredStartups(transformedData);
+        }
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStartups();
+  }, []);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
     setFilteredStartups(
       startupsData.filter((startup) =>
-        startup.title.toLowerCase().includes(query)
+        startup.name.toLowerCase().includes(query)
       )
     );
   };
 
-  const exportToCSV = () => {
-    const csvContent =
-      'data:text/csv;charset=utf-8,' +
-      filteredStartups
-        .map((s) => Object.values(s).join(','))
-        .join('\n');
-    saveAs(new Blob([csvContent], { type: 'text/csv' }), 'startups.csv');
-  };
-
-
-  const GrowthChart = ({ growthData }: { growthData: number[] }) => (
-    <div className="mt-4 p-1 border border-gray-300 rounded-md">
-      <LineChart
-        width={300}
-        height={200}
-        data={growthData.map((val, idx) => ({ name: `Month ${idx + 1}`, value: val }))}
-        margin={{ left: 12, right: 12 }}
-      >
-        <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" />
-        <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} />
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-        <Line type="monotone" dataKey="value" stroke="#2563EB" strokeWidth={2} dot={{ fill: "#2563EB" }} />
-      </LineChart>
-    </div>
-  );
+  const chartData = [
+    { name: 'Jan', value: 400 },
+    { name: 'Feb', value: 500 },
+    { name: 'Mar', value: 300 },
+    { name: 'Apr', value: 450 },
+  ];
 
   return (
     <div className="min-h-screen p-6 bg-slate-50 border border-gray-300 rounded-lg">
-      {/* Header with search and export */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl">Trending Startups</h2>
         <div className="flex gap-3">
@@ -129,153 +278,78 @@ const Startups = () => {
             onChange={handleSearch}
             className="border p-2 rounded-sm min-w-[300px] border-gray-400"
           />
-          <Button onClick={exportToCSV}>Export to CSV</Button>
         </div>
       </div>
 
-      {/* Filter Selects */}
-      <div className="flex items-center justify-between mb-4">
-        <div className='flex items-center gap-3 flex-wrap'>
-          <Select onValueChange={(value) => setCategoryFilter(value)}>
-            <SelectTrigger className="w-[150px] shadow-sm">
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="Technology">Technology</SelectItem>
-                <SelectItem value="Business">Business</SelectItem>
-                <SelectItem value="Socials">Socials</SelectItem>
-                <SelectItem value="Beauty">Beauty</SelectItem>
-                <SelectItem value="HealthCare">HealthCare</SelectItem>
-                <SelectItem value="Finance">Finance</SelectItem>
-                <SelectItem value="Food">Food</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Select onValueChange={(value) => setCountryFilter(value)}>
-            <SelectTrigger className="w-[150px] shadow-sm">
-              <SelectValue placeholder="Countries" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="USA">USA</SelectItem>
-                <SelectItem value="Canada">Canada</SelectItem>
-                <SelectItem value="India">India</SelectItem>
-                <SelectItem value="China">China</SelectItem>
-                <SelectItem value="UK">UK</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Select onValueChange={(value) => setSortBy(value)}>
-            <SelectTrigger className="w-[150px] shadow-sm">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="Name">Name</SelectItem>
-                <SelectItem value="Volume">Volume</SelectItem>
-                <SelectItem value="Profits">Profits</SelectItem>
-                <SelectItem value="Loss">Loss</SelectItem>
-                <SelectItem value="Searches">Searches</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Select onValueChange={(value) => setTimeFrame(value)}>
-            <SelectTrigger className="w-[150px] shadow-sm">
-              <SelectValue placeholder="TimeFrame" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="3 months">3 months</SelectItem>
-                <SelectItem value="6 months">6 months</SelectItem>
-                <SelectItem value="1 year">1 year</SelectItem>
-                <SelectItem value="2 years">2 years</SelectItem>
-                <SelectItem value="3 years">3 years</SelectItem>
-                <SelectItem value="4 years">4 years</SelectItem>
-                <SelectItem value="5 years">5 years</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Select onValueChange={(value) => setFundingFilter(value)}>
-            <SelectTrigger className="w-[150px] shadow-sm">
-              <SelectValue placeholder="Total Funding" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="Less than $1M">Less than $1M</SelectItem>
-                <SelectItem value="$1M - $5M">$1M - $5M</SelectItem>
-                <SelectItem value="$5M - $10M">$5M - $10M</SelectItem>
-                <SelectItem value="More than $10M">More than $10M</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Select onValueChange={(value) => setEmployeeFilter(value)}>
-            <SelectTrigger className="w-[150px] shadow-sm">
-              <SelectValue placeholder="No of employees" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="1-25">1-25</SelectItem>
-                <SelectItem value="25-50">25-50</SelectItem>
-                <SelectItem value="50-100">50-100</SelectItem>
-                <SelectItem value="100-1000">100-1000</SelectItem>
-                <SelectItem value="1000-5000">1000-5000</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Grid/List view toggle */}
-        <div className="flex border border-gray-400 p-[2px] rounded-sm">
-          <button
-            onClick={() => setIsGridView(true)}
-            className={`p-1 ${isGridView ? 'bg-[#3985ED] rounded-sm' : ''}`}
-          >
-            <Image src="/startups/grid.svg" width={20} height={25} alt="Grid View" />
-          </button>
-          <button
-            onClick={() => setIsGridView(false)}
-            className={`p-1 ${!isGridView ? 'bg-[#3985ED] rounded-sm' : ''}`}
-          >
-            <Image src="/startups/list.svg" width={20} height={25} alt="List View" />
-          </button>
-        </div>
-      </div>
-
-      {/* Startup Cards */}
       <div className="bg-white h-screen border border-zinc-300 p-2 rounded-lg shadow-sm">
-        <div className={`${isGridView ? 'flex flex-row gap-3 flex-wrap' : 'flex flex-col w-full gap-4'}`}>
-          <div className="p-3 w-[350px] h-[400px] border rounded-md bg-white hover:bg-gray-100 hover:shadow-lg transition cursor-pointer">
-            {filteredStartups.map((startup) => (
-              <div
-                key={startup.id}
-                onClick={() => handleStartupClick(startup)}>
-                <Link href={`/dashboard/trending-startups/${startup.title}`}>
-                  <div>
-                    <h3 className="text-xl">{startup.title}</h3>
-                    <div className="flex justify-between items-center mt-2">
-                      <span className="text-sm text-gray-600">Volume: {startup.volume}</span>
-                      <span className="text-sm bg-black text-white px-2 py-1 rounded-full">
-                        Funding: {startup.totalFunding}
-                      </span>
+        {loading ? (
+          <p>Loading startups...</p>
+        ) : error ? (
+          <p className="text-red-500">Error: {error}</p>
+        ) : (
+          <div className="flex flex-row gap-3 flex-wrap">
+            {filteredStartups && filteredStartups.length > 0 ? (
+              filteredStartups.map((startup) => (
+                <div
+                  key={startup.uuid}
+                  className="p-4 w-[320px] h-[500px] border rounded-md bg-white hover:bg-gray-100 hover:shadow-lg transition cursor-pointer"
+                >
+                  {/* Logo and Company Name */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gray-300"></div> {/* Placeholder for logo */}
+                    <div className="flex flex-col">
+                      <h3 className="text-xl font-semibold">{startup.name}</h3>
+                      <p className="text-sm text-gray-500">{startup.short_description}</p>
                     </div>
-                    <p className="text-sm text-gray-700 mt-3">{startup.description}</p>
-                    {startup.growthData && <GrowthChart growthData={startup.growthData} />}
                   </div>
-                </Link>
-              </div>
-            ))}
-            <Button className="mt-4" onClick={() => handleAddToHub(startup)}>Add to Hub</Button>
+
+                  {/* Funding */}
+                  <div className="mt-2">
+                    <span className="text-sm text-gray-600">Funding: $100B</span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-700 mt-2">{startup.city},{startup.country}</p>
+
+                  {/* Volume */}
+                  <div className="flex justify-between items-center mt-2">
+                    <span className="text-sm text-gray-600">Volume: -500K</span>
+                  </div>
+
+                  {/* Chart */}
+                  <div className="mt-4 h-[150px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="value" stroke="#4F81BD" />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* Visit Website */}
+                  <div className="mt-4">
+                    <Link
+                      href={startup.web}
+                      target="_blank"
+                      className="text-blue-500 underline"
+                    >
+                      Visit Website
+                    </Link>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">No startups found.</p>
+            )}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default Startups;
+

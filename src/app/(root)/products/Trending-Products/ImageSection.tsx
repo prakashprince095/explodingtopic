@@ -6,7 +6,7 @@ export default function ImageSection() {
       <div className="container mx-auto">
         <div className="flex flex-col items-center gap-8">
           <div className="bg-gray-100 w-full p-7 flex flex-col items-center rounded-lg">
-            <h1 className='text-center text-[30px] mb-5'>See the Visionaries <span className='text-gradient'>Behind the Startups</span></h1>
+            <h1 className='text-center text-[30px] mb-5'>Category Highlights <span className='text-gradient'>Top Categories for Trending Products</span></h1>
             <Image
               src="/products/1.svg"
               alt="Startup Ecosystem Visualization"
@@ -18,22 +18,21 @@ export default function ImageSection() {
             <p className='text-center text-[16px] mb-'>Get Unlimited access, Custom Support, Unlimited Reports →</p>
           </div>
           <div className="">
-            <h2 className="text-2xl  mb-4">The Global Startup Ecosystem</h2>
+            <h2 className="text-2xl  mb-4">The Global Product Ecosystem</h2>
             <p className="text-md text-gray-500 mb-4">
-              This image provides a comprehensive visualization of the current global startup ecosystem. It highlights the interconnectedness of various industries, the flow of capital, and the hotspots of innovation across different regions.
+              This visualization offers an in-depth look at the interconnected world of trending e-commerce products, highlighting consumer preferences and growth patterns across regions.
             </p>
             <p className="text-md text-gray-500 mb-4">
               Key elements depicted in the image include:
             </p>
             <ul className="list-disc list-inside text-gray-500 mb-4">
-              <li>Major tech hubs and their specializations</li>
-              <li>Emerging markets and their growth trajectories</li>
-              <li>Cross-industry collaborations and convergence</li>
-              <li>Investment trends and capital flow patterns</li>
-              <li>Regulatory landscapes affecting startup growth</li>
+              <li>Category Leaders: Smart devices, sustainability solutions, and wearable tech</li>
+              <li>Emerging Markets: Regions showing rapid adoption of trending products</li>
+              <li>Consumer Insights: Key factors driving demand and repeat purchases</li>
+              <li>Growth Trends: Products with rising popularity across diverse demographics</li>
             </ul>
             <p className="text-md text-gray-500">
-              Understanding this ecosystem is crucial for entrepreneurs, investors, and policymakers alike. It provides insights into where opportunities lie, potential challenges to overcome, and how different elements of the startup world interact and influence each other.
+              Understanding this ecosystem is essential for e-commerce professionals, enabling them to identify opportunities and adapt to shifting market dynamics.
             </p>
           </div>
         </div>

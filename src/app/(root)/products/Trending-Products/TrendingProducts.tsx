@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Bookmark, Share2, Link } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
-const startups = [
+const products = [
     {
         name: "OpenAI",
         description: "Leading AI technology and chatbots",
@@ -55,42 +55,41 @@ const startups = [
     },
 ]
 
-export default function TrendingStartups() {
+export default function TrendingProduts() {
     return (
         <section className="py-16 flex flex-col items-center">
             <div className="container mx-auto px-4">
-                <div className="max-w-2xl mx-auto text-center mb-12">
+                <div className="max-w-3xl mx-auto text-center mb-12">
                     <h2 className="text-3xl  tracking-tight mb-4">
-                        Trending Startups
+                        Trending Products
                     </h2>
                     <p className="text-lg text-muted-foreground">
-                        Discover innovative startups shaping the future of technology and business.
-                        These companies are developing groundbreaking solutions to global challenges.
+                        Discover innovative products transforming the way we live, work, and interact. These cutting-edge solutions are addressing global challenges and redefining possibilities.
                     </p>
                 </div>
                 <div className="flex items-center justify-center gap-5 my-5">
-                    {startups.map((startup) => (
-                        <Card key={startup.name} className="w-[350px] h-[450px]">
+                    {products.map((product) => (
+                        <Card key={product.name} className="w-[350px] h-[450px]">
                             <CardHeader className="">
                                 <div className="flex items-center gap-2">
                                     <div className="h-10 w-10 rounded-full ">
                                         <img
-                                            src={startup.logo}
-                                            alt={`${startup.name} logo`}
+                                            src={product.logo}
+                                            alt={`${product.name} logo`}
                                             className="h-full w-full object-cover"
                                         />
                                     </div>
                                     <div className="flex justify-between w-full">
-                                        <h3 className=" text-[14px]">{startup.name}</h3>
+                                        <h3 className=" text-[14px]">{product.name}</h3>
                                         <div>
                                             <Badge variant="secondary" className="bg-black text-white hover:bg-black/90">
-                                                Funding: {startup.funding}
+                                                Funding: {product.funding}
                                             </Badge>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-sm mt-3 text-muted-foreground">{startup.description}</p>
+                                    <p className="text-sm mt-3 text-muted-foreground">{product.description}</p>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <section className="flex items-center space-x-3">
@@ -109,7 +108,7 @@ export default function TrendingStartups() {
                                     </section>
                                     <section className="">
                                         <Badge variant="secondary" className="ml-auto bg-red-100 text-red-600 hover:bg-red-100/90">
-                                            Volume: {startup.volume}
+                                            Volume: {product.volume}
                                         </Badge>
                                     </section>
                                 </div>
@@ -117,7 +116,7 @@ export default function TrendingStartups() {
                             <div className="flex items-center  border mx-5 rounded-lg justify-between">
                                 <CardContent className=" h-[250px] w-full">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={startup.chartData}>
+                                        <LineChart data={product.chartData}>
                                             <Line
                                                 type="monotone"
                                                 dataKey="value"
@@ -148,20 +147,27 @@ export default function TrendingStartups() {
                 </div>
                 <section className="max-w-[1100px] ">
                     <h1 className="text-xl mb-4 font-medium">
-                        Discover the most innovative startups that are shaping the future of technology and business. These companies are at the forefront of their industries, developing groundbreaking solutions to some of the world's most pressing challenges.
+                        Our platform is designed to bring you unparalleled insights into the world of trending e-commerce products. From real-time tracking to advanced analytics, we provide the tools you need to stay ahead in a competitive market.
                     </h1>
                     <p className="text-gray-800">
-                        The startup ecosystem is constantly evolving, with new players emerging and established ones pivoting to meet changing market demands. In today's fast-paced business environment, staying informed about the latest trends and innovations is crucial for entrepreneurs, investors, and industry professionals alike.
+                        Gain in-depth information on each trending product, including key features, popularity metrics, and sales performance. Our platform organizes product data into easy-to-read formats, helping users make informed decisions quickly.
                     </p>
                     <p className="text-gray-800">
-                        In the healthcare industry, HealthAI is leveraging the power of artificial intelligence to revolutionize patient care. Their advanced algorithms are capable of analyzing vast amounts of medical data to detect patterns and anomalies that might be missed by human practitioners. This technology has the potential to significantly improve early diagnosis rates and treatment outcomes, ultimately saving lives and reducing healthcare costs.
+                        Stay on top of market trends with live updates on product performance and consumer interest. Whether it’s a sudden surge in demand or consistent growth, our system ensures you’re always in the loop.
                     </p>
                     <p className="text-gray-800">
-                        FinRevolution is disrupting the financial services industry by harnessing the power of blockchain technology. Their platform is making complex financial instruments and services accessible to a broader audience, potentially democratizing access to wealth-building opportunities. By using smart contracts, FinRevolution is also increasing transparency and reducing the costs associated with traditional financial transactions.
+                        Our intuitive dashboard presents product data in visually engaging charts, graphs, and comparisons. This makes it easy to identify patterns and uncover insights at a glance..
                     </p>
                     <p className="text-gray-800">
-                        These startups represent just a fraction of the innovation happening across various industries. From artificial intelligence and machine learning to biotechnology and space exploration, entrepreneurs are pushing the boundaries of what's possible. They're not just creating new products and services; they're reshaping entire industries and challenging established norms.
+                        Explore products across various categories tailored to your preferences. Whether you’re interested in smart technology, sustainable goods, or lifestyle essentials, our system categorizes products to match your needs.
                     </p>
+                    <p className="text-gray-800">
+                        Discover the why behind the trends. Our platform leverages advanced analytics to explain what drives product popularity, helping you understand consumer behavior and market dynamics.
+                    </p>
+                    <p className="text-gray-800">
+                        Quickly find specific products using advanced search filters and bookmark your favorites for easy access. These features are designed to streamline your exploration and keep your focus on what matters most.
+                    </p>
+
                 </section>
             </div>
         </section>

@@ -1,9 +1,28 @@
-import { NextPage } from 'next'
+'use client'
 
-interface Props {}
+import HeroSection from './HeroSection'
+import TrendingStartups from './TrendingProducts'
+import ImageSection from './ImageSection'
+import RelatedTrends from './RelatedTrends'
+import SignupSection from './SignupSection'
 
-const TrendingProducts: NextPage<Props> = ({}) => {
-  return <div>TrendingProducts</div>
+export default function Home() {
+  return (
+    <main className="min-h-screen flex flex-col items-center bg-background">
+      <HeroSection />
+      
+      <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+      <TrendingStartups />
+      <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+      
+      <ImageSection />
+      <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+
+      <RelatedTrends />
+      <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+
+      <SignupSection />
+    </main>
+  )
 }
 
-export default TrendingProducts
