@@ -1,7 +1,24 @@
 'use client';
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { RelatedStartup, KeyIndicators, Startup } from '@/types/index';
+
+type Startup = {
+  uuid: string;
+  name: string;
+  short_description: string;
+  description: string;
+  web: string;
+  city: string;
+  region: string;
+  country: string;
+  founded_on: string;
+  rank: number;
+  number_of_employees_min: number;
+  number_of_employees_max: number;
+  twitter_url: string;
+  linkedin_url: string;
+  facebook_url: string;
+  number_of_investments: number;
+};
 
 interface StartupContextType {
   selectedStartup: Startup | null;
