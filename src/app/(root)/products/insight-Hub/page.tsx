@@ -1,9 +1,22 @@
-import { NextPage } from 'next'
+'use client'
 
-interface Props {}
+import HeroSection from './hero'
+import Features from './features'
+import { HowItWorks } from './how-it-works'
+import { PremiumFeatures } from './premium-features'
+import { CallToAction } from './call-to-action'
 
-const InsightHub: NextPage<Props> = ({}) => {
-  return <div>InsightHub</div>
+export default function Home() {
+  return (
+    <div className="min-h-screen ">
+      <main>
+        <HeroSection />
+        <Features />
+        <HowItWorks />
+        <PremiumFeatures />
+        <CallToAction />
+      </main>
+    </div>
+  )
 }
 
-export default InsightHub
