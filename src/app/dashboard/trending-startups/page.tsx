@@ -36,7 +36,6 @@ const Startups = () => {
   const router = useRouter();
   const { setSelectedStartup } = useStartup(); // Ensure `setSelectedStartup` is defined in your context
 
-  // Transform raw data into the desired structure
   const transformData = (data: any): Startup[] => {
     return data.data.organization.similar_companies.map(
       (company: any, index: number): Startup => ({
@@ -146,7 +145,7 @@ const Startups = () => {
         </div>
       </div>
 
-      <div className="bg-white h-screen border border-zinc-300 p-2 rounded-lg shadow-sm">
+      <div className="bg-white border border-zinc-300 p-2 rounded-lg shadow-sm">
         {loading ? (
           <p>Loading startups...</p>
         ) : error ? (
