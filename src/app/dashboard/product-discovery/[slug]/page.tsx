@@ -15,13 +15,13 @@ import { Progress } from "@/components/ui/progress"
 import { LineChart, Line, XAxis, ResponsiveContainer } from "recharts"
 
 const socialPlatforms = [
-  { name: "LinkedIn", icon: "/linkedin-icon.png", progress: 75 },
-  { name: "Instagram", icon: "/instagram-icon.png", progress: 60 },
-  { name: "Facebook", icon: "/facebook-icon.png", progress: 85 },
-  { name: "Reddit", icon: "/reddit-icon.png", progress: 45 },
-  { name: "Youtube", icon: "/youtube-icon.png", progress: 70 },
-  { name: "Pinterest", icon: "/pinterest-icon.png", progress: 55 },
-  { name: "TikTok", icon: "/tiktok-icon.png", progress: 80 },
+  { name: "LinkedIn", icon: "/startups/in.svg", progress: 75 },
+  { name: "Instagram", icon: "/startups/insta.svg", progress: 60 },
+  { name: "Facebook", icon: "/startups/fb.svg", progress: 85 },
+  { name: "Reddit", icon: "/startups/rd.svg", progress: 45 },
+  { name: "Youtube", icon: "/startups/yt.svg", progress: 70 },
+  { name: "Pinterest", icon: "/startups/pin.svg", progress: 55 },
+  { name: "TikTok", icon: "/startups/tiktok.svg", progress: 80 },
 ]
 
 const keyIndicators = [
@@ -65,7 +65,7 @@ const topSellers = Array(6).fill({
 
 export default function ProductDetails() {
   return (
-    <main className="p-6 min-h-screen bg-background">
+    <main className="p-3 min-h-scree border border-gray-300 rounded-lg">
       <Link
         href="/dashboard/product-discovery"
         className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
@@ -75,58 +75,57 @@ export default function ProductDetails() {
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Product Info */}
         <Card className="p-6 h-fit">
-          <div className="flex items-start gap-4 mb-6">
+          <div className="flex items-start 0 gap-4 mb-6">
             <Image
               src={mockData.logo}
               alt={mockData.name}
               width={64}
               height={64}
-              className="rounded-lg"
+              className="rounded-lg bg-gray-10"
             />
             <div>
-              <h1 className="text-xl font-bold">{mockData.name}</h1>
+              <h1 className="text-xl ">{mockData.name}</h1>
               <p className="text-sm text-muted-foreground">{mockData.short_description}</p>
             </div>
           </div>
-
-          <div className="space-y-4 mb-6 border-y py-6">
-            <div>
-              <p className="text-sm text-muted-foreground">Avg Revenue</p>
-              <p className="text-lg font-semibold">{mockData.revenue}</p>
+          <div className='border-b-2 my-4 border-dashed '></div>
+          <div className="space-y-4 ">
+            <div className="flex justify-between items-center">
+              <p className="text-md text-muted-foreground">Avg Revenue</p>
+              <p className="text-lg ">{mockData.revenue}</p>
             </div>
-            <div>
+            <div className="flex justify-between items-center">
               <p className="text-sm text-muted-foreground">Avg BSR</p>
-              <p className="text-lg font-semibold">{mockData.bsr}</p>
+              <p className="text-lg ">{mockData.bsr}</p>
             </div>
-            <div>
+            <div className="flex justify-between items-center">
               <p className="text-sm text-muted-foreground">Avg Price</p>
-              <p className="text-lg font-semibold">{mockData.price}</p>
+              <p className="text-lg ">{mockData.price}</p>
             </div>
             <div>
+              <div className='border-b-2 my-4 border-dashed '></div>
               <p className="text-sm text-muted-foreground">Avg Reviews</p>
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-4 h-4 ${
-                      i < Math.floor(parseFloat(mockData.avg_reviews_rating))
+                    className={`w-4 h-4 ${i < Math.floor(parseFloat(mockData.avg_reviews_rating))
                         ? "fill-primary stroke-primary"
                         : "fill-muted stroke-muted-foreground"
-                    }`}
+                      }`}
                   />
                 ))}
                 <span className="text-sm ml-2">{mockData.avg_reviews_rating}/5</span>
               </div>
             </div>
           </div>
-
+          <div className='border-b-2 my-4 border-dashed '></div>
           <p className="text-sm text-muted-foreground mb-2">See product on:</p>
           <div className="flex gap-2">
             <Image src="/amazon-icon.png" alt="Amazon" width={24} height={24} className="rounded" />
-            <Image src="/tiktok-icon.png" alt="TikTok" width={24} height={24} className="rounded" />
-            <Image src="/instagram-icon.png" alt="Instagram" width={24} height={24} className="rounded" />
+            <Image src="/startups/tiktok.svg" alt="TikTok" width={24} height={24} className="rounded" />
+            <Image src="/startups/insta.svg" alt="Instagram" width={24} height={24} className="rounded" />
           </div>
         </Card>
 
@@ -134,7 +133,7 @@ export default function ProductDetails() {
         <Card className="lg:col-span-2 p-6">
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-4">
-              <p className="text-sm font-medium">Timeframe:</p>
+              <p className="text-sm ">Timeframe:</p>
               <Select defaultValue="1year">
                 <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="Select timeframe" />
@@ -147,8 +146,8 @@ export default function ProductDetails() {
               </Select>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm font-medium">Volume:</span>
-              <span className="text-sm text-green-500 font-medium">{mockData.search_volume}</span>
+              <span className="text-sm ">Volume:</span>
+              <span className="text-sm text-green-500 ">{mockData.search_volume}</span>
             </div>
           </div>
 
@@ -178,24 +177,24 @@ export default function ProductDetails() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {/* Key Indicators */}
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <Image src="/indicator-icon.png" alt="" width={20} height={20} />
-            <h2 className="text-lg font-semibold">Key Indicators:</h2>
+        <Card className="p-3">
+          <div className="flex items-center gap-2 ">
+            <Image src="/startups/indicator.svg" alt="" width={20} height={20} />
+            <h2 className="text-lg ">Key Indicators:</h2>
           </div>
+          <div className='border-b-2 my-4 border-dashed '></div>
           <div className="space-y-4">
             {keyIndicators.map((indicator) => (
-              <div key={indicator.name} className="flex justify-between items-center">
-                <span className="text-sm">{indicator.name}:</span>
-                <div className="flex gap-1">
+              <div key={indicator.name} className="flex items-center justify-between py-1.5">
+                <span className="text-md text-gray-600">{indicator.name}:</span>
+                <div className="flex gap-3 bg-gray-100 p-1 rounded-md">
                   {indicator.options.map((option) => (
                     <span
                       key={option}
-                      className={`text-xs px-3 py-1 rounded-full ${
-                        option === indicator.selected
-                          ? "bg-blue-100 text-blue-600"
+                      className={`p-2 text-sm rounded-sm  ${option === indicator.selected
+                          ? "bg-white text-blue-800"
                           : "bg-gray-100 text-gray-400"
-                      }`}
+                        }`}
                     >
                       {option}
                     </span>
@@ -207,19 +206,21 @@ export default function ProductDetails() {
         </Card>
 
         {/* Channels */}
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <Image src="/channels-icon.png" alt="" width={20} height={20} />
-            <h2 className="text-lg font-semibold">Channels:</h2>
+        <Card className="p-4 w-full min-w-[350px] h-full border border-gray-200 shadow-sm rounded-lg">
+          <div className="flex items-center gap-2 ">
+            <Image src="/startups/channel.svg" alt="" width={20} height={20} />
+            <h2 className="text-lg ">Channels:</h2>
           </div>
+          <div className='border-b-2 my-4 border-dashed '></div>
+
           <div className="space-y-4">
             {socialPlatforms.map((platform) => (
-              <div key={platform.name} className="space-y-2">
+              <div key={platform.name} className="flex gap-10 items-center">
                 <div className="flex items-center gap-2">
-                  <Image src={platform.icon} alt={platform.name} width={20} height={20} />
-                  <span className="text-sm">{platform.name}</span>
+                  <Image src={platform.icon} alt={platform.name} width={34} height={34} />
+                  <span className="text-sm text-gray-600 min-w-[80px]">{platform.name}</span>
                 </div>
-                <Progress value={platform.progress} className="h-1.5" />
+                <Progress value={platform.progress} className="h-[5px]  rounded-full" />
               </div>
             ))}
           </div>
@@ -229,7 +230,7 @@ export default function ProductDetails() {
         <Card className="p-6">
           <div className="flex items-center gap-2 mb-6">
             <Image src="/categories-icon.png" alt="" width={20} height={20} />
-            <h2 className="text-lg font-semibold">Categories:</h2>
+            <h2 className="text-lg ">Categories:</h2>
           </div>
           <div className="flex flex-wrap gap-2">
             {mockData.category.map((cat) => (
@@ -247,45 +248,45 @@ export default function ProductDetails() {
       {/* Top Sellers */}
       <div className="mt-8">
         <div className="flex items-center gap-2 mb-6">
-          <Image src="/top-sellers-icon.png" alt="" width={20} height={20} />
-          <h2 className="text-lg font-semibold">Top Sellers:</h2>
+          <Image src="/product/TS.svg" alt="" width={20} height={20} />
+          <h2 className="text-lg ">Top Sellers:</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {topSellers.map((seller, index) => (
             <Card key={index} className="p-4">
               <div className="flex items-start gap-3 mb-4">
                 <Image src="/shopping-bag-icon.png" alt="" width={40} height={40} className="rounded" />
-                <h3 className="text-sm font-medium">{seller.name}</h3>
+                <h3 className="text-sm ">{seller.name}</h3>
               </div>
               <div className="grid grid-cols-3 gap-4">
-                <div>
+                <div className="border p-1 rounded-md border-[D9D9D9]">
                   <p className="text-xs text-muted-foreground mb-1">Quantity</p>
-                  <p className="text-sm font-medium">{seller.quantity}</p>
+                  <p className="text-sm ">{seller.quantity}</p>
                 </div>
-                <div>
+                <div className="border p-1 rounded-md border-[D9D9D9]">
                   <p className="text-xs text-muted-foreground mb-1">Growth Rate</p>
-                  <p className="text-sm font-medium text-green-500">{seller.growth_rate}</p>
+                  <p className="text-sm  text-green-500">{seller.growth_rate}</p>
                 </div>
-                <div>
+                <div className="border p-1 rounded-md border-[D9D9D9]">
                   <p className="text-xs text-muted-foreground mb-1">Price</p>
-                  <p className="text-sm font-medium">{seller.price}</p>
+                  <p className="text-sm ">{seller.price}</p>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4 mt-4">
-                <div>
+                <div className="border p-1 rounded-md border-[D9D9D9]">
                   <p className="text-xs text-muted-foreground mb-1">Rating</p>
                   <div className="flex items-center">
                     <Star className="w-3 h-3 fill-primary stroke-primary mr-1" />
-                    <span className="text-sm font-medium">{seller.rating}</span>
+                    <span className="text-sm ">{seller.rating}</span>
                   </div>
                 </div>
-                <div>
+                <div className="border p-1 rounded-md border-[D9D9D9]">
                   <p className="text-xs text-muted-foreground mb-1">BSR</p>
-                  <p className="text-sm font-medium text-green-500">{seller.bsr}</p>
+                  <p className="text-sm  text-green-500">{seller.bsr}</p>
                 </div>
-                <div>
+                <div className="border p-1 rounded-md border-[D9D9D9]">
                   <p className="text-xs text-muted-foreground mb-1">Listing</p>
-                  <p className="text-sm font-medium">{seller.listing}</p>
+                  <p className="text-sm ">{seller.listing}</p>
                 </div>
               </div>
             </Card>

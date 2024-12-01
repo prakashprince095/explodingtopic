@@ -1,16 +1,18 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Bookmark, LinkIcon, Share2 } from 'lucide-react'
-import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { LineChart, Line, XAxis, ResponsiveContainer } from "recharts"
 import { useProductContext } from "@/context/ProductContext"
 import Features from "./Features"
+import Image from "next/image"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { CartesianGrid, Line, LineChart, XAxis, ResponsiveContainer } from "recharts"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 const productData = {
   uuid: "1",
   name: "EcoWidget",
+  Volume: "300K",
   short_description: "Eco-friendly gadget for energy savings.",
   description: "An eco-friendly gadget designed to optimize energy usage in homes, helping to reduce costs and environmental impact.",
   revenue: "$1M",
@@ -48,10 +50,30 @@ export default function ProductList() {
     router.push(`/dashboard/product-discovery/${productData.name}`)
   }
 
+  const chartConfig = {
+    desktop: {
+      label: "Desktop",
+      color: "hsl(217, 91%, 60%)",
+    },
+    mobile: {
+      label: "Mobile",
+      color: "hsl(217, 91%, 75%)",
+    },
+  }
+
+  function generateChartData() {
+    return productData.selling_data.map((data) => ({
+      month: data.year,
+      desktop: data.sales, // Replace with actual desktop data if available
+      mobile: Math.floor(data.sales * 0.8), // Mock mobile data
+    }));
+  }
+
+
   return (
-    <div className="p-6">
+    <div className="p-3 min-h-scree border border-gray-300 rounded-lg">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold">Trending Products</h1>
+        <h1 className="text-2xl ">Trending Products</h1>
         <Input
           type="search"
           placeholder="Search Products"
@@ -60,51 +82,74 @@ export default function ProductList() {
       </div>
 
       <Features />
+      <div className="bg-card rounded-lg shadow-sm">
+        <div className="flex flex-wrap items-center justify-start gap-4 p-2">
+          <Card
+            className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+            onClick={handleProductClick}
+          >
+            <CardHeader>
+              <div className='flex items-start  gap-2'>
+                <div className='bg-white rounded-md shadow-md h-[50px] w-[60px]'>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-        <Card
-          className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-          onClick={handleProductClick}
-        >
-          <div className="p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold">{productData.name}</h3>
-              <span className="px-2 py-1 text-xs bg-black text-white rounded-full">
-                Price: {productData.price}
-              </span>
-            </div>
-            <p className="text-sm text-muted-foreground mb-4">
-              {productData.short_description}
-            </p>
-            <div className="flex items-center gap-4 mb-4">
-              <Bookmark className="w-4 h-4" />
-              <LinkIcon className="w-4 h-4" />
-              <Share2 className="w-4 h-4" />
-              <span className="ml-auto text-sm text-muted-foreground">
-                {productData.location}
-              </span>
-            </div>
-            <div className="h-[100px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={productData.selling_data}>
+                </div>
+                <div className='w-full'>
+                  <CardTitle className='font-normal text-[18px]'>{productData.name}</CardTitle>
+                  <div className='bg-black justify-self-end text-white p-1 text-[12px] rounded-full w-fit'>
+                    Revenue: $129B
+                  </div>
+                </div>
+              </div>
+              <CardDescription className='text-[14px]'>{productData.short_description}</CardDescription>
+              <CardFooter className="flex justify-between items-center">
+                <div className='flex gap-3'>
+                  <Image src='/startups/saved.svg' alt='' height={20} width={20} />
+                  <Image src='/startups/link.svg' alt='' height={20} width={20} />
+                  <Image src='/startups/share.svg' alt='' height={20} width={20} />
+                </div>
+                <div className=" text-[16px] bg-green-100 px-4 py-1 rounded-full border border-green-500">
+                  + {productData.Volume}
+                </div>
+              </CardFooter>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer config={chartConfig}>
+                <LineChart
+                  data={generateChartData()}
+                  margin={{
+                    left: 12,
+                    right: 12,
+                  }}
+                >
+                  <CartesianGrid vertical={false} />
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 12 }}
                     tickLine={false}
                     axisLine={false}
+                    tickMargin={8}
+                    tickFormatter={(value) => value.slice(0, 3)}
+                  />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
                   />
                   <Line
-                    type="monotone"
-                    dataKey="sales"
-                    stroke="#2563eb"
+                    dataKey="desktop"
+                    type="natural"
+                    stroke="var(--color-desktop)"
                     strokeWidth={2}
-                    dot={{ r: 2 }}
+                    dot={{
+                      fill: "var(--color-desktop)",
+                    }}
+                    activeDot={{
+                      r: 6,
+                    }}
                   />
                 </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </Card>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

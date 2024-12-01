@@ -39,7 +39,7 @@ const KeyIndicator = ({ label, value }: { label: string; value: 'Low' | 'Medium'
 
 const Channel = ({ name, icon, value }: { name: string; icon: string; value: number }) => (
   <div className="flex items-center gap-3 py-1.5">
-    <Image src={icon} alt={name} width={35} height={35} />
+    <Image src={icon} alt={name} width={34} height={34} />
     <span className="text-sm text-gray-600 min-w-[80px]">{name}</span>
     <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
       <div
@@ -287,7 +287,7 @@ export default function StartupDetailsPage() {
                     <span>{startup.volume}</span>
                   </div>
                 </div>
-                <div className="flex w-fit items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
+                <div className="flex w- items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
                   <Image src="/startups/growth.svg" alt="" height={25} width={25} />
                   <div className='flex flex-col'>
                     <span className="text-gray-600 text-sm">Growth Rate:</span>
