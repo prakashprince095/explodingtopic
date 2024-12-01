@@ -1,386 +1,298 @@
-'use client'
+"use client"
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Button } from "@/components/ui/button";
-import { productsData } from "../page";
-import { ProductSegment } from "@/types/interfaces";
+import Link from "next/link"
+import Image from "next/image"
+import { ArrowLeft, Star } from 'lucide-react'
+import { Card } from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Progress } from "@/components/ui/progress"
+import { LineChart, Line, XAxis, ResponsiveContainer } from "recharts"
 
-type ProductDetail = {
-  product: ProductSegment;
-  onClose: () => void;
-  params: { slug: string }; 
-};
+const socialPlatforms = [
+  { name: "LinkedIn", icon: "/linkedin-icon.png", progress: 75 },
+  { name: "Instagram", icon: "/instagram-icon.png", progress: 60 },
+  { name: "Facebook", icon: "/facebook-icon.png", progress: 85 },
+  { name: "Reddit", icon: "/reddit-icon.png", progress: 45 },
+  { name: "Youtube", icon: "/youtube-icon.png", progress: 70 },
+  { name: "Pinterest", icon: "/pinterest-icon.png", progress: 55 },
+  { name: "TikTok", icon: "/tiktok-icon.png", progress: 80 },
+]
 
-type Trend = {
-  name: string;
-  growthRate: string;
-  volume: string;
-  salesData: number[];
-};
+const keyIndicators = [
+  { name: "Growth", options: ["Low", "Medium", "High"], selected: "Medium" },
+  { name: "Seasonality", options: ["Low", "Medium", "High"], selected: "High" },
+  { name: "Speed", options: ["Low", "Medium", "High"], selected: "Medium" },
+  { name: "Volatility", options: ["Low", "Medium", "High"], selected: "Low" },
+  { name: "Sentiment", options: ["Low", "Medium", "High"], selected: "High" },
+  { name: "Forecast", options: ["Low", "Medium", "High"], selected: "Medium" },
+]
 
-type TrendPopupProps = {
-  trend: Trend | null;
-  onClose: () => void;
-};
+const mockData = {
+  name: "Shopping bags",
+  logo: "/shopping-bag-icon.png",
+  short_description: "OpenAI, founded in 2015, develops advanced AI technologies like ChatGPT and DALL·E to benefit humanity. It focuses on innovation, safety, and ethical AI use, shaping the future responsibly.",
+  revenue: "$29,434.03",
+  bsr: "12,000 piece",
+  price: "$15.99",
+  avg_reviews_rating: "4.1",
+  search_volume: "5.5K",
+  category: ["AI", "Technology", "Software"],
+  selling_data: [
+    { month: "Jan", sales: 220 },
+    { month: "Feb", sales: 280 },
+    { month: "Mar", sales: 350 },
+    { month: "Apr", sales: 320 },
+    { month: "May", sales: 280 },
+    { month: "Jun", sales: 320 },
+  ]
+}
 
-type SalesVolumeChart = {
-  data: number[];
-  forecast: boolean;
-};
+const topSellers = Array(6).fill({
+  name: "Shopping bags for ladies and teenagers",
+  quantity: "7,342",
+  growth_rate: "+15%",
+  price: "$20.99",
+  rating: "4.5",
+  bsr: "+24",
+  listing: "Amazon"
+})
 
-const TrendPopup: React.FC<TrendPopupProps> = ({ trend, onClose }) => {
-  if (!trend) return null;
-
+export default function ProductDetails() {
   return (
-    <Dialog open={Boolean(trend)} onOpenChange={onClose}>
-      <DialogContent className="bg-white rounded-lg p-6 shadow-lg max-w-lg">
-        <DialogTitle className="text-2xl mb-4">{trend.name}</DialogTitle>
-        <div className="flex justify-between mb-4">
-          <div>
-            <h3 className="text-xl">{trend.volume}</h3>
-            <p className={`${trend.growthRate.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
-              {trend.growthRate}
-            </p>
-          </div>
-        </div>
-        <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={trend.salesData.map((value, index) => ({ name: `Year ${index + 1}`, value }))}>
-            <XAxis dataKey="name" stroke="#888888" />
-            <YAxis stroke="#888888" />
-            <Tooltip />
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke={trend.growthRate.startsWith('+') ? '#22c55e' : '#ef4444'}
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        <Button variant="secondary" onClick={onClose} className="mt-4">
-          Close
-        </Button>
-      </DialogContent>
-    </Dialog>
-  );
-};
+    <main className="p-6 min-h-screen bg-background">
+      <Link
+        href="/dashboard/product-discovery"
+        className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
+      >
+        <ArrowLeft className="w-4 h-4 mr-1" />
+        Back
+      </Link>
 
-const RelatedTrends: React.FC<{ trends: Trend[] }> = ({ trends }) => {
-  const [selectedTrend, setSelectedTrend] = useState<Trend | null>(null);
-
-  return (
-    <>
-      <h1 className="text-lg mb-4">Related Trends</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {trends.map((trend, index) => (
-          <div key={index} onClick={() => setSelectedTrend(trend)} className="border p-4 rounded-lg cursor-pointer">
-            <h1>{trend.name}</h1>
-            <p className={trend.growthRate.startsWith('+') ? 'text-green-500' : 'text-red-500'}>
-              {trend.growthRate}
-            </p>
-          </div>
-        ))}
-      </div>
-      {selectedTrend && <TrendPopup trend={selectedTrend} onClose={() => setSelectedTrend(null)} />}
-    </>
-  );
-};
-
-const TopSellers: React.FC<{ sellers: ProductSegment['topSellers'] }> = ({ sellers }) => {
-  if (!sellers || sellers.length === 0) return <p>No top sellers available.</p>;
-
-  return (
-    <div>
-      <h1 className="text-lg mb-4">Top Sellers</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {sellers.map((seller, index) => (
-          <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Product Info */}
+        <Card className="p-6 h-fit">
+          <div className="flex items-start gap-4 mb-6">
             <Image
-              src={seller.logo}
-              alt={seller.name}
-              className="w-12 h-12 rounded-full object-cover"
-              width={20}
-              height={20}
+              src={mockData.logo}
+              alt={mockData.name}
+              width={64}
+              height={64}
+              className="rounded-lg"
             />
             <div>
-              <h1 className="f">{seller.name}</h1>
-              <p className="text-sm text-gray-600">Revenue: {seller.revenue}</p>
-              <p className="text-sm text-gray-600">Sales: {seller.sales}</p>
+              <h1 className="text-xl font-bold">{mockData.name}</h1>
+              <p className="text-sm text-muted-foreground">{mockData.short_description}</p>
             </div>
           </div>
-        ))}
-      </div>
-    </div>
-  );
-};
 
-const RelatedProducts: React.FC<{ products: ProductSegment['relatedProducts'] }> = ({ products }) => {
-  if (!products || products.length === 0) return <p>No related products available.</p>;
-
-  return (
-    <div>
-      <h1 className="text-lg mb-4">Related Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {products.map((product, index) => (
-          <div key={index} className="border p-4 rounded-lg flex items-center space-x-4">
-            <Image
-              src={product.logo}
-              alt={product.name}
-              className="w-12 h-12 rounded-full object-cover"
-              width={20}
-              height={20}
-            />
+          <div className="space-y-4 mb-6 border-y py-6">
             <div>
-              <h1 className="f">{product.name}</h1>
-              <p className="text-sm text-gray-600">Price: {product.price}</p>
-              <span className="text-yellow-500">{product.avgRating} ★</span>
+              <p className="text-sm text-muted-foreground">Avg Revenue</p>
+              <p className="text-lg font-semibold">{mockData.revenue}</p>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const SalesVolumeChart: React.FC<SalesVolumeChart> = ({ data, forecast }) => {
-  const chartData = data.map((value, index) => ({
-    name: `Year ${index + 1}`,
-    value,
-    forecastValue: forecast && index === data.length - 1 ? value * 1.15 : null,
-  }));
-
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={chartData}>
-        <XAxis dataKey="name" stroke="#888888" />
-        <YAxis stroke="#888888" />
-        <Tooltip />
-        <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-        <Line type="monotone" dataKey="value" stroke="#4B9CE2" strokeWidth={2} />
-        {forecast && (
-          <Line
-            type="monotone"
-            dataKey="forecastValue"
-            stroke="#FFA500"
-            strokeWidth={2}
-            dot={false}
-            strokeDasharray="5 5"
-          />
-        )}
-      </LineChart>
-    </ResponsiveContainer>
-  );
-};
-
-const timeframes = ['3 Months', '6 Months', '1 Year', '2 Years', '3 Years', '4 Years', '5 Years'];
-
-const generateChartData = (data: number[], forecast: boolean) => {
-  return {
-    labels: ["2020", "2021", "2022", "2023", "2024"],
-    datasets: [
-      {
-        label: "Sales",
-        data: data,
-        borderColor: "#4B9CE2",
-        fill: true,
-        backgroundColor: "rgba(75, 156, 226, 0.2)",
-        tension: 0.3,
-        borderWidth: 2,
-        pointRadius: 0,
-      },
-      {
-        label: "Forecast",
-        data: forecast ? [null, null, null, null, 7.5] : [],
-        borderColor: "#FFA500",
-        fill: true,
-        backgroundColor: "rgba(255, 165, 0, 0.2)",
-        borderDash: [5, 5],
-        pointRadius: 0,
-      },
-    ],
-  };
-};
-
-const productDetail: React.FC<ProductDetail> = ({ product, onClose, params }) => {
-  const [selectedTimeframe, setSelectedTimeframe] = useState<string>('5 Years');
-  const [forecast, setForecast] = useState<boolean>(true);
-  const [selectedProduct, setSelectedProduct] = useState<ProductSegment | null>(null);
-
-  useEffect(() => {
-    async function fetchParams() {
-      const paramsValue = await params;
-      if (paramsValue.slug) {
-        const foundProduct = productsData.find((p) => p.name === paramsValue.slug);
-        setSelectedProduct(foundProduct || null);
-      }
-    }
-    fetchParams();
-  }, [params]); 
-
-  const salesData = product?.salesData || [0, 2, 3, 4.5, 6.5];
-  const chartData = generateChartData(salesData, forecast);
-
-  const relatedTrends: Trend[] = [
-    {
-      name: 'Product X Demand',
-      growthRate: '+1200%',
-      volume: 'High Volume',
-      salesData: [20, 40, 60, 80, 100],
-    },
-    {
-      name: 'Product Y Interest',
-      growthRate: '+450%',
-      volume: 'Medium Volume',
-      salesData: [10, 20, 40, 60, 80],
-    },
-    {
-      name: 'Product Z Sales',
-      growthRate: '+800%',
-      volume: 'Low Volume',
-      salesData: [5, 10, 20, 25, 30],
-    },
-  ];
-
-  const mockTopSellers = [
-    {
-      id: 1,
-      logo: "/logos/1.svg",
-      name: "SellerOne",
-      revenue: "$200K",
-      sales: "500 units",
-    },
-    {
-      id: 2,
-      logo: "/logos/1.svg",
-      name: "BestDeals",
-      revenue: "$350K",
-      sales: "800 units",
-    },
-  ];
-
-  const mockRelatedProducts = [
-    {
-      id: 1,
-      logo: "/logos/1.svg",
-      name: "Gadget X",
-      price: "$199",
-      avgRating: "4.5",
-    },
-    {
-      id: 2,
-      logo: "/logos/1.svg",
-      name: "Gadget Y",
-      price: "$299",
-      avgRating: "4.8",
-    },
-  ];
-
-  return (
-    <div className="fixed h-screen w-screen inset-0 bg-gray-50 p-6 overflow-auto">
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-7xl mx-auto border border-gray-200">
-        {/* First Section: Product Overview */}
-        <div className="flex items-center justify-center gap-3">
-          {/* Product Image */}
-          <div className="w-[380px] h-[400px] rounded-lg bg-slate-100 p-3">
-            <Image
-              src={product?.imageUrl || '/logos/1.svg'}  // Fallback image URL
-              alt={product?.name || 'Product image'}
-              width={50}
-              height={50}
-            />
-
-            <h2 className="text-2xl f mb-2">{product?.name}</h2>
-            <p>{product?.description}</p>
-            <div className="mt-4">
-              {product?.categories.map((category, index) => (
-                <span
-                  key={index}
-                  className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm mr-2"
-                >
-                  {category}
-                </span>
-              ))}
+            <div>
+              <p className="text-sm text-muted-foreground">Avg BSR</p>
+              <p className="text-lg font-semibold">{mockData.bsr}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Avg Price</p>
+              <p className="text-lg font-semibold">{mockData.price}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Avg Reviews</p>
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`w-4 h-4 ${
+                      i < Math.floor(parseFloat(mockData.avg_reviews_rating))
+                        ? "fill-primary stroke-primary"
+                        : "fill-muted stroke-muted-foreground"
+                    }`}
+                  />
+                ))}
+                <span className="text-sm ml-2">{mockData.avg_reviews_rating}/5</span>
+              </div>
             </div>
           </div>
 
-          {/* Avg metrics */}
-          <div className="w-[380px] h-[400px] rounded-lg bg-slate-100 p-3">
-            <h3 className="text-xl f mb-2">Metrics</h3>
-            <ul>
-              <li>Avg Revenue: {product?.avgRevenue}</li>
-              <li>Avg BSR: {product?.avgBSR}</li>
-              <li>Avg Price: {product?.avgPrice}</li>
-              <li>Avg Monthly Sales: {product?.avgMonthlySales}</li>
-              <li>Avg Reviews: {product?.avgReviews}</li>
-            </ul>
+          <p className="text-sm text-muted-foreground mb-2">See product on:</p>
+          <div className="flex gap-2">
+            <Image src="/amazon-icon.png" alt="Amazon" width={24} height={24} className="rounded" />
+            <Image src="/tiktok-icon.png" alt="TikTok" width={24} height={24} className="rounded" />
+            <Image src="/instagram-icon.png" alt="Instagram" width={24} height={24} className="rounded" />
           </div>
-          {/* Key Indicators */}
+        </Card>
 
-          <div className="w-[380px] h-[400px] rounded-lg bg-slate-100 p-3">
-            <h1 className="text-lg f mb-2">Key Indicators</h1>
-            <ul>
-              <li>Growth: {product?.keyIndicators?.growth}</li>
-              <li>Speed: {product?.keyIndicators?.speed}</li>
-              <li>Seasonality: {product?.keyIndicators?.seasonality}</li>
-              <li>Volatility: {product?.keyIndicators?.volatility}</li>
-              <li>Sentiment: {product?.keyIndicators?.sentiment}</li>
-              <li>
-                Forecast:{" "}
-                <input
-                  type="checkbox"
-                  checked={forecast}
-                  onChange={() => setForecast(!forecast)}
+        {/* Center Column - Chart */}
+        <Card className="lg:col-span-2 p-6">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-4">
+              <p className="text-sm font-medium">Timeframe:</p>
+              <Select defaultValue="1year">
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="Select timeframe" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1year">1 year</SelectItem>
+                  <SelectItem value="6months">6 months</SelectItem>
+                  <SelectItem value="3months">3 months</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium">Volume:</span>
+              <span className="text-sm text-green-500 font-medium">{mockData.search_volume}</span>
+            </div>
+          </div>
+
+          <p className="text-lg text-muted-foreground mb-8">January - June 2024</p>
+
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={mockData.selling_data}>
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12 }}
                 />
-              </li>
-            </ul>
+                <Line
+                  type="monotone"
+                  dataKey="sales"
+                  stroke="#2563eb"
+                  strokeWidth={2}
+                  dot={{ r: 4, fill: "#2563eb" }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
-        </div>
-
-        {/* Sales Volume Chart */}
-        <div>
-          <h3 className="text-xl f mb-4">Sales Volume</h3>
-          <select
-            className="mb-4 p-2 border border-gray-300 rounded-md"
-            value={selectedTimeframe}
-            onChange={(e) => setSelectedTimeframe(e.target.value)}
-          >
-            <option>5 Years</option>
-            <option>4 Years</option>
-            <option>3 Years</option>
-            <option>2 Years</option>
-            <option>1 Year</option>
-          </select>
-          <div>
-            <SalesVolumeChart data={salesData} forecast={forecast} />
-          </div>
-          <div className="mt-4 flex items-center">
-            <label className="mr-2 text-gray-600">Include Forecast</label>
-            <input
-              type="checkbox"
-              checked={forecast}
-              onChange={() => setForecast(!forecast)}
-              className="mr-4"
-            />
-          </div>
-        </div>
-        {/* Top Sellers */}
-        <TopSellers sellers={mockTopSellers} />
-        {/* Related Products */}
-        <RelatedProducts products={mockRelatedProducts} />
-        {/* Related Trends */}
-        <RelatedTrends trends={relatedTrends} />
-        {/* Close Button */}
-        <Button onClick={onClose} className="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-          Close
-        </Button>
+        </Card>
       </div>
-    </div>
-  );
-};
 
-export default productDetail;
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        {/* Key Indicators */}
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-6">
+            <Image src="/indicator-icon.png" alt="" width={20} height={20} />
+            <h2 className="text-lg font-semibold">Key Indicators:</h2>
+          </div>
+          <div className="space-y-4">
+            {keyIndicators.map((indicator) => (
+              <div key={indicator.name} className="flex justify-between items-center">
+                <span className="text-sm">{indicator.name}:</span>
+                <div className="flex gap-1">
+                  {indicator.options.map((option) => (
+                    <span
+                      key={option}
+                      className={`text-xs px-3 py-1 rounded-full ${
+                        option === indicator.selected
+                          ? "bg-blue-100 text-blue-600"
+                          : "bg-gray-100 text-gray-400"
+                      }`}
+                    >
+                      {option}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Channels */}
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-6">
+            <Image src="/channels-icon.png" alt="" width={20} height={20} />
+            <h2 className="text-lg font-semibold">Channels:</h2>
+          </div>
+          <div className="space-y-4">
+            {socialPlatforms.map((platform) => (
+              <div key={platform.name} className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Image src={platform.icon} alt={platform.name} width={20} height={20} />
+                  <span className="text-sm">{platform.name}</span>
+                </div>
+                <Progress value={platform.progress} className="h-1.5" />
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Categories */}
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-6">
+            <Image src="/categories-icon.png" alt="" width={20} height={20} />
+            <h2 className="text-lg font-semibold">Categories:</h2>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {mockData.category.map((cat) => (
+              <span
+                key={cat}
+                className="px-4 py-1 bg-blue-50 text-blue-600 text-sm rounded-full"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+        </Card>
+      </div>
+
+      {/* Top Sellers */}
+      <div className="mt-8">
+        <div className="flex items-center gap-2 mb-6">
+          <Image src="/top-sellers-icon.png" alt="" width={20} height={20} />
+          <h2 className="text-lg font-semibold">Top Sellers:</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {topSellers.map((seller, index) => (
+            <Card key={index} className="p-4">
+              <div className="flex items-start gap-3 mb-4">
+                <Image src="/shopping-bag-icon.png" alt="" width={40} height={40} className="rounded" />
+                <h3 className="text-sm font-medium">{seller.name}</h3>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Quantity</p>
+                  <p className="text-sm font-medium">{seller.quantity}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Growth Rate</p>
+                  <p className="text-sm font-medium text-green-500">{seller.growth_rate}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Price</p>
+                  <p className="text-sm font-medium">{seller.price}</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Rating</p>
+                  <div className="flex items-center">
+                    <Star className="w-3 h-3 fill-primary stroke-primary mr-1" />
+                    <span className="text-sm font-medium">{seller.rating}</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">BSR</p>
+                  <p className="text-sm font-medium text-green-500">{seller.bsr}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Listing</p>
+                  <p className="text-sm font-medium">{seller.listing}</p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </main>
+  )
+}
 
