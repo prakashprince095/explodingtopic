@@ -1,36 +1,35 @@
-'use client'
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { TrendingUp } from 'lucide-react'
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-import Image from 'next/image'
-import { useStartup } from '@/context/StartupContext'
-import localResponseData from '@/data/response.json'
-import Features from './Features'
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import Image from 'next/image';
+import { useStartup } from '@/context/StartupContext';
+import localResponseData from '@/data/response.json';
+import Features from './Features';
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 // Define Startup type
 type Startup = {
-  uuid: string
-  name: string
-  short_description: string
-  description: string
-  web: string
-  city: string
-  region: string
-  country: string
-  founded_on: string
-  rank: number
-  number_of_employees_min: number
-  number_of_employees_max: number
-  twitter_url: string
-  linkedin_url: string
-  facebook_url: string
-  number_of_investments: number
-}
+  uuid: string;
+  name: string;
+  short_description: string;
+  description: string;
+  web: string;
+  city: string;
+  region: string;
+  country: string;
+  founded_on: string;
+  rank: number;
+  number_of_employees_min: number;
+  number_of_employees_max: number;
+  twitter_url: string;
+  linkedin_url: string;
+  facebook_url: string;
+  number_of_investments: number;
+};
 
 const chartConfig = {
   desktop: {
@@ -41,16 +40,17 @@ const chartConfig = {
     label: "Mobile",
     color: "hsl(217, 91%, 75%)",
   },
-}
-const Startups = () => {
-  const [startupsData, setStartupsData] = useState<Startup[]>([])
-  const [filteredStartups, setFilteredStartups] = useState<Startup[]>([])
-  const [searchQuery, setSearchQuery] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+};
 
-  const router = useRouter()
-  const { setSelectedStartup } = useStartup()
+const Startups = () => {
+  const [startupsData, setStartupsData] = useState<Startup[]>([]);
+  const [filteredStartups, setFilteredStartups] = useState<Startup[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+  const { setSelectedStartup } = useStartup();
 
   const transformData = (data: any): Startup[] => {
     return data.data.organization.similar_companies.map(
@@ -72,64 +72,64 @@ const Startups = () => {
         facebook_url: '',
         number_of_investments: data.data.organization.num_investments,
       })
-    )
-  }
+    );
+  };
+
+  const fetchData = async () => {
+    const backendUrl = 'http://localhost:3000/user/cruchbaseData';
+    try {
+      const response = await fetch(backendUrl);
+      if (!response.ok) throw new Error(`Backend error: ${response.statusText}`);
+      const data = await response.json();
+      return transformData(data);
+    } catch (err) {
+      console.error("Backend fetch failed, falling back to local data:", err);
+      return transformData(localResponseData);
+    }
+  };
 
   useEffect(() => {
     const fetchStartups = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        setLoading(true)
-        setError(null)
-
-        const useBackend = process.env.NEXT_PUBLIC_CRUNCHBASE_API === 'true'
-
-        if (useBackend) {
-          const response = await fetch('/api/startups')
-          if (!response.ok) throw new Error(`Error: ${response.statusText}`)
-
-          const data = await response.json()
-          const transformedData = transformData(data)
-          setStartupsData(transformedData)
-          setFilteredStartups(transformedData)
-        } else {
-          const transformedData = transformData(localResponseData)
-          setStartupsData(transformedData)
-          setFilteredStartups(transformedData)
-        }
+        const data = await fetchData();
+        setStartupsData(data);
+        setFilteredStartups(data);
       } catch (err) {
-        setError((err as Error).message)
+        setError("Failed to fetch startup data.");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchStartups()
-  }, [])
+    fetchStartups();
+  }, []);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase()
-    setSearchQuery(query)
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
     setFilteredStartups(
       startupsData.filter((startup) =>
         startup.name.toLowerCase().includes(query)
       )
-    )
-  }
+    );
+  };
 
   const handleStartupClick = (startup: Startup) => {
-    setSelectedStartup(startup)
-    router.push(`/dashboard/trending-startups/${startup.uuid}`)
-  }
+    setSelectedStartup(startup);
+    router.push(`/dashboard/trending-startups/${startup.uuid}`);
+  };
 
   const generateChartData = () => {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June']
+    const months = ['January', 'February', 'March', 'April', 'May', 'June'];
     return months.map(month => ({
       month,
       desktop: Math.floor(Math.random() * 300) + 50,
       mobile: Math.floor(Math.random() * 200) + 50
-    }))
-  }
-
+    }));
+  };
   return (
     <div className="p-3 min-h-scree border border-gray-300 rounded-lg">
       <div className="flex justify-between items-center mb-6">

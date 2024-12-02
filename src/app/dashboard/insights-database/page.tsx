@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import CompanyDetails from './CompanyDetails';
-import CompanyInsights from './CompanyInsights';
+import { useRouter } from 'next/navigation';
 
 interface Industry {
   name: string;
@@ -106,28 +105,29 @@ const companyData: CompanyData = {
 };
 
 const TrendsDatabase: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
   const filteredIndustries = industries.filter((industry) =>
     industry.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleIndustryClick = (industryName: string) => {
+    router.push(`/dashboard/insights-database/${industryName}`);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center w-full bg-white border border-gray-300 p-3 rounded-lg">
       <div className="flex justify-center mb-6">
         <input
           type="text"
-          placeholder="Search Trends Database"
+          placeholder="Search Industries"
           value={searchTerm}
-          onChange={handleSearch}
-          className="border p-2 rounded-sm min-w-[300px] border-gray-400"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border p-2 rounded-sm w-full mb-4"
         />
       </div>
 
@@ -170,32 +170,6 @@ const TrendsDatabase: React.FC = () => {
             </div>
           )}
 
-          {selectedSubcategory && !selectedCompany && (
-            <CompanyDetails
-              company={companies[0]} // Modify as needed to reflect selected subcategory
-              onClick={() => setSelectedCompany(companies[0].name)}
-            />
-          )}
-
-          {selectedCompany && (
-            <CompanyInsights
-              companyName={companyData.name}
-              data={{
-                volumeData: [100, 200, 300, 400, 500], // Example volume data
-                volume: Number(companyData.volume), // Convert string to number
-                growth: Number(companyData.growth), // Convert string to number
-                channels: companyData.data.channels,
-                keyIndicators: companyData.data.keyIndicators,
-                aboutTopic: companyData.description,
-                relatedTrends: companyData.data.relatedTrends.map(trend => ({
-                  name: trend.name,
-                  growth: trend.growth,
-                  labels: ['2020', '2021', '2022', '2023', '2024'],
-                  data: trend.chartData
-                }))
-              }}
-            />
-          )}
         </div>
       </div>
       <div className="flex justify-center mt-6 text-sm text-gray-400">

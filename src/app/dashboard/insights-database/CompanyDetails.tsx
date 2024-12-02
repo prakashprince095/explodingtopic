@@ -165,20 +165,6 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ company, onClick }) => 
                 </SelectGroup>
               </SelectContent>
             </Select>
-            {/* <select className="border p-2 rounded" value={sortType} onChange={(e) => handleSort(e.target.value)}>
-            <option value="Growth"></option>
-            <option value="Volume"></option>
-          </select>
-          <select className="border p-2 rounded" value={timeframe} onChange={(e) => setTimeframe(e.target.value)}>
-            <option value="5 Years">5 Years</option>
-            <option value="3 Years">3 Years</option>
-            <option value="1 Year">1 Year</option>
-          </select>
-          <select className="border p-2 rounded" value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="All"></option>
-            <option value="Brands"></option>
-            <option value="Non-Brands">Non-Brands</option>
-          </select> */}
           </div>
 
           <Button onClick={handleExport}>

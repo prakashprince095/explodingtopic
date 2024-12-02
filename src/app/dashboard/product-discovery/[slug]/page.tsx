@@ -4,13 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Star } from 'lucide-react'
 import { Card } from "@/components/ui/card"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
 import { LineChart, Line, XAxis, ResponsiveContainer } from "recharts"
 
