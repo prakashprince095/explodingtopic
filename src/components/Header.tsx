@@ -12,21 +12,12 @@ const menuItems = [
     {
         label: 'Product',
         links: [
-            { href: '/products/insight-Hub', label: 'Insights-Hub' },
             { href: '/products/Trending-Startup', label: 'Trending-Startups' },
             { href: '/products/Trending-Products', label: 'Trending-Products' },
             { href: '/products/Deep-Dive-Analysis', label: 'Deep Dive Analysis' },
-        ],
-    },
-    {
-        label: 'Solutions',
-        links: [
-            { href: '/solutions/overview', label: 'Startup Details' },
-            { href: '/solutions/rfi-Management', label: 'Products Details' },
-            { href: '/solutions/changeOrderManagement', label: 'Meta Wave' },
-            { href: '/solutions/purchaseOrderManagement', label: 'Reports Center' },
-            { href: '/solutions/documentManagement', label: 'Insight Database' },
-            { href: '/solutions/customFormBuilder', label: 'Niche Data Explorer' },
+            { href: '/products/Meta-Wave', label: 'Meta Wave' },
+            { href: '/products/Report-Center', label: 'Reports Center' },
+            { href: '/products/Insight-Database', label: 'Insight Database' },
         ],
     },
     {

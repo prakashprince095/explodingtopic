@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button"
 export default function HeroSection() {
     return (
         <section className="">
-            <div className="relative flex flex-col gap-4 h-[400px]  w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
-                <h1 className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[700px] font-medium tracking-tighter text-black dark:text-white">
+            <div className="relative flex flex-col gap-4 h-[600px]  w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
+                <h1 className="z-10 whitespace-pre-wrap text-center text-[60px] max-w-[800px] font-medium tracking-tighter text-black dark:text-white">
                     Discover Tomorrow's Innovations Today <span className="text-gradient">before they ignite</span>
                 </h1>
-                <p className="text-md max-w-[700px] text-center mb-8">
+                <p className="text-lg max-w-[700px] text-center mb-8">
                     Stay ahead of the curve with real-time insights into the world's most promising startups and emerging trends.
                 </p>
                 <div className="flex gap-4">

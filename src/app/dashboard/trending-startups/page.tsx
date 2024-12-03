@@ -131,7 +131,7 @@ const Startups = () => {
     }));
   };
   return (
-    <div className="p-3 min-h-scree border border-gray-300 rounded-lg">
+    <div className="p-3 min-h-screen bg-[#FAFAFA] border border-gray-300 rounded-lg">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl ">Trending Startups</h2>
         <div className="flex gap-3">

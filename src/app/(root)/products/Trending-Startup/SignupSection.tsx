@@ -1,31 +1,66 @@
+'use client'
+
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
 
-export default function SignupSection() {
+export default function SimpleSignupForm() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Handle form submission here
+    console.log('Form submitted:', { name, email, password })
+  }
+
   return (
-    <section className="py-16 bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4">
-        <Card className="max-w-md mx-auto">
-          <CardHeader>
-            <CardTitle>Sign Up Now</CardTitle>
-            <CardDescription>Get exclusive access to startup insights and trends</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <div className="space-y-4">
-                <Input type="text" placeholder="Full Name" />
-                <Input type="email" placeholder="Email Address" />
-                <Input type="password" placeholder="Password" />
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">Sign Up</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
+    <div className="w-full max-w-md mx-auto p-6 bg-white">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">Sign Up</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <Label htmlFor="name" className="text-sm font-medium text-gray-700">Full Name</Label>
+          <Input 
+            id="name"
+            type="text" 
+            placeholder="John Doe" 
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address</Label>
+          <Input 
+            id="email"
+            type="email" 
+            placeholder="john@example.com" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="password" className="text-sm font-medium text-gray-700">Password</Label>
+          <Input 
+            id="password"
+            type="password" 
+            placeholder="••••••••" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="mt-1"
+          />
+        </div>
+        <Button type="submit" className="w-full">
+          Sign Up
+        </Button>
+      </form>
+    </div>
   )
 }
 
