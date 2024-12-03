@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
-// Define Startup type
 type Startup = {
   uuid: string;
   name: string;
@@ -77,17 +76,32 @@ const Startups = () => {
 
   const fetchData = async () => {
     const backendUrl = 'http://localhost:3000/user/cruchbaseData';
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer your-auth-token',
+    };
+  
+    console.log("Sending request to backend with:", { url: backendUrl, headers });
+  
     try {
-      const response = await fetch(backendUrl);
-      if (!response.ok) throw new Error(`Backend error: ${response.statusText}`);
-      const data = await response.json();
-      return transformData(data);
+      const response = await fetch(backendUrl, {
+        method: 'GET',
+        headers,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Backend error: ${response.statusText}`);
+      }
+  
+      const data = await response.json(); 
+      return transformData(data); 
     } catch (err) {
       console.error("Backend fetch failed, falling back to local data:", err);
       return transformData(localResponseData);
     }
   };
-
+  
+  
   useEffect(() => {
     const fetchStartups = async () => {
       setLoading(true);
@@ -231,4 +245,3 @@ const Startups = () => {
 }
 
 export default Startups
-

@@ -235,7 +235,6 @@ return (
             </Select>
         </div>
 
-        {/* Grid/List view toggle */}
         <div className="flex border border-gray-400 p-[2px] rounded-sm">
             <button
                 className="p-1 bg-[#3985ED] rounded-sm"
