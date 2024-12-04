@@ -8,29 +8,6 @@ interface Industry {
   subcategories: string[];
 }
 
-interface Company {
-  name: string;
-  volume: string;
-  growth: string;
-}
-
-interface CompanyData {
-  name: string;
-  volume: string;
-  growth: string;
-  description: string;
-  data: {
-    description: string;
-    channels: { name: string; percentage: number }[];
-    keyIndicators: { name: string; value: number }[];
-    relatedTrends: {
-      name: string;
-      growth: number;
-      chartData: number[];
-    }[];
-  };
-}
-
 const industries: Industry[] = [
   {
     name: 'Business',
@@ -74,94 +51,58 @@ const industries: Industry[] = [
   },
 ];
 
-const companies: Company[] = [
-  { name: 'Company A', volume: '10000', growth: '500' },
-  { name: 'Company B', volume: '8000', growth: '320' },
-];
-
-const companyData: CompanyData = {
-  name: 'Placeholder Company',
-  volume: '14800',
-  growth: '9800',
-  description: 'Description of the company and its services or products.',
-  data: {
-    description: 'Detailed company insight data goes here.',
-    channels: [
-      { name: 'Social Media', percentage: 60 },
-      { name: 'Search Engines', percentage: 30 },
-      { name: 'Email Marketing', percentage: 10 },
-    ],
-    keyIndicators: [
-      { name: 'Revenue', value: 100 },
-      { name: 'Active Users', value: 50 },
-      { name: 'Conversion Rate', value: 2 },
-    ],
-    relatedTrends: [
-      { name: 'Trend A', growth: 30, chartData: [10, 20, 30, 40, 50] },
-      { name: 'Trend B', growth: 25, chartData: [15, 25, 35, 45, 55] },
-      { name: 'Trend C', growth: 15, chartData: [5, 15, 25, 35, 45] },
-    ],
-  },
-};
-
 const TrendsDatabase: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const router = useRouter();
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
-  const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+  const router = useRouter();
 
   const filteredIndustries = industries.filter((industry) =>
     industry.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleIndustryClick = (industryName: string) => {
-    router.push(`/dashboard/insights-database/${industryName}`);
+  const handleSubcategoryClick = (subcategory: string) => {
+    router.push(`/dashboard/insights-database/${subcategory}`);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center w-full bg-white border border-gray-300 p-3 rounded-lg">
-      <div className="flex justify-center mb-6">
-        <input
-          type="text"
-          placeholder="Search Industries"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="border p-2 rounded-sm w-full mb-4"
-        />
-      </div>
-
-      <div className="flex bg-white shadow-lg w-[1280px] rounded-lg overflow-hidden">
-        <div className="w-1/4 bg-gray-50 p-4 overflow-auto">
+    <div className="min-h-screen flex flex-col items-center w-full bg-gray-50 p-6">
+      <input
+        type="text"
+        placeholder="Search Industries"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="border p-2 rounded mb-6 w-full max-w-md"
+      />
+      <div className="flex bg-gray-100 shadow-lg w-full max-w-6xl rounded-lg">
+        {/* Industry List */}
+        <div className="w-1/3 bg-gray-50 p-4 overflow-auto">
           <ul>
             {filteredIndustries.map((industry) => (
               <li
                 key={industry.name}
-                className={`p-4 cursor-pointer hover:bg-blue-50 transition-colors duration-200 ${selectedIndustry === industry.name ? 'bg-blue-100' : ''}`}
-                onMouseEnter={() => setSelectedIndustry(industry.name)}
+                className={`p-3 cursor-pointer hover:bg-blue-50 transition ${
+                  selectedIndustry === industry.name ? 'bg-blue-100' : ''
+                }`}
                 onClick={() => setSelectedIndustry(industry.name)}
               >
-                <section className="flex justify-between items-center">
-                  <span className="font-medium">{industry.name}</span>
-                  <span className="text-gray-500">{industry.subcategories.length}</span>
-                </section>
+                {industry.name}
               </li>
             ))}
           </ul>
         </div>
-
-        <div className="w-3/4 p-6">
-          {selectedIndustry && !selectedCompany && (
+        {/* Subcategories */}
+        <div className="w-2/3 p-6">
+          {selectedIndustry && (
             <div>
-              <h2 className="text-lg  mb-4">Subcategories of {selectedIndustry}</h2>
+              <h2 className="text-lg mb-4">Subcategories of {selectedIndustry}</h2>
               <ul className="grid grid-cols-2 gap-4">
                 {industries
                   .find((industry) => industry.name === selectedIndustry)
                   ?.subcategories.map((subcategory) => (
                     <li
                       key={subcategory}
-                      className={`p-2 cursor-pointer border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors ${selectedSubcategory === subcategory ? 'bg-blue-100' : ''}`}
-                      onClick={() => setSelectedSubcategory(subcategory)}
+                      className="p-3 border rounded cursor-pointer hover:bg-blue-50"
+                      onClick={() => handleSubcategoryClick(subcategory)}
                     >
                       {subcategory}
                     </li>
@@ -169,11 +110,7 @@ const TrendsDatabase: React.FC = () => {
               </ul>
             </div>
           )}
-
         </div>
-      </div>
-      <div className="flex justify-center mt-6 text-sm text-gray-400">
-        <span className="mx-2">Privacy Policy</span> | <span className="mx-2">Terms & Conditions</span> | <span className="mx-2">Affiliates</span>
       </div>
     </div>
   );
