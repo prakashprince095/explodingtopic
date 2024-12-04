@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import Image from 'next/image';
 
 function Help() {
     const [isMounted, setIsMounted] = useState(false);
@@ -60,19 +60,19 @@ function Help() {
                         <ul className="space-y-2">
                             <li>
                                 <p className="flex items-center gap-2 hover:underline">
-                                    <img className="w-10" src="/contact/w.svg" alt="WhatsApp" />
+                                    <Image width={20} height={20} src="/contact/w.svg" alt="WhatsApp" />
                                     <span className="text-[20px]">WhatsApp</span>
                                 </p>
                             </li>
                             <li>
                                 <p className="flex items-center gap-2 hover:underline">
-                                    <img className="w-10" src="/contact/s.svg" alt="Skype" />
+                                    <Image width={20} height={20} src="/contact/s.svg" alt="Skype" />
                                     <span className="text-[20px]">Skype</span>
                                 </p>
                             </li>
                             <li>
                                 <p className="flex items-center gap-2 hover:underline">
-                                    <img className="w-10" src="/contact/m.svg" alt="Gmail" />
+                                    <Image width={20} height={20} src="/contact/m.svg" alt="Gmail" />
                                     <span className="text-[20px]">Gmail</span>
                                 </p>
                             </li>
@@ -85,7 +85,7 @@ function Help() {
                             Call our team Mon-Fri from 8am to 5pm.
                             <br />
                             <span className="hover:underline flex items-center gap-3">
-                                <img className="w-10" src="/contact/c.svg" alt="Phone" />
+                                <Image height={10} width={10} src="/contact/c.svg" alt="Phone" />
                                 <span className="text-[20px]">+1 (555) 000-0000</span>
                             </span>
                         </p>

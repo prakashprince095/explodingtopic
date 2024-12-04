@@ -3,7 +3,7 @@ import { Bookmark, Share2, Link } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
-
+import Image from "next/image"
 interface StartupCardProps {
   name: string
   description: string
@@ -27,10 +27,11 @@ export function StartupCard({
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-full overflow-hidden">
-              <img
+              <Image
                 src={logo}
                 alt={`${name} logo`}
-                className="h-full w-full object-cover"
+                width={25}
+                height={25}
               />
             </div>
             <div>

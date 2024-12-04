@@ -275,7 +275,7 @@ export default function StartupDetailsPage() {
             <Card key={i} className="p-3 hover:bg-gray-50 border border-gray-200 shadow-sm rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <img src={`/${startup.name.toLowerCase()}.svg`} alt={startup.name} className="w-5 h-5" />
+                  <Image src={`/${startup.name.toLowerCase()}.svg`} alt={startup.name} width={10} height={10} />
                 </div>
                 <span className="font-medium text-sm">{startup.name}</span>
               </div>
@@ -329,7 +329,7 @@ export default function StartupDetailsPage() {
               <div className="flex items-center  mb-2">
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <img src={`/${i % 2 === 0 ? 'openai' : 'microsoft'}.svg`} alt="" className="w-4 h-4" />
+                    <Image src={`/${i % 2 === 0 ? 'openai' : 'microsoft'}.svg`} alt="" height={8} width={8} />
                   </div>
                   <span className="text-sm font-medium">
                     {i % 2 === 0 ? 'OpenAI' : 'Microsoft Cooperation'}

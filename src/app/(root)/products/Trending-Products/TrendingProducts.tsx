@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Bookmark, Share2, Link } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
-
+import Image from "next/image"
 const products = [
     {
         name: "OpenAI",
@@ -73,10 +73,11 @@ export default function TrendingProduts() {
                             <CardHeader className="">
                                 <div className="flex items-center gap-2">
                                     <div className="h-10 w-10 rounded-full ">
-                                        <img
+                                        <Image
                                             src={product.logo}
                                             alt={`${product.name} logo`}
-                                            className="h-full w-full object-cover"
+                                            width={25}
+                                            height={25}
                                         />
                                     </div>
                                     <div className="flex justify-between w-full">

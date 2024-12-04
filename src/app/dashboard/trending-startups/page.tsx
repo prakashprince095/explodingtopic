@@ -75,18 +75,12 @@ const Startups = () => {
   };
 
   const fetchData = async () => {
-    const backendUrl = 'http://localhost:3000/user/cruchbaseData';
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer your-auth-token',
-    };
-  
-    console.log("Sending request to backend with:", { url: backendUrl, headers });
+    const backendUrl = '';
+    console.log("Sending request to backend with:", { url: backendUrl});
   
     try {
       const response = await fetch(backendUrl, {
         method: 'GET',
-        headers,
       });
   
       if (!response.ok) {

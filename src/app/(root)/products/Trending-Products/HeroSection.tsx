@@ -7,7 +7,7 @@ export default function HeroSection() {
         <section className="">
             <div className="relative flex flex-col gap-4 h-[400px]  w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
                 <h1 className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[900px] font-medium tracking-tighter text-black dark:text-white">
-                    Discover Tomorrow's Best-Selling Products Today <span className="text-gradient">Before They Redefine Industries</span>
+                    Discover Tomorrow&apos;s Best-Selling Products Today <span className="text-gradient">Before They Redefine Industries</span>
                 </h1>
                 <p className="text-md max-w-[700px] text-center mb-8">
                     Stay ahead of the curve with real-time insights into the most trending e-commerce products and emerging consumer preferences.

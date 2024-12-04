@@ -7,7 +7,7 @@ export default function UserEngagement() {
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold mb-8">Stay Connected to Global Innovation</h2>
         <p className="text-xl mb-8">
-          Get exclusive insights, trend reports, and investment opportunities from the world's most promising startups.
+          Get exclusive insights, trend reports, and investment opportunities from the world&apos;s most promising startups.
         </p>
         <form className="max-w-md mx-auto mb-8">
           <div className="flex gap-4">

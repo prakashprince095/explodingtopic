@@ -54,7 +54,7 @@ const features = [
 export default function FeaturesSection() {
     return (
         <div className=" flex flex-col items-center ">
-            <h1 className="text-center mb-3 text-[40px]">What's is <span className="text-gradient"> Exploding GPT?</span></h1>
+            <h1 className="text-center mb-3 text-[40px]">What&apos;s is <span className="text-gradient"> Exploding GPT?</span></h1>
             <p className="max-w-[800px] text-gray-500 text-center text-[16px] font-normal mb-5">This section provides a breakdown of what the platform offers, highlighting its unique strengths in clear and relatable terms.</p>
             <BentoGrid className="lg:grid-rows-3 my-6">
                 {features.map((feature) => (

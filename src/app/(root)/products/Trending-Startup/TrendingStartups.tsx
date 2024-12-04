@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Bookmark, Share2, Link } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
-
+import Image from "next/image"
 const startups = [
     {
         name: "OpenAI",
@@ -74,10 +74,11 @@ export default function TrendingStartups() {
                             <CardHeader className="">
                                 <div className="flex items-center gap-2">
                                     <div className="h-10 w-10 rounded-full ">
-                                        <img
+                                        <Image
                                             src={startup.logo}
                                             alt={`${startup.name} logo`}
-                                            className="h-full w-full object-cover"
+                                            width={25}
+                                            height={25}
                                         />
                                     </div>
                                     <div className="flex justify-between w-full">
@@ -148,10 +149,10 @@ export default function TrendingStartups() {
                 </div>
                 <section className="max-w-[1100px] ">
                     <h1 className="text-xl mb-4 font-medium">
-                        Discover the most innovative startups that are shaping the future of technology and business. These companies are at the forefront of their industries, developing groundbreaking solutions to some of the world's most pressing challenges.
+                        Discover the most innovative startups that are shaping the future of technology and business. These companies are at the forefront of their industries, developing groundbreaking solutions to some of the world&apos;s most pressing challenges.
                     </h1>
                     <p className="text-gray-800">
-                        The startup ecosystem is constantly evolving, with new players emerging and established ones pivoting to meet changing market demands. In today's fast-paced business environment, staying informed about the latest trends and innovations is crucial for entrepreneurs, investors, and industry professionals alike.
+                        The startup ecosystem is constantly evolving, with new players emerging and established ones pivoting to meet changing market demands. In today&apos;s fast-paced business environment, staying informed about the latest trends and innovations is crucial for entrepreneurs, investors, and industry professionals alike.
                     </p>
                     <p className="text-gray-800">
                         In the healthcare industry, HealthAI is leveraging the power of artificial intelligence to revolutionize patient care. Their advanced algorithms are capable of analyzing vast amounts of medical data to detect patterns and anomalies that might be missed by human practitioners. This technology has the potential to significantly improve early diagnosis rates and treatment outcomes, ultimately saving lives and reducing healthcare costs.
@@ -160,7 +161,7 @@ export default function TrendingStartups() {
                         FinRevolution is disrupting the financial services industry by harnessing the power of blockchain technology. Their platform is making complex financial instruments and services accessible to a broader audience, potentially democratizing access to wealth-building opportunities. By using smart contracts, FinRevolution is also increasing transparency and reducing the costs associated with traditional financial transactions.
                     </p>
                     <p className="text-gray-800">
-                        These startups represent just a fraction of the innovation happening across various industries. From artificial intelligence and machine learning to biotechnology and space exploration, entrepreneurs are pushing the boundaries of what's possible. They're not just creating new products and services; they're reshaping entire industries and challenging established norms.
+                        These startups represent just a fraction of the innovation happening across various industries. From artificial intelligence and machine learning to biotechnology and space exploration, entrepreneurs are pushing the boundaries of what&apos;s possible. They&apos;re not just creating new products and services; they&apos;re reshaping entire industries and challenging established norms.
                     </p>
                 </section>
             </div>
