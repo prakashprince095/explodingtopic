@@ -1,7 +1,62 @@
 'use client';
 import { useParams } from 'next/navigation';
+import { TrendingUp } from "lucide-react"
+import { PolarGrid, RadialBar, RadialBarChart } from "recharts"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
 
-// Define the structure of the data for each category
+const chartData = [
+  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
+  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
+  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  
+]
+const chartConfig = {
+  visitors: {
+    label: "Visitors",
+  },
+  chrome: {
+    label: "Chrome",
+    color: "hsl(var(--chart-1))",
+  },
+  safari: {
+    label: "Safari",
+    color: "hsl(var(--chart-2))",
+  },
+  firefox: {
+    label: "Firefox",
+    color: "hsl(var(--chart-3))",
+  },
+  edge: {
+    label: "Edge",
+    color: "hsl(var(--chart-4))",
+  },
+  other: {
+    label: "Other",
+    color: "hsl(var(--chart-5))",
+  },
+} satisfies ChartConfig
+
+
 type CategoryData = {
   title: string;
   volume: string;
@@ -11,7 +66,6 @@ type CategoryData = {
   background: string;
 };
 
-// Define all the categories as a union type
 type CategoryKeys =
   | 'AI Transcription'
   | 'AI in Education'
@@ -25,7 +79,6 @@ type CategoryKeys =
   | 'Short-Form Video Editors'
   | 'Specialty Lotions';
 
-// Sample data for each category
 const categoryData: Record<CategoryKeys, CategoryData> = {
   "AI Transcription": {
     title: "AI Transcription",
@@ -117,7 +170,7 @@ const categoryData: Record<CategoryKeys, CategoryData> = {
   },
 };
 
-// Helper function to convert slug back to the original category name
+
 const fromSlug = (slug: string): CategoryKeys | null => {
   switch (slug) {
     case 'ai-transcription':
@@ -148,13 +201,11 @@ const fromSlug = (slug: string): CategoryKeys | null => {
 };
 
 const CategoryPage = () => {
-  const params = useParams(); // Get dynamic parameters from the URL
+  const params = useParams();
   const { category } = params as { category: string };
 
-  // Convert slug back to the category name
   const categoryKey = fromSlug(category);
 
-  // Fetch the correct data based on the converted category key
   const data = categoryKey ? categoryData[categoryKey] : null;
 
   if (!data) {
@@ -162,11 +213,40 @@ const CategoryPage = () => {
   }
 
   return (
-    <div className="container mx-auto p-8 bg-gray-100 min-h-screen">
-      <div className="grid grid-cols-3 gap-8">
-        {/* Left Section */}
-        <div className="col-span-1 space-y-6">
-          {/* Displaying the main trend information */}
+    <div className="container flex flex-col gap-7 p-8 bg-gray-100 min-h-screen">
+      <div className="p-6 bg-white shadow-md rounded-md w-full">
+        <h3 className="text-xl ">Analytics</h3>
+        <div className="m-10">
+            <CardHeader className="items-center pb-0">
+              <CardTitle>Radial Chart - Grid</CardTitle>
+            </CardHeader>
+            <CardContent className="flex-1 pb-0">
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto  h-[500px]"
+              >
+                <RadialBarChart data={chartData} innerRadius={20} outerRadius={200}>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel nameKey="browser" />}
+                  />
+                  <PolarGrid gridType="circle" />
+                  <RadialBar dataKey="visitors" />
+                </RadialBarChart>
+              </ChartContainer>
+            </CardContent>
+            <CardFooter className="flex-col gap-2 text-sm">
+              <div className="flex items-center gap-2 font-medium leading-none">
+                Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+              </div>
+              <div className="leading-none text-muted-foreground">
+                Showing total visitors for the last 6 months
+              </div>
+            </CardFooter>
+        </div>
+      </div>
+      <div className="flex flex-col gap-8 ">
+        <div className="flex flex-col space-y-6 w-full">
           <div className="p-6 bg-white shadow-md rounded-md">
             <h2 className="text-2xl ">{data.title}</h2>
             <div className="mt-4 flex justify-between items-center">
@@ -176,14 +256,12 @@ const CategoryPage = () => {
             <p className="mt-4 text-gray-600">{data.description}</p>
           </div>
 
-          {/* Background & Analysis */}
           <div className="p-6 bg-white shadow-md rounded-md">
             <h3 className="text-xl ">Background & Analysis</h3>
             <p className="mt-2 text-gray-600">{data.background}</p>
             <button className="mt-4 text-blue-500">Read More</button>
           </div>
 
-          {/* Related Meta Trends */}
           <div className="p-6 bg-white shadow-md rounded-md">
             <h3 className="text-xl ">Related Meta Trends</h3>
             <ul className="mt-2 space-y-2">
@@ -191,14 +269,6 @@ const CategoryPage = () => {
                 <li key={index} className="text-blue-500 cursor-pointer">{trend}</li>
               ))}
             </ul>
-          </div>
-        </div>
-
-        {/* Right Section: Placeholder for the network diagram */}
-        <div className="col-span-2 p-6 bg-white shadow-md rounded-md">
-          <h3 className="text-xl ">Network of Related Topics</h3>
-          <div className="mt-6 w-full h-96 bg-gray-200 flex items-center justify-center">
-            <p>Network Visualization Here</p>
           </div>
         </div>
       </div>

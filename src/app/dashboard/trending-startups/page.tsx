@@ -225,7 +225,7 @@ const Startups = () => {
                             fill: "var(--color-desktop)",
                           }}
                           activeDot={{
-                            r: 6,
+                            r: 0,
                           }}
                         />
                       </LineChart>
