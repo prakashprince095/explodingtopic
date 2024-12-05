@@ -42,7 +42,7 @@ export default function SubcategoryPage() {
 
     return (
         <div className="p-4 md:p-6 min-h-screen bg-background">
-            <h1 className="text-lg md:text-xl  mb-2">{subcategory} Insights</h1>
+            <h1 className="text-lg md:text-xl mb-2">{subcategory} Insights</h1>
             <p className="mb-6 text-muted-foreground">Industry-wide trends and insights for {subcategory}.</p>
 
             <ScrollArea className="w-full">
@@ -56,7 +56,10 @@ export default function SubcategoryPage() {
                             <CardHeader>
                                 <CardTitle className='font-normal text-md'>{company.name}</CardTitle>
                                 <p className="text-sm text-muted-foreground">
-                                    Volume: {company.volume} | Growth: {company.growth}%
+                                    Volume: {company.volume} 
+                                </p>
+                                <p className="text-sm text-muted-foreground">
+                                     Growth: {company.growth}%
                                 </p>
                             </CardHeader>
                             <CardContent>
@@ -67,11 +70,11 @@ export default function SubcategoryPage() {
                                             color: "hsl(var(--primary))",
                                         },
                                     }}
-                                    className="h-[100px]"
+                                    className="h-[150px]"
                                 >
                                     <LineChart
                                         data={company.data}
-                                        margin={{ left: 12, right: 12 }}
+                                        margin={{ left: 6, right: 12 }}
                                     >
                                         <CartesianGrid strokeDasharray="3 3" />
                                         <Tooltip content={<ChartTooltipContent />} />
@@ -79,8 +82,6 @@ export default function SubcategoryPage() {
                                     </LineChart>
                                 </ChartContainer>
                             </CardContent>
-
-
                         </Card>
                     ))}
                 </div>

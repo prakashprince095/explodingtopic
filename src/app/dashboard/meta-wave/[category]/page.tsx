@@ -18,12 +18,12 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { browser: "chrome", visitors: 135, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 220, fill: "var(--color-safari)" },
   { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
   { browser: "other", visitors: 90, fill: "var(--color-other)" },
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "chrome", visitors: 220, fill: "var(--color-chrome)" },
   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
   { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
@@ -220,12 +220,12 @@ const CategoryPage = () => {
             <CardHeader className="items-center pb-0">
               <CardTitle>Radial Chart - Grid</CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 pb-0">
+            <CardContent className="flex-1 pb-3">
               <ChartContainer
                 config={chartConfig}
                 className="mx-auto  h-[500px]"
               >
-                <RadialBarChart data={chartData} innerRadius={20} outerRadius={200}>
+                <RadialBarChart data={chartData} innerRadius={30} outerRadius={250}>
                   <ChartTooltip
                     cursor={false}
                     content={<ChartTooltipContent hideLabel nameKey="browser" />}
@@ -235,14 +235,6 @@ const CategoryPage = () => {
                 </RadialBarChart>
               </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
-              <div className="flex items-center gap-2 font-medium leading-none">
-                Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="leading-none text-muted-foreground">
-                Showing total visitors for the last 6 months
-              </div>
-            </CardFooter>
         </div>
       </div>
       <div className="flex flex-col gap-8 ">
