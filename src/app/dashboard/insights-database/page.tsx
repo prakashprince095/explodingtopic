@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
 
 interface Industry {
   name: string;
@@ -66,23 +67,26 @@ const TrendsDatabase: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center w-full bg-gray-50 p-6">
-      <input
-        type="text"
-        placeholder="Search Industries"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="border p-2 rounded mb-6 w-full max-w-md"
-      />
-      <div className="flex bg-gray-100 shadow-lg w-full max-w-6xl rounded-lg">
+      <div className="flex justify-between w-full mb-6">
+        <h2 className="text-2xl ">Insight Database</h2>
+        <div className="">
+          <Input
+            type="text"
+            placeholder="Search Industries"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="flex bg-gray-100 shadow-lg border w-full  rounded-lg">
         {/* Industry List */}
         <div className="w-1/3 bg-gray-50 p-4 overflow-auto">
           <ul>
             {filteredIndustries.map((industry) => (
               <li
                 key={industry.name}
-                className={`p-3 cursor-pointer hover:bg-blue-50 transition ${
-                  selectedIndustry === industry.name ? 'bg-blue-100' : ''
-                }`}
+                className={`p-3 cursor-pointer hover:bg-gray-50 transition ${selectedIndustry === industry.name ? 'bg-gray-100' : ''
+                  }`}
                 onClick={() => setSelectedIndustry(industry.name)}
               >
                 {industry.name}
@@ -91,7 +95,7 @@ const TrendsDatabase: React.FC = () => {
           </ul>
         </div>
         {/* Subcategories */}
-        <div className="w-2/3 p-6">
+        <div className="w-full p-6">
           {selectedIndustry && (
             <div>
               <h2 className="text-lg mb-4">Subcategories of {selectedIndustry}</h2>
@@ -101,7 +105,7 @@ const TrendsDatabase: React.FC = () => {
                   ?.subcategories.map((subcategory) => (
                     <li
                       key={subcategory}
-                      className="p-3 border rounded cursor-pointer hover:bg-blue-50"
+                      className="p-3 border rounded cursor-pointer hover:bg-white"
                       onClick={() => handleSubcategoryClick(subcategory)}
                     >
                       {subcategory}

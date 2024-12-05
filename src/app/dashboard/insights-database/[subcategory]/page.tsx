@@ -41,7 +41,7 @@ export default function SubcategoryPage() {
     }
 
     return (
-        <div className="p-4 md:p-6 min-h-screen bg-background">
+        <div className="p-4 md:p-6 min-h-screen bg-background bg-gray-50">
             <h1 className="text-lg md:text-xl  mb-2">{subcategory} Insights</h1>
             <p className="mb-6 text-muted-foreground">Industry-wide trends and insights for {subcategory}.</p>
 
