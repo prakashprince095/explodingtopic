@@ -31,7 +31,7 @@ export default function HomePage() {
       <Header />
       <main className="flex min-h-screen flex-col items-center justify-between ">
         <div className="relative flex flex-col gap-4 h-[400px]  w-full items-center justify-center overflow-hidden rounded-lg bg-background p-20 ">
-          <h1 className="z-10 whitespace-pre-wrap text-center text-[70px] max-w-[700px] font-medium tracking-tighter text-black dark:text-white">
+          <h1 className="z-10 whitespace-pre-wrap text-center text-[60px] max-w-[700px]  font-semibold tracking-tighter text-black dark:text-white">
             Stay ahead by spotting trends <span className="text-gradient">before they ignite</span>
           </h1>
           <div className="flex gap-4">

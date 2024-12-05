@@ -78,14 +78,14 @@ const TrendsDatabase: React.FC = () => {
           />
         </div>
       </div>
-      <div className="flex bg-gray-100 shadow-lg border w-full  rounded-lg">
+      <div className="flex bg-white shadow-sm border w-full rounded-lg">
         {/* Industry List */}
-        <div className="w-1/3 bg-gray-50 p-4 overflow-auto">
+        <div className="w-1/3 bg-gray-50  p-4 overflow-auto">
           <ul>
             {filteredIndustries.map((industry) => (
               <li
                 key={industry.name}
-                className={`p-3 cursor-pointer hover:bg-gray-50 transition ${selectedIndustry === industry.name ? 'bg-gray-100' : ''
+                className={`p-3 cursor-pointer my-2 hover:bg-gray-100 transition ${selectedIndustry === industry.name ? 'bg-gray-100' : ''
                   }`}
                 onClick={() => setSelectedIndustry(industry.name)}
               >
