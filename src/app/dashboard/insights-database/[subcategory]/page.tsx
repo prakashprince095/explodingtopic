@@ -62,30 +62,39 @@ export default function SubcategoryPage() {
                                 <CardDescription className={`${company.growth > 0 ? "text-green-700 bg-green-100" : "text-red-700 bg-red-100"
                                     } font-medium w-fit py-1 px-2 rounded-full`}>
                                     Growth:{" "}
-                                    <span
-
-                                    >
+                                    <span>
                                         {company.growth}%
                                     </span>
                                 </CardDescription>
                             </CardHeader>
 
                             <CardContent>
-                                <ChartContainer
-                                    config={{
-                                        value: {
-                                            label: "Growth",
-                                            color: "hsl(var(--primary))",
-                                        },
-                                    }}
-                                    className="h-[150px]"
-                                >
-                                    <LineChart data={company.data} margin={{ left: 12, right: 12 }}>
-                                        <CartesianGrid vertical={false} strokeDasharray="1 3" />
-                                        <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} />
-                                        <Tooltip content={<ChartTooltipContent />} />
-                                        <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={2} />
+                                <ChartContainer config={{ value: { label: "Growth", color: "hsl(var(--primary))", }, }} className="h-[150px]">
+                                    <LineChart
+                                        width={300}
+                                        height={200}
+                                        data={company.data}
+                                        margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
+                                    >
+                                        <defs>
+                                            <linearGradient id="colorDesktop" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stopColor="hsl(217, 91%, 60%)" stopOpacity={0.8} />
+                                                <stop offset="100%" stopColor="hsl(217, 91%, 60%)" stopOpacity={0} />
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid stroke="#f5f5f5" />
+                                        <ChartTooltip content={<ChartTooltipContent />} />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="value" // Correct dataKey
+                                            stroke="hsl(217, 91%, 60%)"
+                                            fillOpacity={1}
+                                            fill="url(#colorDesktop)"
+                                            strokeWidth={2}
+                                            dot={{ r: 4, fill: "hsl(217, 91%, 60%)" }}
+                                        />
                                     </LineChart>
+
                                 </ChartContainer>
                             </CardContent>
                         </Card>
