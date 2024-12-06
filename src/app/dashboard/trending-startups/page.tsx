@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import Image from 'next/image';
 import { useStartup } from '@/context/StartupContext';
 import localResponseData from '@/data/response.json';
@@ -76,26 +76,26 @@ const Startups = () => {
 
   const fetchData = async () => {
     const backendUrl = '';
-    console.log("Sending request to backend with:", { url: backendUrl});
-  
+    console.log("Sending request to backend with:", { url: backendUrl });
+
     try {
       const response = await fetch(backendUrl, {
         method: 'GET',
       });
-  
+
       if (!response.ok) {
         throw new Error(`Backend error: ${response.statusText}`);
       }
-  
-      const data = await response.json(); 
-      return transformData(data); 
+
+      const data = await response.json();
+      return transformData(data);
     } catch (err) {
       console.error("Backend fetch failed, falling back to local data:", err);
       return transformData(localResponseData);
     }
   };
-  
-  
+
+
   useEffect(() => {
     const fetchStartups = async () => {
       setLoading(true);
@@ -167,7 +167,7 @@ const Startups = () => {
                 <Card key={startup.uuid} className="w-[300px] cursor-pointer hover:shadow-md transition" onClick={() => handleStartupClick(startup)}>
                   <CardHeader>
                     <div className='flex items-start  gap-2'>
-                      <div className='bg-white rounded-md shadow-md h-[60px] w-[60px]'>
+                      <div className='bg-white rounded-md shadow-md h-[60px] border w-[80px]'>
 
                       </div>
                       <div className='w-full'>
@@ -180,9 +180,9 @@ const Startups = () => {
                     <CardDescription className='text-[14px]'>{startup.short_description}</CardDescription>
                     <CardFooter className="flex justify-between items-center">
                       <div className='flex gap-3'>
-                        <Image src='/startups/saved.svg' alt='' height={20} width={20}/>
-                        <Image src='/startups/link.svg' alt='' height={20} width={20}/>
-                        <Image src='/startups/share.svg' alt='' height={20} width={20}/>
+                        <Image src='/startups/saved.svg' alt='' height={20} width={20} />
+                        <Image src='/startups/link.svg' alt='' height={20} width={20} />
+                        <Image src='/startups/share.svg' alt='' height={20} width={20} />
                       </div>
                       <div className=" text-[14px]">
                         {startup.city}, {startup.country}
@@ -192,35 +192,27 @@ const Startups = () => {
                   <CardContent>
                     <ChartContainer config={chartConfig}>
                       <LineChart
+                        width={300}
+                        height={200}
                         data={generateChartData()}
-                        margin={{
-                          left: 12,
-                          right: 12,
-                        }}
+                        margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
                       >
-                        <CartesianGrid vertical={false} />
-                        <XAxis
-                          dataKey="month"
-                          tickLine={false}
-                          axisLine={false}
-                          tickMargin={8}
-                          tickFormatter={(value) => value.slice(0, 3)}
-                        />
-                        <ChartTooltip
-                          cursor={false}
-                          content={<ChartTooltipContent hideLabel />}
-                        />
+                        <defs>
+                          <linearGradient id="colorDesktop" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="hsl(217, 91%, 60%)" stopOpacity={0.8} />
+                            <stop offset="100%" stopColor="hsl(217, 91%, 60%)" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid stroke="#f5f5f5" />
+                        <ChartTooltip content={<ChartTooltipContent />} />
                         <Line
+                          type="monotone"
                           dataKey="desktop"
-                          type="natural"
-                          stroke="var(--color-desktop)"
+                          stroke="hsl(217, 91%, 60%)"
+                          fillOpacity={1}
+                          fill="url(#colorDesktop)"
                           strokeWidth={2}
-                          dot={{
-                            fill: "var(--color-desktop)",
-                          }}
-                          activeDot={{
-                            r: 0,
-                          }}
+                          dot={{ r: 4, fill: "hsl(217, 91%, 60%)" }}
                         />
                       </LineChart>
                     </ChartContainer>

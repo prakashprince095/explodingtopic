@@ -154,7 +154,7 @@ const CompanyInsightsPage = () => {
           <h1 className="text-2xl  text-gray-900">Shopping Bags</h1>
           <p className="text-sm text-gray-600">AI-driven insights and performance metrics</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex  items-center gap-4">
           <span className="text-xl  text-green-600">5.5K</span>
           <span className="text-lg text-green-600">+15% Growth</span>
         </div>
