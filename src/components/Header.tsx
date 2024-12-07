@@ -51,7 +51,7 @@ const Header: React.FC = () => {
 
     return (
         <header className="w-full bg-background text-zinc-700">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-4 ">
                 <div className="flex justify-between items-center h-16 md:h-20">
                     <Link href="/" className="flex-shrink-0">
                         <Image src="/logos/1.svg" alt="Logo" width={40} height={40} />
