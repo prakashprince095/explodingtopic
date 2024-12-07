@@ -21,13 +21,27 @@ const menuItems = [
         ],
     },
     {
+        label: 'Company',
+        links: [
+            { href: '/Company/Changelogs', label: 'Changelogs' },
+            { href: '/Company/Faqs', label: 'Faqs' },
+            { href: '/Company/Blogs', label: 'Blog' },
+            { href: '/Company/caseStudies', label: 'Case Studies' },
+            { href: '/Company/Support', label: 'Support' },
+            { href: '/Company/Carrers', label: 'Carrers' },
+            { href: '/Company/Aboutus', label: 'About us' },
+        ],
+    },
+    {
         label: 'Resources',
         links: [
-            { href: '/resources/changelogs', label: 'Changelogs' },
-            { href: '/resources/FAQs', label: 'Faqs' },
-            { href: '/resources/Blogs', label: 'Blog' },
-            { href: '/resources/case-Studies', label: 'Case Studies' },
-            { href: '/resources/support', label: 'Support' },
+            { href: '/Company/Changelogs', label: 'Changelogs' },
+            { href: '/Company/Faqs', label: 'Faqs' },
+            { href: '/Company/Blogs', label: 'Blog' },
+            { href: '/Company/caseStudies', label: 'Case Studies' },
+            { href: '/Company/Support', label: 'Support' },
+            { href: '/Company/Carrers', label: 'Carrers' },
+            { href: '/Company/Aboutus', label: 'About us' },
         ],
     },
 ];
