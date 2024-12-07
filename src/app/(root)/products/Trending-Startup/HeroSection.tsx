@@ -9,7 +9,7 @@ export default function HeroSection() {
                 <h1 className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[800px] font-semibold tracking-tighter text-black dark:text-white">
                     Discover Tomorrow&apos;s Innovations Today <span className="text-gradient">before they ignite</span>
                 </h1>
-                <p className="text-lg max-w-[700px] text-center mb-8">
+                <p className="text-xl max-w-[700px] text-center mb-8">
                     Stay ahead of the curve with real-time insights into the world&apos;s most promising startups and emerging trends.
                 </p>
                 <div className="flex gap-4">

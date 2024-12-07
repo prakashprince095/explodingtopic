@@ -48,19 +48,23 @@ export default function HomePage() {
           />
         </div>
         <ReviewsSection />
-        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+        <div className="bg-gray-200 w-full h-[1px] my-14"></div>
         <FeaturesSection />
-        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+        <div className="bg-gray-200 w-full h-[1px] my-14"></div>
         <AnalyticsSection />
-        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
-        <div className="flex flex-col items-center">
-          <h1 className="text-[40px] text-center">Features Designed for <span className="text-gradient font-medium">Your Success</span></h1>
-          <p className=" text-center w-[800px] text-[#686868] text-[16px] font-normal mb-5">Highlighting the platform’s standout features ensures users recognize its unique value proposition. Each feature card explains how it solves user pain points or creates opportunities.</p>
+        <div className="bg-gray-200 w-full h-[1px] my-14"></div>
+        <div className="flex flex-col items-center px-4 py-8 sm:px-6 md:px-10 lg:px-12">
+          <h1 className="mb-4 text-center text-[28px] leading-tight sm:text-[32px] lg:text-[40px]">
+            Features Designed for <span className="text-gradient font-medium">Your Success</span>
+          </h1>
+          <p className="mb-5 max-w-3xl text-center text-sm text-[#686868] font-normal sm:text-base lg:text-[16px]">
+            Highlighting the platform’s standout features ensures users recognize its unique value proposition. Each feature card explains how it solves user pain points or creates opportunities.
+          </p>
           <FeaturesSectionDemo />
         </div>
-        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+        <div className="bg-gray-200 w-full h-[1px] my-14"></div>
         <SignupSection />
-        <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
+        <div className="bg-gray-200 w-full h-[1px] my-14"></div>
       </main>
       <Footer />
     </>

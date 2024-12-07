@@ -17,7 +17,7 @@ export default function Changelogs() {
             <li>A new personalized dashboard for saving your favorite startups and products.</li>
             <li>Improved data visualization with interactive charts for product trends.</li>
             <li>Bug fix: Resolved issues with bookmarking startups on mobile devices.</li>
-          </ul>
+          </ul> 
           <div className="grid grid-cols-2 gap-4">
             <Image
               src="/products/1.svg"

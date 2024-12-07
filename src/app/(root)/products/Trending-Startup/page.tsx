@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center bg-background">
       <HeroSection />
-      
       <div className="bg-gray-200 w-screen h-[1px] "></div>
+      
       <TrendingStartups />
       <div className="bg-gray-200 w-screen h-[1px] my-14"></div>
       
