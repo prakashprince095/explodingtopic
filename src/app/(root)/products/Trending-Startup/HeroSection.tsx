@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export default function HeroSection() {
     return (
         <section className="w-full flex flex-col items-center gap-10">
-            <div className="relative  flex flex-col gap-4 h-[600px] w-full items-center justify-center overflow-hidden rounded-lg bg-background p-10 ">
+            <div className="relative  flex flex-col gap-4 h-[500px] w-full items-center justify-center overflow-hidden rounded-lg bg-background p-10 ">
                 <h1 className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[800px] font-semibold tracking-tighter text-black dark:text-white">
                     Discover Tomorrow&apos;s Innovations Today <span className="text-gradient">before they ignite</span>
                 </h1>

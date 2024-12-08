@@ -57,9 +57,9 @@ const startups = [
 
 export default function TrendingStartups() {
     return (
-        <section className="py-16 flex flex-col items-center">
+        <section className="max-w-[1280px] flex flex-col items-center">
             <div className="container mx-auto px-4">
-                <div className="max-w-2xl mx-auto text-center mb-12">
+                {/* <div className="max-w-2xl mx-auto text-center mb-12">
                     <h2 className="text-3xl  tracking-tight mb-4">
                         Trending Startups
                     </h2>
@@ -67,10 +67,10 @@ export default function TrendingStartups() {
                         Discover innovative startups shaping the future of technology and business.
                         These companies are developing groundbreaking solutions to global challenges.
                     </p>
-                </div>
-                <div className="flex items-center justify-center gap-5 my-5">
+                </div> */}
+                <div className="bg-[#F6F5F4] max-w-[1280px] p-10 flex items-center justify-center gap-5 my-5">
                     {startups.map((startup) => (
-                        <Card key={startup.name} className="w-[350px] h-[450px]">
+                        <Card key={startup.name} className="w-[350px] h-[400px]">
                             <CardHeader className="">
                                 <div className="flex items-center gap-2">
                                     <div className="h-10 w-10 rounded-full ">
@@ -147,7 +147,10 @@ export default function TrendingStartups() {
                         </Card>
                     ))}
                 </div>
-                <section className="max-w-[1100px] ">
+                <div className="my-[30px] flex flex-col items-center">
+                    <h1 className="text-center max-w-[500px] text-[30px]">See your biggest organization data in Exploding</h1>
+                </div>
+                <section className=" ">
                     <h1 className="text-xl mb-4 font-medium">
                         Discover the most innovative startups that are shaping the future of technology and business. These companies are at the forefront of their industries, developing groundbreaking solutions to some of the world&apos;s most pressing challenges.
                     </h1>
