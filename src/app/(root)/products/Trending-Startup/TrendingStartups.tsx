@@ -148,7 +148,8 @@ export default function TrendingStartups() {
                     ))}
                 </div>
                 <div className="my-[30px] flex flex-col items-center">
-                    <h1 className="text-center max-w-[500px] text-[30px]">See your biggest organization data in Exploding</h1>
+                    <h1 className="text-center max-w-[500px] text-[30px]">See your biggest organizations data in Exploding</h1>
+                    
                 </div>
                 <section className=" ">
                     <h1 className="text-xl mb-4 font-medium">
