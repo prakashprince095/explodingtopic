@@ -12,6 +12,7 @@ import { FeaturesSectionDemo } from "@/components/ui/FeaturesSectionDemo";
 import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
 import SignupSection from "@/components/SignupSection";
+import Trusted from "@/components/Trusted";
 
 export default function HomePage() {
   // const { isAuthenticated, verfiySession } = useAuthStore();
@@ -48,6 +49,8 @@ export default function HomePage() {
           />
         </div>
         <ReviewsSection />
+        <div className="bg-gray-200 w-full h-[1px] my-14"></div>
+        <Trusted />
         <div className="bg-gray-200 w-full h-[1px] my-14"></div>
         <FeaturesSection />
         <div className="bg-gray-200 w-full h-[1px] my-14"></div>
