@@ -8,7 +8,7 @@ export default function ImageSection() {
         Why Exploading is the best tool for Organizations details
       </h1>
       <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        <div className=" border-[#D9D9D9] h-fit border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
+        <div className=" border-[#D9D9D9] h-fit bg-[#FAFAFA] border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
           <CardHeader>
             <WalletCards className="w-10 h-10 " />
             <CardTitle className="text-2xl font-medium">Details</CardTitle>
@@ -24,7 +24,7 @@ export default function ImageSection() {
           </div>
         </div>
 
-        <div className=" border-[#D9D9D9] h-fit border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
+        <div className=" border-[#D9D9D9] h-fit bg-[#FAFAFA] border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
           <CardHeader>
             <Command className="w-10 h-10 " />
             <CardTitle className="text-2xl font-medium">Key Indicators</CardTitle>
@@ -40,7 +40,7 @@ export default function ImageSection() {
           </div>
         </div>
 
-        <div className=" border-[#D9D9D9] h-fit border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
+        <div className=" border-[#D9D9D9] h-fit bg-[#FAFAFA] border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
           <CardHeader>
             <TvMinimalPlay className="w-10 h-10 " />
             <CardTitle className="text-2xl font-medium">Channels</CardTitle>
