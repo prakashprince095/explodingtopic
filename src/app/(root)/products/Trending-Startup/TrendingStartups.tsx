@@ -27,19 +27,19 @@ export default function TrendingStartups() {
                     <StartupsCards />
                 </div>
                 <div className="mt-36 mb-10 flex flex-col items-center">
-                    <h1 className="text-center border-b pb-10 max-w-[500px] font-semibold text-[28px]">See your biggest organizations data in Exploding</h1>
+                    <h1 className="text-center border-b pb-10 max-w-[500px] font-semibold text-[28px]">See your favourite organizations data in Exploding</h1>
                     <div className='flex border-b gap-14 max-w-[600px] py-8 flex-wrap items-center justify-center'>
-                        <Image src='/landing/Trusted-1.svg' alt='' height={60} width={60} />
-                        <Image src='/landing/Trusted-2.svg' alt='' height={60} width={60} />
-                        <Image src='/landing/Trusted-3.svg' alt='' height={60} width={60} />
-                        <Image src='/landing/Trusted-4.svg' alt='' height={60} width={60} />
-                        <Image src='/landing/Trusted-5.svg' alt='' height={60} width={60} />
-                        <Image src='/landing/Trusted-6.svg' alt='' height={60} width={60} />
-                        <Image src='/landing/Trusted-7.svg' alt='' height={60} width={60} />
+                        <Image src='/landing/Trusted-1.svg' alt='' height={90} width={90} />
+                        <Image src='/landing/Trusted-2.svg' alt='' height={90} width={90} />
+                        <Image src='/landing/Trusted-3.svg' alt='' height={90} width={90} />
+                        <Image src='/landing/Trusted-4.svg' alt='' height={90} width={90} />
+                        <Image src='/landing/Trusted-5.svg' alt='' height={90} width={90} />
+                        <Image src='/landing/Trusted-6.svg' alt='' height={90} width={90} />
+                        <Image src='/landing/Trusted-7.svg' alt='' height={90} width={90} />
                     </div>
                 </div>
                 <section className=" max-w-[400px] ">
-                    <h1 className="text-2xl  font-bold">Discover every part of your niche related startup:</h1>
+                    <h1 className="text-2xl  font-medium">Discover every part of your niche related startup:</h1>
                     <h2 className="text-md mb-4 text-gray-600 font-medium">
                         Discover the most innovative startups that are shaping the future of technology and business. These companies are at the forefront of their industries, developing groundbreaking solutions to some of the world&apos;s most pressing challenges.
                     </h2>

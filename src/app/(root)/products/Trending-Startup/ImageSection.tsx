@@ -1,44 +1,62 @@
-import Image from 'next/image'
-
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { WalletCards, Command, TvMinimalPlay } from 'lucide-react'
+import Image from "next/image"
 export default function ImageSection() {
   return (
-    <section className="max-w-[1100px] ">
-      <div className="container mx-auto">
-        <div className="flex flex-col items-center gap-8">
-          <div className="bg-gray-100 w-full p-7 flex flex-col items-center rounded-lg">
-            <h1 className='text-center text-[30px] mb-5'>See the Visionaries <span className='text-gradient'>Behind the Startups</span></h1>
-            <Image
-              src="/products/1.svg"
-              alt="Startup Ecosystem Visualization"
-              width={800}
-              height={650}
-              className="rounded-lg shadow-sm"
-            />
-            <h1 className='text-center text-[24px] my-5'>Are you Enterprise?</h1>
-            <p className='text-center text-[16px] mb-'>Get Unlimited access, Custom Support, Unlimited Reports →</p>
-          </div>
+    <div className="max-w-[1280px]  p-6">
+      <h1 className="text-2xl font-medium  mb-12 ">
+        Why Exploading is the best tool for Organizations details
+      </h1>
+      <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className=" border-[#D9D9D9] h-fit border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
+          <CardHeader>
+            <WalletCards className="w-10 h-10 " />
+            <CardTitle className="text-2xl font-medium">Details</CardTitle>
+          </CardHeader>
+          <CardContent className="px-3 text-zinc-600">
+            <p>
+              A logo bright, a name so bold, <br />
+              With stories of when their journey told.
+            </p>
+          </CardContent>
           <div className="">
-            <h2 className="text-2xl  mb-4">The Global Startup Ecosystem</h2>
-            <p className="text-md text-gray-500 mb-4">
-              This image provides a comprehensive visualization of the current global startup ecosystem. It highlights the interconnectedness of various industries, the flow of capital, and the hotspots of innovation across different regions.
+            <Image src='/startups/detail-box.svg' alt="" height={300} width={400} />
+          </div>
+        </div>
+
+        <div className=" border-[#D9D9D9] h-fit border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
+          <CardHeader>
+            <Command className="w-10 h-10 " />
+            <CardTitle className="text-2xl font-medium">Key Indicators</CardTitle>
+          </CardHeader>
+          <CardContent className="px-3 text-zinc-600">
+            <p>
+              Growth and speed in colors shine, <br />
+              Potential and forecast—metrics divine.
             </p>
-            <p className="text-md text-gray-500 mb-4">
-              Key elements depicted in the image include:
+          </CardContent>
+          <div className="">
+            <Image src='/startups/indicator-box.svg' alt="" height={300} width={400} />
+          </div>
+        </div>
+
+        <div className=" border-[#D9D9D9] h-fit border-[1px] rounded-lg shadow-sm px-2 pt-2 shadow-[#808080]/25 ">
+          <CardHeader>
+            <TvMinimalPlay className="w-10 h-10 " />
+            <CardTitle className="text-2xl font-medium">Channels</CardTitle>
+          </CardHeader>
+          <CardContent className="px-3 text-zinc-600">
+            <p>
+              Platforms they use, metrics they boast, <br />
+              Engagement rates they love the most.
             </p>
-            <ul className="list-disc list-inside text-gray-500 mb-4">
-              <li>Major tech hubs and their specializations</li>
-              <li>Emerging markets and their growth trajectories</li>
-              <li>Cross-industry collaborations and convergence</li>
-              <li>Investment trends and capital flow patterns</li>
-              <li>Regulatory landscapes affecting startup growth</li>
-            </ul>
-            <p className="text-md text-gray-500">
-              Understanding this ecosystem is crucial for entrepreneurs, investors, and policymakers alike. It provides insights into where opportunities lie, potential challenges to overcome, and how different elements of the startup world interact and influence each other.
-            </p>
+          </CardContent>
+          <div className="">
+            <Image src='/startups/channel-box.svg' alt="" height={300} width={400} />
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
