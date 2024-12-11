@@ -1,66 +1,28 @@
-'use client'
+import React from 'react';
+import { BorderBeam } from "@/components/ui/border-beam";
+import { Button } from '@/components/ui/button';
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
-export default function SimpleSignupForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', { name, email, password })
-  }
-
-  return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Sign Up</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <Label htmlFor="name" className="text-sm font-medium text-gray-700">Full Name</Label>
-          <Input 
-            id="name"
-            type="text" 
-            placeholder="John Doe" 
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="mt-1"
-          />
+const SignupSection = () => {
+    return (
+        <div className="relative flex mb-10 bg-[#FAFAFA] flex-col items-center justify-center h-auto w-full max-w-[1200px] px-6 py-12 mx-auto overflow-hidden rounded-lg border bg-background md:h-[300px] md:px-12 lg:flex-row">
+            <section className="z-10 flex  flex-col items-center text-center justify-center">
+                <h1 className="text-[28px] leading-tight md:text-[32px] lg:text-[40px]">
+                    Join a Thriving Community of{" "}
+                    <span className="text-gradient">Innovators</span>
+                </h1>
+                <p className="mt-4 mb-6 text-sm text-[#666666] md:text-base lg:mt-2 lg:mb-8">
+                    Thousands of businesses, investors, and entrepreneurs rely on our platform to stay ahead. Join them today and see the difference!
+                </p>
+                <div className="flex flex-wrap gap-4">
+                    <Button>Get Started →</Button>
+                    <button className="px-4 py-2 text-sm font-medium text-black bg-white border rounded-md shadow-sm hover:bg-gray-200 md:text-base">
+                        Try Free ↗
+                    </button>
+                </div>
+            </section>
+            <BorderBeam size={300} duration={10} delay={9} className="absolute inset-0" />
         </div>
-        <div>
-          <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address</Label>
-          <Input 
-            id="email"
-            type="email" 
-            placeholder="john@example.com" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="mt-1"
-          />
-        </div>
-        <div>
-          <Label htmlFor="password" className="text-sm font-medium text-gray-700">Password</Label>
-          <Input 
-            id="password"
-            type="password" 
-            placeholder="••••••••" 
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="mt-1"
-          />
-        </div>
-        <Button type="submit" className="w-full">
-          Sign Up
-        </Button>
-      </form>
-    </div>
-  )
-}
+    );
+};
 
+export default SignupSection;

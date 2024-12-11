@@ -1,31 +1,28 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import React from 'react';
+import { BorderBeam } from "@/components/ui/border-beam";
+import { Button } from '@/components/ui/button';
 
-export default function SignupSection() {
-  return (
-    <section className="py-16 bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4">
-        <Card className="max-w-md mx-auto">
-          <CardHeader>
-            <CardTitle>Sign Up Now</CardTitle>
-            <CardDescription>Get exclusive access to startup insights and trends</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <div className="space-y-4">
-                <Input type="text" placeholder="Full Name" />
-                <Input type="email" placeholder="Email Address" />
-                <Input type="password" placeholder="Password" />
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">Sign Up</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
-  )
-}
+const SignupSection = () => {
+    return (
+        <div className="relative flex mb-10 bg-[#FAFAFA] flex-col items-center justify-center h-auto w-full max-w-[1200px] px-6 py-12 mx-auto overflow-hidden rounded-lg border bg-background md:h-[300px] md:px-12 lg:flex-row">
+            <section className="z-10 flex  flex-col items-center text-center justify-center">
+                <h1 className="text-[28px] leading-tight md:text-[32px] lg:text-[40px]">
+                    Join a Thriving Community of{" "}
+                    <span className="text-gradient">Innovators</span>
+                </h1>
+                <p className="mt-4 mb-6 text-sm text-[#666666] md:text-base lg:mt-2 lg:mb-8">
+                    Thousands of businesses, investors, and entrepreneurs rely on our platform to stay ahead. Join them today and see the difference!
+                </p>
+                <div className="flex flex-wrap gap-4">
+                    <Button>Get Started →</Button>
+                    <button className="px-4 py-2 text-sm font-medium text-black bg-white border rounded-md shadow-sm hover:bg-gray-200 md:text-base">
+                        Try Free ↗
+                    </button>
+                </div>
+            </section>
+            <BorderBeam size={300} duration={10} delay={9} className="absolute inset-0" />
+        </div>
+    );
+};
 
+export default SignupSection;
