@@ -66,20 +66,20 @@ const StartupsCards = () => {
           <div className="flex flex-wrap items-center justify-start gap-4 p-2">
             {startupsData.length > 0 ? (
               startupsData.map((startup) => (
-                <Card key={startup.uuid} className="w-[300px] cursor-pointer hover:shadow-md transition">
+                <Card key={startup.uuid} className="w-[350px] cursor-pointer hover:shadow-md transition">
                   <CardHeader>
                     <div className='flex items-start  gap-2'>
                       <div className='bg-white rounded-md shadow-md h-[60px] border w-[80px]'>
 
                       </div>
                       <div className='w-full'>
-                        <CardTitle className='font-normal text-[18px]'>{startup.name}</CardTitle>
-                        <div className='bg-black justify-self-end text-white p-1 text-[12px] rounded-full w-fit'>
+                        <CardTitle className='font-normal text-[20px]'>{startup.name}</CardTitle>
+                        <div className='bg-black justify-self-end text-white px-2 py-1 text-[14px] rounded-full w-fit'>
                           Funding: $129B
                         </div>
                       </div>
                     </div>
-                    <CardDescription className='text-[14px]'>{startup.short_description}</CardDescription>
+                    <CardDescription className='text-[16px]'>{startup.short_description}</CardDescription>
                     <CardFooter className="flex justify-between items-center">
                       <div className='flex gap-3'>
                         <Image src='/startups/link.svg' alt='' height={20} width={20} />

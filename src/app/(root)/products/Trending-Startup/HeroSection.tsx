@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
-
+import Link from "next/link";
 export default function HeroSection() {
     return (
         <section className="w-full flex flex-col items-center gap-10">
@@ -13,7 +13,7 @@ export default function HeroSection() {
                     Stay ahead of the curve with real-time insights into the world&apos;s most promising startups and emerging trends.
                 </p>
                 <div className="flex gap-4">
-                    <Button>Explore Trends</Button>
+                    <Button><Link href='/register'>Explore Trends</Link></Button>
                 </div>
                 <AnimatedGridPattern
                     numSquares={60}
