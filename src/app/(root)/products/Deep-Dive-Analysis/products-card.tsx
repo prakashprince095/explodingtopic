@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 import Image from "next/image"
+
 interface StartupCardProps {
   name: string
   description: string
@@ -13,14 +14,7 @@ interface StartupCardProps {
   logo: string
 }
 
-export function StartupCard({
-  name,
-  description,
-  funding,
-  volume,
-  chartData,
-  logo
-}: StartupCardProps) {
+export function ProductsCard({ name, description, funding, volume, chartData, logo }: StartupCardProps) {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="space-y-4 p-6">

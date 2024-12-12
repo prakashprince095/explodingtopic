@@ -14,10 +14,10 @@ const menuItems = [
         links: [
             { href: '/products/Trending-Startup', label: 'Trending-Startups' },
             { href: '/products/Trending-Products', label: 'Trending-Products' },
-            { href: '/products/Deep-Dive-Analysis', label: 'Deep Dive Analysis' },
-            { href: '/products/Meta-Wave', label: 'Meta Wave' },
-            { href: '/products/Report-Center', label: 'Reports Center' },
             { href: '/products/Insight-Database', label: 'Insight Database' },
+            { href: '/products/Meta-Wave', label: 'Meta Wave' },
+            { href: '/products/Deep-Dive-Analysis', label: 'Deep Dive Analysis' },
+            { href: '/products/Report-Center', label: 'Reports Center' },
         ],
     },
     {

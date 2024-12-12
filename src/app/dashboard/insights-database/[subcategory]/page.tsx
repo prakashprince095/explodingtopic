@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription }
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-
+import Features from '../../product-discovery/Features';
 interface CompanyData {
     name: string
     volume: number
@@ -14,16 +14,16 @@ interface CompanyData {
 }
 
 const defaultCompanies: CompanyData[] = [
-    { name: 'CompanyA', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyB', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyC', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyD', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyE', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyF', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyG', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyH', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyI', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
-    { name: 'CompanyJ', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'AI', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Real-Estate', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Food', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Drinks', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Cars', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Automobiles', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Smart Phone', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Internet', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'E-commerce', volume: 500, growth: 25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
+    { name: 'Transport', volume: 500, growth: -25, data: [{ year: '2020', value: 50 }, { year: '2021', value: 100 }, { year: '2022', value: 50 }, { year: '2023', value: 200 }, { year: '2024', value: 250 },] },
 
 ];
 
@@ -44,8 +44,8 @@ export default function SubcategoryPage() {
         <div className="p-4 md:p-6 min-h-screen bg-gray-50">
             <h1 className="text-lg md:text-2xl mb-2">{subcategory}</h1>
             <p className="mb-6 text-gray-500">Industry-wide trends and insights for {subcategory}.</p>
-        
-            <ScrollArea className="w-full">
+            <Features />
+            <ScrollArea className="w-full mt-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 pb-4">
                     {defaultCompanies.map((company) => (
                         <Card key={company.name} className="w-[300px] cursor-pointer hover:shadow-md transition" onClick={() => handleCompanyClick(company.name)}>

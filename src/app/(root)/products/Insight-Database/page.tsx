@@ -1,9 +1,12 @@
-import React from 'react'
+'use client'
 
-const InsightDatabase = () => {
+import HeroSection from './HeroSection'
+export default function InsightDatabase() {
   return (
-    <div>InsightDatabase</div>
+    <main className=" flex flex-col items-center max-w-[1280px] justify-center mx-auto bg-background">
+      <HeroSection />
+      <div className="bg-gray-200 w-full h-[1px] my-14"></div>
+    </main>
   )
 }
 
-export default InsightDatabase

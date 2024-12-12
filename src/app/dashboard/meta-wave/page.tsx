@@ -4,7 +4,7 @@ import { useState, ChangeEvent } from "react";
 import {
   SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Select
 } from "@/components/ui/select"
-// Example data for categories with six items in each category
+import { Button } from "@/components/ui/button";
 type CategoryItem = {
   name: string;
   description: string;
@@ -111,14 +111,6 @@ const MetaWavePage = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
-          {/* <select
-          onChange={(e) => setSortOrder(e.target.value as 'volume' | 'growth')}
-          value={sortOrder}
-          className="border p-2 rounded-md"
-        >
-          <option value="volume">Sort by Volume</option>
-          <option value="growth">Sort by Growth</option>
-        </select> */}
         </div>
       </div>
       {filteredCategories.map(({ title, items }) => (
@@ -170,7 +162,7 @@ type CategoryCardProps = {
   onToggleExpand: () => void;
   onToggleFavorite: () => void;
   isFavorite: boolean;
-  idx: number; 
+  idx: number;
 };
 
 const toSlug = (name: string) => name.toLowerCase().replace(/\s+/g, '-');
@@ -185,17 +177,19 @@ const CategoryCard = ({ category, expanded, onToggleExpand, onToggleFavorite, is
         </button>
       </div>
       <p className="text-gray-500">{category.description}</p>
-      <div className="mt-4 text-sm text-gray-500">Volume: {category.volume}</div>
-      <div className="mt-1 text-md text-green-500">Growth: {category.growth}</div>
+      <div className="flex items-center justify-between my-2">
+        <div className="mt-1 text-sm px-2 py-1 rounded-full bg-black text-white w-fit"><span> Volume: {category.volume}</span></div>
+        <div className="mt-1 text-sm border border-emerald-600 px-2 py-1 rounded-full bg-emerald-100 text-emerald-600 w-fit"><span> Growth: {category.growth}</span></div>
+      </div>
     </Link>
     {expanded && (
       <div className="mt-3 text-sm">
         <p>More details about {category.name}... (e.g., recent news or applications)</p>
       </div>
     )}
-    <button onClick={onToggleExpand} className="text-blue-500 text-sm mt-3 underline">
+    <Button onClick={onToggleExpand} className="p-1 text-xs">
       {expanded ? 'Show Less' : 'Show More'}
-    </button>
+    </Button>
   </div>
 );
 export default MetaWavePage;

@@ -1,10 +1,13 @@
 import React from 'react';
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from '@/components/ui/button';
-
+import { motion } from 'framer-motion';
 const SignupSection = () => {
     return (
-        <div className="relative flex mb-10 bg-[#FAFAFA] flex-col items-center justify-center h-auto w-full max-w-[1200px] px-6 py-12 mx-auto overflow-hidden rounded-lg border bg-background md:h-[300px] md:px-12 lg:flex-row">
+        <motion.div className="relative flex mb-10 bg-[#FAFAFA] flex-col items-center justify-center h-auto w-full max-w-[1200px] px-6 py-12 mx-auto overflow-hidden rounded-lg border bg-background md:h-[300px] md:px-12 lg:flex-row"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }} >
             <section className="z-10 flex  flex-col items-center text-center justify-center">
                 <h1 className="text-[28px] leading-tight md:text-[32px] lg:text-[40px]">
                     Join a Thriving Community of{" "}
@@ -21,7 +24,7 @@ const SignupSection = () => {
                 </div>
             </section>
             <BorderBeam size={300} duration={10} delay={9} className="absolute inset-0" />
-        </div>
+        </motion.div>
     );
 };
 

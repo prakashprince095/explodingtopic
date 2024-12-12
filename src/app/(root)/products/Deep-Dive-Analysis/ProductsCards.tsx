@@ -26,7 +26,7 @@ const chartConfig = {
     color: "hsl(217, 91%, 75%)",
   },
 };
-const StartupsCards = () => {
+const ProductsCards = () => {
   const [startupsData, setStartupsData] = useState<Startup[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -135,4 +135,4 @@ const StartupsCards = () => {
   );
 };
 
-export default StartupsCards;
+export default ProductsCards;

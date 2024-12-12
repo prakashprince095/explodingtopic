@@ -1,260 +1,238 @@
-'use client';
+"use client"
+
+import * as React from "react"
+import { useParams } from "next/navigation"
+import { BadgeCheck } from 'lucide-react'
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
+import { channels } from "@/data/channels"
+import { categories } from '@/data/categories'
+import { relatedStartups } from '@/data/relatedStartups'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import Image from "next/image"
+const chartData = [
+  { name: 'Jan', value: 2000 },
+  { name: 'Feb', value: 4500 },
+  { name: 'Mar', value: 3500 },
+  { name: 'Apr', value: 2000 },
+  { name: 'May', value: 3000 },
+  { name: 'Jun', value: 3200 }
+]
+
+const KeyIndicator = ({ label, value }: { label: string; value: 'Low' | 'Medium' | 'High' }) => (
+  <div className="flex items-center justify-between py-1.5">
+    <span className="text-md text-gray-600">{label}:</span>
+    <div className="flex gap-3 bg-gray-100 p-1 rounded-md">
+      {['Low', 'Medium', 'High'].map((level) => (
+        <span
+          key={level}
+          className={`p-2 text-sm rounded-sm ${value === level ? 'bg-white text-blue-800' : 'bg-gray-100 text-gray-400'
+            }`}
+        >
+          {level}
+        </span>
+      ))}
+    </div>
+  </div>
+)
+
+const Channel = ({ name, icon, value }: { name: string; icon: string; value: number }) => (
+  <div className="flex items-center gap-3 py-1.5">
+    <Image src={icon} alt={name} width={34} height={34} />
+    <span className="text-sm text-gray-600 min-w-[80px]">{name}</span>
+    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+      <div
+        className="h-full bg-blue-500 rounded-full"
+        style={{ width: `${value}%` }}
+      />
+    </div>
+  </div>
+)
 
 
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { useParams } from 'next/navigation';
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-type Channel = {
-  name: string;
-  percentage: number;
-};
-
-type KeyIndicator = {
-  name: string;
-  value: number;
-};
-
-type RelatedTrend = {
-  name: string;
-  growth: number;
-  labels: string[];
-  data: number[];
-};
-
-type ProductData = {
-  volumeData: number[];
-  volume: number;
-  growth: number;
-  channels: Channel[];
-  keyIndicators: KeyIndicator[];
-  aboutTopic: string;
-  relatedTrends: RelatedTrend[];
-};
-
-interface CompanyInsightsProps {
-  companyName: string;
-  data: ProductData;
-}
-
-const CompanyInsightsPage = () => {
-  const params = useParams();
-  const subcategory = params?.subcategory;
-  const company = params?.company;
-
-  const mockData: ProductData = {
-    volumeData: [100, 200, 300, 400, 500, 600],
-    volume: 5000,
-    growth: 10,
-    channels: [
-      { name: 'Online', percentage: 60 },
-      { name: 'Retail', percentage: 30 },
-      { name: 'Wholesale', percentage: 10 },
-    ],
-    keyIndicators: [
-      { name: 'Sales', value: 80 },
-      { name: 'Customer Satisfaction', value: 90 },
-    ],
-    aboutTopic: 'This topic focuses on the growth trends in technology products.',
-    relatedTrends: [
-      {
-        name: 'Trend A',
-        growth: 20,
-        labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-        data: [10, 20, 30, 40],
-      },
-      {
-        name: 'Trend B',
-        growth: 15,
-        labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-        data: [15, 25, 35, 45],
-      },
-    ],
-  };
-
-  const data = mockData;
+export default function CompanyInsightsPage() {
+  const params = useParams()
+  const subcategory = params?.subcategory
+  const company = params?.company
 
   if (!subcategory || !company) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
-  const volumeChartData = {
-    labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
-    datasets: [
-      {
-        label: 'Volume',
-        data: data.volumeData,
-        borderColor: '#2563eb',
-        backgroundColor: 'rgba(37, 99, 235, 0.2)',
-        fill: true,
-      },
-    ],
-  };
-
-  const channelChartData = {
-    labels: data.channels.map((channel: Channel) => channel.name),
-    datasets: [
-      {
-        label: 'Channel Breakdown',
-        data: data.channels.map((channel: Channel) => channel.percentage),
-        backgroundColor: '#3b82f6',
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-
-  // Mock data for the trends
-  const trends = [
-    { name: 'OpenAI', growth: '+10%', growthColor: 'text-green-500', volume: '74K' },
-    { name: 'Microsoft Cooperation', growth: '-10%', growthColor: 'text-red-500', volume: '74K' },
-    { name: 'OpenAI', growth: '+10%', growthColor: 'text-green-500', volume: '74K' },
-    { name: 'Microsoft Cooperation', growth: '-10%', growthColor: 'text-red-500', volume: '74K' },
-    { name: 'OpenAI', growth: '+10%', growthColor: 'text-green-500', volume: '74K' },
-    { name: 'Microsoft Cooperation', growth: '-10%', growthColor: 'text-red-500', volume: '74K' },
-  ];
-
-  // Mock chart data for the line graph
-  const chartData = [
-    { value: 0.5 },
-    { value: 0.6 },
-    { value: 0.7 },
-    { value: 0.6 },
-    { value: 0.8 },
-    { value: 0.7 },
-    { value: 0.9 },
-  ];
-
-
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col items-center p-8 overflow-auto">
-      {/* Header Section */}
-      <div className="flex justify-between items-center w-full max-w-[1280px] mb-6">
+    <div className="min-h-screen w-full bg-gray-50/50 p-8">
+      <div className="mx-auto max-w-7xl space-y-8">
+        {/* Header Section */}
         <div>
-          <h1 className="text-2xl  text-gray-900">Shopping Bags</h1>
-          <p className="text-sm text-gray-600">AI-driven insights and performance metrics</p>
+          <h1 className="text-2xl  text-gray-900">{company}</h1>
+          <p className="text-sm text-gray-500">AI-driven insights and performance metrics</p>
         </div>
-        <div className="flex  items-center gap-4">
-          <span className="text-xl  text-green-600">5.5K</span>
-          <span className="text-lg text-green-600">+15% Growth</span>
-        </div>
-      </div>
+        <Card className="p-4 border w-full h-full border-gray-200 shadow-sm rounded-lg">
+          <div className="flex justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-gray-600">Timeframe:</span>
+              <Select defaultValue="1year">
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="Select timeframe" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1year">1 year</SelectItem>
+                  <SelectItem value="6months">6 months</SelectItem>
+                  <SelectItem value="3months">3 months</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center justify-between  gap-20">
+              <span className="text-xl  text-emerald-600">5.5K</span>
+              <span className="text-lg font-medium text-emerald-600">+15% Growth</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600">Forecast:</span>
+              <span className="text-sm text-green-500 font-medium">Volume: 5.5K</span>
+            </div>
+          </div>
+          <h2 className="text-lg  mb-4">January - June 2024</h2>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: '#666' }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: '#666' }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#2563eb"
+                  strokeWidth={2}
+                  dot={{ r: 4, fill: "#2563eb" }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
 
-      {/* Main Chart */}
-      <div className="w-full max-w-[1280px] bg-white rounded-lg shadow p-6 mb-8">
-        <Line data={volumeChartData}  />
-      </div>
+        <div className="grid grid-cols-3 gap-6">
+          {/* Key Indicators */}
+          <Card className="p-4 w-full min-w-[350px] h-full border border-gray-200 shadow-sm rounded-lg">
+            <div className='flex items-center gap-2'>
+              <Image src='/startups/indicator.svg' alt='' width={30} height={30} />
+              <h2 className="text-lg ">
+                Key Indicators:
+              </h2>
+            </div>
+            <div className='border-b-2 my-2 border-dashed '></div>
 
-      {/* Indicators and Subcharts */}
-      <div className="w-full max-w-[1280px] grid grid-cols-3 gap-4 mb-8">
-        {/* Key Indicators */}
-        <div className="col-span-1 bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-medium mb-4">Key Indicators</h2>
-          <div className="space-y-4">
-            {['Growth', 'Seasonality', 'Speed', 'Volatility'].map((indicator, index) => (
-              <div key={index}>
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">{indicator}</span>
-                  <span className="text-sm text-gray-600">{(index + 1) * 20}%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    style={{ width: `${(index + 1) * 20}%` }}
-                    className="bg-blue-600 h-2 rounded-full"
-                  ></div>
-                </div>
+            <KeyIndicator label="Growth" value="Medium" />
+            <KeyIndicator label="Seasonality" value="Low" />
+            <KeyIndicator label="Speed" value="High" />
+            <KeyIndicator label="Volatility" value="Medium" />
+            <KeyIndicator label="Sentiment" value="High" />
+            <KeyIndicator label="Forecast" value="Medium" />
+          </Card>
+
+          {/* Channels */}
+          <Card className="p-4 w-full min-w-[350px] h-full border border-gray-200 shadow-sm rounded-lg">
+            <div className='flex items-center gap-2'>
+              <Image src='/startups/channel.svg' alt='' width={30} height={30} />
+              <h2 className="text-lg ">
+                Channels:
+              </h2>
+            </div>
+            <div className='border-b-2 my-2 border-dashed '></div>
+            <Channel name="LinkedIn" icon="/startups/in.svg" value={75} />
+            <Channel name="Instagram" icon="/startups/insta.svg" value={60} />
+            <Channel name="Facebook" icon="/startups/fb.svg" value={45} />
+            <Channel name="Reddit" icon="/startups/rd.svg" value={30} />
+            <Channel name="Youtube" icon="/startups/yt.svg" value={25} />
+            <Channel name="Pinterest" icon="/startups/pin.svg" value={20} />
+            <Channel name="TikTok" icon="/startups/tiktok.svg" value={15} />
+          </Card>
+          {/* Categories */}
+          <Card>
+            <CardHeader>
+              <div className='flex items-center gap-2'>
+                <h2 className="text-lg ">
+                  About the Topic:
+                </h2>
               </div>
+              <div className='border-b-2 my-2 border-dashed '></div>
+            </CardHeader>
+            <CardContent>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos delectus ad quibusdam id ipsum? Doloribus voluptate itaque, omnis rem aliquid adipisci deleniti eaque eius nisi, cum, atque quia mollitia a expedita cupiditate similique molestiae eveniet error? Libero, molestiae! Veritatis voluptatibus sint a quibusdam aperiam quis exercitationem assumenda.</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Related Startups */}
+        <div className='mt-6'>
+          <div className='flex items-center gap-2 mb-3'>
+            <Image src='/startups/rs.svg' alt='' width={30} height={30} />
+            <h2 className="text-lg ">
+              Related Industries:
+            </h2>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { name: "OpenAI", volume: "45K", growth: "15%", revenue: "$20B" },
+              { name: "Microsoft", volume: "45K", growth: "07%", revenue: "$400B" },
+              { name: "Microsoft", volume: "45K", growth: "07%", revenue: "$400B" },
+              { name: "OpenAI", volume: "45K", growth: "15%", revenue: "$20B" },
+              { name: "Microsoft", volume: "45K", growth: "07%", revenue: "$400B" },
+              { name: "Microsoft", volume: "45K", growth: "07%", revenue: "$400B" }
+            ].map((startup, i) => (
+              <Card key={i} className="p-3 hover:bg-gray-50 border border-gray-200 shadow-sm rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <Image src={`/${startup.name.toLowerCase()}.svg`} alt={startup.name} width={10} height={10} />
+                  </div>
+                  <span className="font-medium text-sm">{startup.name}</span>
+                </div>
+                <div className="flex w-full justify-between">
+                  <div className="flex w-fit items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
+                    <Image src="/startups/vloumn.svg" alt="" height={25} width={25} />
+                    <div className='flex flex-col'>
+                      <span className="text-gray-600 text-sm">Volume:</span>
+                      <span>{startup.volume}</span>
+                    </div>
+                  </div>
+                  <div className="flex w- items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
+                    <Image src="/startups/growth.svg" alt="" height={25} width={25} />
+                    <div className='flex flex-col'>
+                      <span className="text-gray-600 text-sm">Growth Rate:</span>
+                      <span className={startup.growth.includes('-') ? 'text-red-500' : 'text-green-500'}>
+                        {startup.growth.includes('-') ? '' : '+'}
+                        {startup.growth}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex w-fit items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
+                    <Image src="/startups/revenue.svg" alt="" height={25} width={25} />
+                    <div className='flex flex-col'>
+                      <span className="text-gray-600 text-sm">Revenue:</span>
+                      <span>{startup.revenue}</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  OpenAI, founded in 2015, develops advanced AI technologies like ChatGPT and DALL·E to benefit humanity. It focuses on innovation, safety, and ethical AI use, shaping the future responsibly.
+                </p>
+              </Card>
             ))}
           </div>
         </div>
 
-        {/* Channels */}
-        <div className="col-span-1 bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-medium mb-4">Channels</h2>
-          <Bar
-            data={{
-              labels: ['LinkedIn', 'Instagram', 'Facebook', 'Reddit', 'YouTube', 'Pinterest', 'TikTok'],
-              datasets: [
-                {
-                  label: 'Engagement',
-                  data: [60, 45, 50, 30, 20, 10, 35],
-                  backgroundColor: '#3b82f6',
-                },
-              ],
-            }}
-            options={chartOptions}
-          />
-        </div>
-
-        {/* About Section */}
-        <div className="col-span-1 bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-medium mb-4">About the Topic</h2>
-          <p className="text-gray-600">
-            This section provides AI-driven insights into the growth of shopping bag trends. It focuses on volume,
-            channels, and related trends shaping the market.
-          </p>
-        </div>
-      </div>
-
-      {/* Related Trends */}
-      <div className="w-full max-w-[1280px]">
-        <h2 className="text-lg font-medium mb-4">Related Trends:</h2>
-        <div className="grid grid-cols-3 gap-4">
-          {trends.map((trend, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between bg-white rounded-lg shadow p-4 border border-gray-200"
-            >
-              {/* Placeholder for an icon */}
-              <div className="w-10 h-10 bg-gray-200 rounded-md"></div>
-
-              {/* Trend Info */}
-              <div className="flex flex-col items-start flex-grow mx-4">
-                <span className="text-sm font-medium text-gray-800">{trend.name}</span>
-                <span className={`text-sm  ${trend.growthColor}`}>{trend.growth}</span>
-                <span className="text-sm text-gray-500">{trend.volume}</span>
-              </div>
-
-              {/* Mini Line Chart */}
-              <div className="w-24 h-8">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData}>
-                    <Line
-                      type="monotone"
-                      dataKey="value"
-                      stroke="#2563eb"
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CompanyInsightsPage;

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { motion } from "framer-motion";
@@ -9,7 +10,7 @@ import { Button } from "@/components/ui/button";
 export default function HeroSection() {
     return (
         <motion.section
-            className="w-full flex flex-col items-center gap-10"
+            className="flex flex-col items-center gap-10"
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeInOut" }}
@@ -21,8 +22,7 @@ export default function HeroSection() {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 1.2, ease: "easeInOut" }}
                 >
-                    Discover Tomorrow&apos;s Innovations Today{' '}
-                    <span className="text-gradient">before they ignite</span>
+                    About us
                 </motion.h1>
                 <motion.p
                     className="text-xl max-w-[700px] text-center mb-8"
@@ -30,8 +30,7 @@ export default function HeroSection() {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 1.4, ease: "easeInOut" }}
                 >
-                    Stay ahead of the curve with real-time insights into the world&apos;s most promising startups and emerging trends.
-                </motion.p>
+                    We provide actionable insights and data-driven solutions to help you stay ahead in your industry.                </motion.p>
                 <motion.div
                     className="flex gap-4"
                     initial={{ y: 30, opacity: 0 }}

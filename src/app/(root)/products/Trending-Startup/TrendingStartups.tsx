@@ -1,18 +1,21 @@
 
 'use client'
 
-import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { MoveRight } from 'lucide-react'
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 import Image from "next/image"
 import StartupsCards from "./StartupCards"
 import Link from "next/link"
+import { motion } from "framer-motion";
 
 export default function TrendingStartups() {
     return (
-        <section className="max-w-[1280px] flex flex-col items-center">
+        <motion.section
+            className="max-w-[1280px] flex flex-col items-center"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+        >
             <div className="container mx-auto px-4">
                 {/* <div className="max-w-2xl mx-auto text-center mb-12">
                     <h2 className="text-3xl  tracking-tight mb-4">
@@ -49,7 +52,7 @@ export default function TrendingStartups() {
                     </div>
                 </div>
             </div>
-        </section>
+        </motion.section>
     )
 }
 

@@ -1,14 +1,14 @@
 'use client';
 import { useParams } from 'next/navigation';
 import { PolarGrid, RadialBar, RadialBarChart } from "recharts"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-
+import Image from 'next/image';
 const chartData = [
   { browser: "chrome", visitors: 135, fill: "var(--color-chrome)" },
   { browser: "safari", visitors: 220, fill: "var(--color-safari)" },
@@ -20,7 +20,7 @@ const chartData = [
   { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
   { browser: "other", visitors: 90, fill: "var(--color-other)" },
-  
+
 ]
 const chartConfig = {
   visitors: {
@@ -206,53 +206,95 @@ const CategoryPage = () => {
 
   return (
     <div className="container flex flex-col gap-7 p-8 bg-gray-100 min-h-screen">
-      <div className="p-6 bg-white shadow-md rounded-md w-full">
-        <h3 className="text-xl ">Analytics</h3>
-        <div className="m-10">
-            <CardHeader className="items-center pb-0">
-              <CardTitle>Radial Chart - Grid</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-1 pb-3">
-              <ChartContainer
-                config={chartConfig}
-                className="mx-auto  h-[500px]"
-              >
-                <RadialBarChart data={chartData} innerRadius={30} outerRadius={250}>
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel nameKey="browser" />}
-                  />
-                  <PolarGrid gridType="circle" />
-                  <RadialBar dataKey="visitors" />
-                </RadialBarChart>
-              </ChartContainer>
-            </CardContent>
+      <div className="flex items-start gap-5 justify-center ">
+        <div className="p-6 bg-white shadow-md rounded-md">
+          <h2 className="text-2xl ">{data.title}</h2>
+          <div className="mt-4 flex justify-between items-center">
+            <p className="text-gray-600">{data.volume} Volume</p>
+            <p className="text-green-500">{data.growth} Growth</p>
+          </div>
+          <p className="mt-4 text-gray-600">{data.description}</p>
+        </div>
+        <div className=" bg-white">
+          <h3 className="text-xl ">Analytics</h3>
+          <CardHeader className="items-center pb-0">
+            <CardTitle>Radial Chart - Grid</CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1 pb-3">
+            <ChartContainer
+              config={chartConfig}
+              className="mx-auto  h-[500px]"
+            >
+              <RadialBarChart data={chartData} innerRadius={30} outerRadius={250}>
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel nameKey="browser" />}
+                />
+                <PolarGrid gridType="circle" />
+                <RadialBar dataKey="visitors" />
+              </RadialBarChart>
+            </ChartContainer>
+          </CardContent>
         </div>
       </div>
-      <div className="flex flex-col gap-8 ">
-        <div className="flex flex-col space-y-6 w-full">
-          <div className="p-6 bg-white shadow-md rounded-md">
-            <h2 className="text-2xl ">{data.title}</h2>
-            <div className="mt-4 flex justify-between items-center">
-              <p className="text-gray-600">{data.volume} Volume</p>
-              <p className="text-green-500">{data.growth} Growth</p>
-            </div>
-            <p className="mt-4 text-gray-600">{data.description}</p>
-          </div>
+      <div className="flex flex-col gap-3  w-full">
+        <div className="p-6 bg-white shadow-md w-full rounded-md">
+          <h3 className="text-xl ">Background & Analysis</h3>
+          <p className="mt-2 text-gray-600">{data.background}</p>
+          <button className="mt-4 text-blue-500">Read More</button>
+        </div>
 
-          <div className="p-6 bg-white shadow-md rounded-md">
-            <h3 className="text-xl ">Background & Analysis</h3>
-            <p className="mt-2 text-gray-600">{data.background}</p>
-            <button className="mt-4 text-blue-500">Read More</button>
+        <div className='mt-6'>
+          <div className='flex items-center gap-2 mb-3'>
+            <Image src='/startups/rs.svg' alt='' width={30} height={30} />
+            <h2 className="text-lg ">
+              Related Meta trends:
+            </h2>
           </div>
-
-          <div className="p-6 bg-white shadow-md rounded-md">
-            <h3 className="text-xl ">Related Meta Trends</h3>
-            <ul className="mt-2 space-y-2">
-              {data.relatedTrends.map((trend, index) => (
-                <li key={index} className="text-blue-500 cursor-pointer">{trend}</li>
-              ))}
-            </ul>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { name: "AI Image", volume: "45K", growth: "15%", revenue: "$20B" },
+              { name: "AI Video", volume: "45K", growth: "07%", revenue: "$400B" },
+              { name: "AI Text Editor", volume: "45K", growth: "07%", revenue: "$400B" }
+            ].map((startup, i) => (
+              <Card key={i} className="p-3 hover:bg-gray-50 border border-gray-200 shadow-sm rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <Image src={`/${startup.name.toLowerCase()}.svg`} alt={startup.name} width={10} height={10} />
+                  </div>
+                  <span className="font-medium text-sm">{startup.name}</span>
+                </div>
+                <div className="flex w-full justify-between">
+                  <div className="flex w-fit items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
+                    <Image src="/startups/vloumn.svg" alt="" height={25} width={25} />
+                    <div className='flex flex-col'>
+                      <span className="text-gray-600 text-sm">Volume:</span>
+                      <span>{startup.volume}</span>
+                    </div>
+                  </div>
+                  <div className="flex w- items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
+                    <Image src="/startups/growth.svg" alt="" height={25} width={25} />
+                    <div className='flex flex-col'>
+                      <span className="text-gray-600 text-sm">Growth Rate:</span>
+                      <span className={startup.growth.includes('-') ? 'text-red-500' : 'text-green-500'}>
+                        {startup.growth.includes('-') ? '' : '+'}
+                        {startup.growth}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex w-fit items-center gap-2 border rounded-md border-[#D9D9D9] p-2">
+                    <Image src="/startups/revenue.svg" alt="" height={25} width={25} />
+                    <div className='flex flex-col'>
+                      <span className="text-gray-600 text-sm">Revenue:</span>
+                      <span>{startup.revenue}</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  OpenAI, founded in 2015, develops advanced AI technologies like ChatGPT and DALL·E to benefit humanity. It focuses on innovation, safety, and ethical AI use, shaping the future responsibly.
+                </p>
+              </Card>
+            ))}
           </div>
         </div>
       </div>

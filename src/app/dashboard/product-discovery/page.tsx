@@ -107,7 +107,7 @@ export default function ProductList() {
                   <Image src='/startups/link.svg' alt='' height={20} width={20} />
                   <Image src='/startups/share.svg' alt='' height={20} width={20} />
                 </div>
-                <div className=" text-[16px] bg-green-100 px-4 py-1 rounded-full border border-green-500">
+                <div className="mt-1 text-md border border-emerald-600 px-2 py-1 rounded-full bg-emerald-100 text-emerald-600 w-fit">
                   + {productData.Volume}
                 </div>
               </CardFooter>

@@ -16,21 +16,20 @@ export default function HeroSection() {
         >
             <div className="relative flex flex-col gap-6 h-[500px] w-full items-center justify-center overflow-hidden rounded-lg bg-background p-10">
                 <motion.h1
-                    className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[800px] font-semibold tracking-tighter text-black dark:text-white"
+                    className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[700px] font-semibold tracking-tighter text-black dark:text-white"
                     initial={{ y: -50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 1.2, ease: "easeInOut" }}
                 >
-                    Discover Tomorrow&apos;s Innovations Today{' '}
-                    <span className="text-gradient">before they ignite</span>
+                     Explore Industries in Depth <span className="text-gradient">before they ignite</span>
                 </motion.h1>
                 <motion.p
-                    className="text-xl max-w-[700px] text-center mb-8"
+                    className="text-xl max-w-[800px] text-center mb-8"
                     initial={{ y: -30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 1.4, ease: "easeInOut" }}
                 >
-                    Stay ahead of the curve with real-time insights into the world&apos;s most promising startups and emerging trends.
+                   Discover a world of trends, insights, and opportunities. Dive into industries, uncover subcategories, and analyze the leading organizations driving transformation.
                 </motion.p>
                 <motion.div
                     className="flex gap-4"

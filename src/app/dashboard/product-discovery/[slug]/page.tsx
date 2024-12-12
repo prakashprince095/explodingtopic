@@ -123,7 +123,6 @@ export default function ProductDetails() {
           </div>
         </Card>
 
-        {/* Center Column - Chart */}
         <Card className="lg:col-span-2 p-6">
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-4">
