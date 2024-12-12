@@ -6,11 +6,11 @@ export default function HeroSection() {
     return (
         <section className="w-full flex flex-col items-center gap-10">
             <div className="relative  flex flex-col gap-4 h-[500px] w-full items-center justify-center overflow-hidden rounded-lg bg-background p-10 ">
-                <h1 className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[800px] font-semibold tracking-tighter text-black dark:text-white">
-                    Discover Tomorrow&apos;s Innovations Today <span className="text-gradient">before they ignite</span>
+                <h1 className="z-10 whitespace-pre-wrap text-center text-[50px] max-w-[600px] font-semibold tracking-tighter text-black dark:text-white">
+                Discover What&apos;s Driving the <span className="text-gradient">Market Today</span>
                 </h1>
-                <p className="text-xl max-w-[700px] text-center mb-8">
-                    Stay ahead of the curve with real-time insights into the world&apos;s most promising startups and emerging trends.
+                <p className="text-xl max-w-[800px] text-center mb-8">
+                From everyday essentials to groundbreaking innovations, explore the products capturing the world&apos;s attention. See what&apos;s trending and shape your strategy with insights that matter.
                 </p>
                 <div className="flex gap-4">
                     <Button><Link href='/register'>Explore Trends</Link></Button>
