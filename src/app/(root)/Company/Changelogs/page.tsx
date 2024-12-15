@@ -185,7 +185,7 @@ export default function Changelogs() {
           Change Logs
         </h1>
         <p className="text-lg max-w-[700px] text-center mb-8">
-          We’re committed to continuously improving your experience. Explore the latest features, enhancements, and fixes we've implemented.
+        We&rsquo;re committed to continuously improving your experience. Explore the latest features, enhancements, and fixes we&rsquo;ve implemented.
         </p>
         <div className="flex gap-4">
           <Button>Explore Trends</Button>

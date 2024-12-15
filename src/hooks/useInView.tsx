@@ -1,25 +1,26 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react';
 
 export function useInView(options = {}) {
-  const ref = useRef(null)
-  const [isInView, setIsInView] = useState(false)
+  const ref = useRef(null);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
+    const element = ref.current; // Capture the current value of ref
     const observer = new IntersectionObserver(([entry]) => {
-      setIsInView(entry.isIntersecting)
-    }, options)
+      setIsInView(entry.isIntersecting);
+    }, options);
 
-    if (ref.current) {
-      observer.observe(ref.current)
+    if (element) {
+      observer.observe(element);
     }
 
+    // Cleanup
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current)
+      if (element) {
+        observer.unobserve(element);
       }
-    }
-  }, [options])
+    };
+  }, [options]);
 
-  return [ref, isInView]
+  return [ref, isInView];
 }
-

@@ -80,7 +80,7 @@ export default function CaseStudiesPage() {
           <span className="ml-2 inline-block animate-pulse">📊</span>
         </h1>
         <p className="text-lg text-muted-foreground">
-          Explore how we've helped businesses transform and succeed.
+        Explore how we&rsquo;ve helped businesses transform and succeed.
         </p>
       </div>
 

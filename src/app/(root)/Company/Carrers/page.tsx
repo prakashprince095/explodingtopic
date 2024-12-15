@@ -245,8 +245,8 @@ export default function EnhancedCareersPage() {
           <Card>
             <CardContent className="p-6">
               <h3 className="mb-2 text-xl font-bold">Continuous Learning</h3>
-              <p className="text-muted-foreground">We invest in our employees' growth through training, workshops, and conference attendance.</p>
-            </CardContent>
+              <p className="text-muted-foreground">We invest in our employees&apos; growth through training, workshops, and conference attendance.</p>
+              </CardContent>
           </Card>
         </div>
       </div>
@@ -270,8 +270,8 @@ export default function EnhancedCareersPage() {
                   <p className="text-sm text-muted-foreground">Senior Developer</p>
                 </div>
               </div>
-              <p className="italic text-muted-foreground">"Working here has been an incredible journey. The supportive environment and challenging projects have helped me grow both personally and professionally."</p>
-            </CardContent>
+              <p className="italic text-muted-foreground">&quot;Working here has been an incredible journey. The supportive environment and challenging projects have helped me grow both personally and professionally.&quot;</p>
+              </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6">
@@ -288,8 +288,8 @@ export default function EnhancedCareersPage() {
                   <p className="text-sm text-muted-foreground">Product Manager</p>
                 </div>
               </div>
-              <p className="italic text-muted-foreground">"The collaborative culture here is unmatched. I've had the opportunity to work with brilliant minds and create products that truly make a difference."</p>
-            </CardContent>
+              <p className="italic text-muted-foreground">&quot;The collaborative culture here is unmatched. I&apos;ve had the opportunity to work with brilliant minds and create products that truly make a difference.&quot;</p>
+              </CardContent>
           </Card>
         </div>
       </div>
@@ -384,10 +384,10 @@ export default function EnhancedCareersPage() {
 
       {/* Call to Action */}
       <div className="rounded-lg bg-muted p-8 text-center">
-        <h2 className="mb-4 text-3xl font-bold">Don't see the right fit?</h2>
-        <p className="mb-6 text-lg text-muted-foreground">
-          We're always looking for talented individuals to join our team. Send us your resume, and we'll keep you in mind for future opportunities.
-        </p>
+      <h2 className="mb-4 text-3xl font-bold">Don&apos;t see the right fit?</h2>
+      <p className="mb-6 text-lg text-muted-foreground">
+      We&apos;re always looking for talented individuals to join our team. Send us your resume, and we&apos;ll keep you in mind for future opportunities.
+      </p>
         <Button size="lg">
           Submit Your Resume
           <Briefcase className="ml-2 h-5 w-5" />

@@ -56,7 +56,7 @@ export default function FAQPage() {
       <div className="text-center">
         <h2 className="text-2xl  mb-4">Still Have Questions?</h2>
         <p className="text-muted-foreground mb-6">
-          If you didn't find the answer you're looking for, our support team is here to help!
+        If you didn&rsquo;t find the answer you&rsquo;re looking for, our support team is here to help!
         </p>
         <Dialog>
           <DialogTrigger asChild>
@@ -69,7 +69,7 @@ export default function FAQPage() {
             <DialogHeader>
               <DialogTitle>Contact Support</DialogTitle>
               <DialogDescription>
-                Fill out this form and we'll get back to you as soon as possible.
+              Fill out this form and we&rsquo;ll get back to you as soon as possible.
               </DialogDescription>
             </DialogHeader>
             <ContactForm />

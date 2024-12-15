@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import Image from 'next/image';
@@ -74,8 +74,9 @@ const Startups = () => {
     );
   };
 
-  const fetchData = async () => {
-    const backendUrl = '';
+  // Wrap fetchData in useCallback to prevent it from being re-created on each render
+  const fetchData = useCallback(async () => {
+    const backendUrl = ''; // Replace with your actual backend URL
     console.log("Sending request to backend with:", { url: backendUrl });
 
     try {
@@ -93,8 +94,7 @@ const Startups = () => {
       console.error("Backend fetch failed, falling back to local data:", err);
       return transformData(localResponseData);
     }
-  };
-
+  }, []);
 
   useEffect(() => {
     const fetchStartups = async () => {
@@ -113,7 +113,7 @@ const Startups = () => {
     };
 
     fetchStartups();
-  }, []);
+  }, [fetchData]); // Effect now depends on the memoized fetchData function
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
@@ -138,6 +138,7 @@ const Startups = () => {
       mobile: Math.floor(Math.random() * 200) + 50
     }));
   };
+
   return (
     <div className="p-3 min-h-screen bg-[#FAFAFA] border border-gray-300 rounded-lg">
       <div className="flex justify-between items-center mb-6">
@@ -225,9 +226,9 @@ const Startups = () => {
           </div>
         )}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Startups
+export default Startups;
+``
