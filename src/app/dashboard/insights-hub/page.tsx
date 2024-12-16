@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from "react";
+import { Startup } from "@/context/HubContext";  // Import the Startup type
 import { useHub } from "@/context/HubContext";
 import { useProductContext } from "@/context/ProductContext";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,20 @@ interface HubItem {
   isFavorite?: boolean;
 }
 
+// interface ProductItem {
+//   id: number;
+//   name: string;
+//   description: string;
+//   growth: string;
+//   salesVolume: string;
+//   totalRevenue: string;
+//   latestVersion: string;
+//   stock: string;
+//   categories: string[];
+//   location: string;
+//   isFavorite?: boolean;
+// }
+
 interface ProductItem {
   id: number;
   name: string;
@@ -42,11 +57,42 @@ interface ProductItem {
   categories: string[];
   location: string;
   isFavorite?: boolean;
-}
+};
+
 
 const InsightHub: React.FC = () => {
-  const { hubItems = [] }: { hubItems?: HubItem[] } = useHub();
-  const { productItems = [] }: { productItems?: ProductItem[] } = useProductContext();
+  const { hubItems = [] }: { hubItems: Startup[] } = useHub(); // Get Startup[] from useHub
+  const { productItems = [] } = useProductContext();  // Get the ProductItem[] from context
+  // Map Startup[] to HubItem[] by transforming the data
+  const mappedHubItems: HubItem[] = hubItems.map(startup => ({
+    id: Number(startup.id), // Convert string 'id' to number
+    title: startup.title,
+    volume: startup.volume.toString(), // Convert number 'volume' to string
+    totalFunding: startup.totalFunding,
+    latestRound: startup.latestRound,
+    employees: startup.employees.toString(), // Convert number 'employees' to string
+    category: startup.category,
+    location: startup.location,
+    growth: startup.growth,
+    description: startup.description,
+    isFavorite: startup.isFavorite,
+  }));
+  // Map ProductItem[] to HubItem[] by transforming the data
+const mappedProductItems: HubItem[] = productItems.map(product => ({
+  id: Number(product.id),  // Convert string 'uuid' to number for 'id'
+  title: product.name,  // Use 'name' from ProductItem as 'title'
+  volume: product.quantity.toString(),  // Convert number 'quantity' to string for 'volume'
+  totalFunding: product.revenue,  // Use 'revenue' from ProductItem as 'totalFunding'
+  latestRound: product.best_selling_rate,  // Use 'best_selling_rate' as 'latestRound'
+  employees: product.avg_reviews_rating.toString(),  // Convert 'avg_reviews_rating' to string for 'employees'
+  category: product.category,  // Directly map 'category'
+  location: product.location,  // Directly map 'location'
+  growth: product.growth_rate,  // Map 'growth_rate' to 'growth'
+  description: product.short_description,  // Use 'short_description' from ProductItem as 'description'
+  isFavorite: product.avg_reviews_rating > '4',  // Example: mark as favorite if avg_reviews_rating > 4
+}));
+  // const { hubItems = [] }: { hubItems?: HubItem[] } = useHub();
+  // const { productItems = [] }: { productItems?: ProductItem[] } = useProductContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [filterBy, setFilterBy] = useState("");
@@ -139,11 +185,11 @@ const InsightHub: React.FC = () => {
 
     if (lastAction.startsWith('favoriteHub_')) {
       const itemId = Number(lastAction.split('_')[1]);
-      const item = hubItems?.find(item => item.id === itemId);
+      const item = mappedHubItems?.find(item => Number(item.id) === itemId);
       if (item) toggleFavoriteHubItem(item);
     } else if (lastAction.startsWith('favoriteProduct_')) {
       const itemId = Number(lastAction.split('_')[1]);
-      const item = productItems?.find(item => item.id === itemId);
+      const item = productItems?.find(item => Number(item.id) === itemId);
       if (item) toggleFavoriteProductItem(item);
     }
 
@@ -151,7 +197,7 @@ const InsightHub: React.FC = () => {
   };
 
   const processedHubItems = handleSortHub(
-    handleFilterHub(handleSearchHub(hubItems ?? [], searchTerm), filterBy),
+    handleFilterHub(handleSearchHub(mappedHubItems ?? [], searchTerm), filterBy),
     "category"
   );
   const processedProductItems = handleSortProduct(

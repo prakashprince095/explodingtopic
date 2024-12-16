@@ -15,7 +15,7 @@ type CategoryData = {
   background: string;
   volumeData: { month: string; volume: number }[];
 };
-
+//  minAngle={15} used at line 104 causing the errror so removed for temeporary
 const categoryData: Record<string, CategoryData> = {
   "ai-transcription": {
     title: "AI Transcription",
@@ -93,7 +93,7 @@ const CategoryPage = () => {
             </div>
           </CardContent>
         </Card>
-
+        
         <Card>
           <CardHeader>
             <CardTitle>Browser Usage</CardTitle>
@@ -101,7 +101,8 @@ const CategoryPage = () => {
           <CardContent>
             <ChartContainer config={chartConfig} className="h-[300px]">
               <RadialBarChart data={browserData} innerRadius="30%" outerRadius="90%" startAngle={180} endAngle={0}>
-                <RadialBar minAngle={15} background dataKey="visitors">
+                
+                <RadialBar background dataKey="visitors">
                   <LabelList position="inside" fill="#fff" dataKey="browser" />
                 </RadialBar>
                 <ChartTooltip />

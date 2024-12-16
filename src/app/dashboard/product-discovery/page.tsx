@@ -9,10 +9,41 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { CartesianGrid, Line, LineChart, XAxis, ResponsiveContainer } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
+// const productData = {
+//   id: 1,
+//   name: "EcoWidget",
+//   Volume: "300K",
+//   short_description: "Eco-friendly gadget for energy savings.",
+//   description: "An eco-friendly gadget designed to optimize energy usage in homes, helping to reduce costs and environmental impact.",
+//   revenue: "$1M",
+//   best_selling_rate: "+50%",
+//   price: "$100",
+//   avg_reviews_rating: "4.8 / 5",
+//   twitter_url: "https://twitter.com/ecowidget",
+//   amazon_url: "https://amazon.com/ecowidget",
+//   selling_data: [
+//     { year: "Jan", sales: 2000 },
+//     { year: "Feb", sales: 3500 },
+//     { year: "Mar", sales: 3000 },
+//     { year: "Apr", sales: 4500 },
+//     { year: "May", sales: 8000 },
+//     { year: "Jun", sales: 6000 },
+//   ],
+//   growth_rate: "+20%",
+//   search_volume: "15K",
+//   category: ["Home", "Technology", "Eco-friendly"],
+//   channels: [
+//     { platform: "Instagram", value: "20K followers" },
+//     { platform: "Facebook", value: "50K likes" },
+//   ],
+//   logo: "https://via.placeholder.com/150",
+//   quantity: 500,
+//   location: "USA",
+// }
 const productData = {
-  uuid: "1",
+  id: 1,
   name: "EcoWidget",
-  Volume: "300K",
+  volume: "300K", // Corrected from 'Volume' to 'volume'
   short_description: "Eco-friendly gadget for energy savings.",
   description: "An eco-friendly gadget designed to optimize energy usage in homes, helping to reduce costs and environmental impact.",
   revenue: "$1M",
@@ -39,14 +70,21 @@ const productData = {
   logo: "https://via.placeholder.com/150",
   quantity: 500,
   location: "USA",
-}
+  growth: "+20%",  // Added missing field
+  salesVolume: "20,000",  // Added missing field
+  totalRevenue: "$2M",  // Added missing field
+  latestVersion: "v1.2",  // Added missing field
+  stock: "500",  // Added missing field
+  categories: ["Eco-friendly", "Gadget"],  // Added missing field
+};
+
 
 export default function ProductList() {
   const router = useRouter()
-  const { setProduct } = useProductContext()
+  const { setProductItems } = useProductContext()
 
   const handleProductClick = () => {
-    setProduct(productData)
+    setProductItems([productData])
     router.push(`/dashboard/product-discovery/${productData.name}`)
   }
 
@@ -108,7 +146,7 @@ export default function ProductList() {
                   <Image src='/startups/share.svg' alt='' height={20} width={20} />
                 </div>
                 <div className="mt-1 text-md border border-emerald-600 px-2 py-1 rounded-full bg-emerald-100 text-emerald-600 w-fit">
-                  + {productData.Volume}
+                  + {productData.volume}
                 </div>
               </CardFooter>
             </CardHeader>

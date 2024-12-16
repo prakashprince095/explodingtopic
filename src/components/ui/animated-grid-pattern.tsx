@@ -33,7 +33,6 @@ export default function AnimatedGridPattern({
   const id = useId();
   const containerRef = useRef<SVGSVGElement | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [squares, setSquares] = useState(() => generateSquares(numSquares));
 
   const getPos = useCallback(() => {
     return [
@@ -48,6 +47,8 @@ export default function AnimatedGridPattern({
       pos: getPos(),
     }));
   }, [getPos]);
+  const [squares, setSquares] = useState(() => generateSquares(numSquares));
+
 
   const updateSquarePosition = (id: number) => {
     setSquares((currentSquares) =>

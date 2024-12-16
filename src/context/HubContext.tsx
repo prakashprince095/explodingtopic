@@ -3,8 +3,8 @@
 import React, { createContext, useContext, useState } from "react";
 
 // Define the structure of a Startup
-interface Startup {
-  id: string;
+export interface Startup {
+  id: number;
   title: string;
   description: string;
   employees: number;
